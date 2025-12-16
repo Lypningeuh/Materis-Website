@@ -77,9 +77,8 @@ export default function TemoignagesSection() {
 
   return (
     <SectionWrapper background="noir" className="relative overflow-hidden">
-      {/* Decorative elements */}
-      <div className="absolute top-0 left-0 w-96 h-96 bg-dore/5 rounded-full blur-3xl" />
-      <div className="absolute bottom-0 right-0 w-80 h-80 bg-dore/5 rounded-full blur-3xl" />
+      {/* Subtle decorative gradient */}
+      <div className="absolute inset-0 bg-gradient-to-br from-dore/5 via-transparent to-dore/5 pointer-events-none" />
 
       <div className="relative">
         <SectionHeader
@@ -101,7 +100,7 @@ export default function TemoignagesSection() {
                   animate={{ opacity: 1, y: 0 }}
                   exit={{ opacity: 0, y: -20 }}
                   transition={{ duration: 0.5 }}
-                  className="p-8 md:p-12 rounded-2xl bg-blanc/5 border border-blanc/10 backdrop-blur-sm"
+                  className="p-8 md:p-12 rounded-2xl bg-blanc/5 border border-blanc/10"
                 >
                   {/* Quote icon */}
                   <Quote size={40} className="text-dore/40 mb-6" />

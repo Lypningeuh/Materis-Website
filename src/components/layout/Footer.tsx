@@ -2,6 +2,7 @@
 
 import Link from "next/link";
 import Image from "next/image";
+import { usePathname } from "next/navigation";
 import { Phone, MessageCircle, Mail, MapPin, Heart } from "lucide-react";
 
 const contactChannels = [
@@ -40,6 +41,13 @@ const legalLinks = [
 ];
 
 export default function Footer() {
+  const pathname = usePathname();
+  
+  // Don't render on admin pages
+  if (pathname?.startsWith("/admin")) {
+    return null;
+  }
+  
   return (
     <footer className="bg-noir text-blanc/90">
       {/* Human touch section */}

@@ -3,6 +3,7 @@
 import Link from "next/link";
 import Image from "next/image";
 import { useState, useEffect } from "react";
+import { usePathname } from "next/navigation";
 import { motion, AnimatePresence } from "framer-motion";
 import { Menu, X, Phone } from "lucide-react";
 
@@ -19,6 +20,16 @@ const navigation = [
 export default function Header() {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const pathname = usePathname();
+  
+  // Don't render on admin pages
+  if (pathname?.startsWith("/admin")) {
+    return null;
+  }
+  
+  // Only use transparent/light header on homepage
+  const isHomepage = pathname === "/";
+  const useTransparentHeader = isHomepage && !isScrolled;
 
   useEffect(() => {
     const handleScroll = () => {
@@ -31,9 +42,9 @@ export default function Header() {
   return (
     <header
       className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${
-        isScrolled
-          ? "glass shadow-soft py-3"
-          : "bg-transparent py-5"
+        useTransparentHeader
+          ? "bg-transparent py-5"
+          : "glass shadow-soft py-3"
       }`}
     >
       <div className="max-w-7xl mx-auto px-6 lg:px-8">
@@ -41,11 +52,11 @@ export default function Header() {
           {/* Logo */}
           <Link href="/" className="flex items-center">
             <Image
-              src="/logo_full_header.svg"
+              src={useTransparentHeader ? "/logo_white.svg" : "/logo_full_header.svg"}
               alt="MATERIS"
               width={180}
               height={56}
-              className="h-10 md:h-12 w-auto"
+              className="h-10 md:h-12 w-auto transition-all duration-300"
               priority
             />
           </Link>
@@ -56,7 +67,12 @@ export default function Header() {
               <Link
                 key={item.name}
                 href={item.href}
-                className="text-sm font-medium text-noir-light hover:text-dore transition-colors duration-300 link-underline"
+                prefetch={true}
+                className={`text-sm font-medium transition-colors duration-300 link-underline ${
+                  useTransparentHeader
+                    ? "text-blanc/90 hover:text-blanc"
+                    : "text-noir-light hover:text-dore"
+                }`}
               >
                 {item.name}
               </Link>
@@ -69,7 +85,11 @@ export default function Header() {
               href="https://calendly.com"
               target="_blank"
               rel="noopener noreferrer"
-              className="flex items-center gap-2 px-6 py-2.5 btn-gradient text-blanc text-sm font-medium rounded-full"
+              className={`flex items-center gap-2 px-6 py-2.5 text-sm font-medium rounded-full transition-all duration-300 ${
+                useTransparentHeader
+                  ? "bg-blanc/15 backdrop-blur-sm text-blanc border border-blanc/30 hover:bg-blanc/25"
+                  : "btn-gradient text-blanc"
+              }`}
             >
               <Phone size={16} />
               Prendre RDV
@@ -79,7 +99,9 @@ export default function Header() {
           {/* Mobile Menu Button */}
           <button
             onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-            className="lg:hidden p-2 text-noir"
+            className={`lg:hidden p-2 transition-colors duration-300 ${
+              useTransparentHeader ? "text-blanc" : "text-noir"
+            }`}
             aria-label="Menu"
           >
             {isMobileMenuOpen ? <X size={24} /> : <Menu size={24} />}
@@ -107,6 +129,7 @@ export default function Header() {
                 >
                   <Link
                     href={item.href}
+                    prefetch={true}
                     onClick={() => setIsMobileMenuOpen(false)}
                     className="block text-lg font-medium text-noir-light hover:text-dore transition-colors"
                   >
@@ -137,4 +160,3 @@ export default function Header() {
     </header>
   );
 }
-
