@@ -1,26 +1,194 @@
 @import "tailwindcss";
 
+/* =====================
+   MATERIS Color System
+   Luxe, Zen, Lumineux
+===================== */
+
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  /* Noir variants */
+  --noir-principal: #221D2B;
+  --noir-leger: #3D3549;
+  --noir-profond: #1A1520;
+  
+  /* Clair variants */
+  --blanc-pur: #FFFFFF;
+  --clair-principal: #FAF8F4;
+  --creme-doux: #F5F2EB;
+  --beige-leger: #EDE9E0;
+  
+  /* Doré variants */
+  --dore-clair: #E8C777;
+  --dore-principal: #D6A647;
+  --dore-fonce: #B8892F;
+  --bronze: #9A7328;
+  
+  /* Semantic */
+  --background: var(--clair-principal);
+  --foreground: var(--noir-principal);
+  --muted: var(--creme-doux);
+  --accent: var(--dore-principal);
 }
 
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+  
+  /* Noir */
+  --color-noir: var(--noir-principal);
+  --color-noir-light: var(--noir-leger);
+  --color-noir-deep: var(--noir-profond);
+  
+  /* Clair */
+  --color-blanc: var(--blanc-pur);
+  --color-clair: var(--clair-principal);
+  --color-creme: var(--creme-doux);
+  --color-beige: var(--beige-leger);
+  
+  /* Doré */
+  --color-dore-light: var(--dore-clair);
+  --color-dore: var(--dore-principal);
+  --color-dore-dark: var(--dore-fonce);
+  --color-bronze: var(--bronze);
+  
+  /* Font */
+  --font-serif: var(--font-cormorant);
+  --font-sans: var(--font-raleway);
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+/* Global styles */
+* {
+  scroll-behavior: smooth;
 }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  background: var(--clair-principal);
+  color: var(--noir-principal);
+  font-family: var(--font-raleway), system-ui, sans-serif;
+  line-height: 1.7;
+  overflow-x: hidden;
+}
+
+/* Typography */
+h1, h2, h3, h4 {
+  font-family: var(--font-cormorant), Georgia, serif;
+  font-weight: 500;
+  letter-spacing: 0.01em;
+  line-height: 1.2;
+}
+
+/* Selection */
+::selection {
+  background: var(--dore-principal);
+  color: var(--blanc-pur);
+}
+
+/* Custom scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--creme-doux);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--beige-leger);
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--dore-principal);
+}
+
+/* Animations */
+@keyframes fade-in-up {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes fade-in {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes shimmer {
+  0% {
+    background-position: -200% 0;
+  }
+  100% {
+    background-position: 200% 0;
+  }
+}
+
+.animate-fade-in-up {
+  animation: fade-in-up 0.8s ease-out forwards;
+}
+
+.animate-fade-in {
+  animation: fade-in 0.6s ease-out forwards;
+}
+
+/* Luxury button gradient */
+.btn-gradient {
+  background: linear-gradient(135deg, var(--dore-clair), var(--dore-principal));
+  transition: all 0.4s ease;
+}
+
+.btn-gradient:hover {
+  background: linear-gradient(135deg, var(--dore-principal), var(--dore-fonce));
+  transform: scale(1.02);
+  box-shadow: 0 8px 30px rgba(214, 166, 71, 0.3);
+}
+
+/* Glass effect for header */
+.glass {
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  background: rgba(250, 248, 244, 0.85);
+}
+
+/* Soft shadow for cards */
+.shadow-soft {
+  box-shadow: 0 4px 20px rgba(34, 29, 43, 0.08);
+}
+
+.shadow-soft-hover:hover {
+  box-shadow: 0 8px 40px rgba(34, 29, 43, 0.12);
+}
+
+/* Border gold animation */
+.border-glow:focus {
+  border-color: var(--dore-principal);
+  box-shadow: 0 0 0 3px rgba(214, 166, 71, 0.15);
+}
+
+/* Link underline animation */
+.link-underline {
+  position: relative;
+}
+
+.link-underline::after {
+  content: '';
+  position: absolute;
+  bottom: -2px;
+  left: 0;
+  width: 0;
+  height: 1px;
+  background: var(--dore-principal);
+  transition: width 0.3s ease;
+}
+
+.link-underline:hover::after {
+  width: 100%;
 }
