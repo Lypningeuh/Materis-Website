@@ -16,11 +16,14 @@ import {
   LogOut,
   Loader2,
   FolderOpen,
+  FileText,
+  PlayCircle,
+  Video,
 } from "lucide-react";
 import { supabase } from "@/lib/supabase";
-import type { RessourceCategory, Ressource, Session, Praticien } from "@/lib/types";
+import type { RessourceCategory, Ressource, Session, Praticien, FormationExample } from "@/lib/types";
 
-type Tab = "ressources" | "sessions" | "praticiens" | "categories";
+type Tab = "ressources" | "sessions" | "praticiens" | "categories" | "exemples";
 
 // Simple password protection (à remplacer par une vraie auth plus tard)
 const ADMIN_PASSWORD = "materis2025";
@@ -36,6 +39,7 @@ export default function AdminPanel() {
   const [ressources, setRessources] = useState<Ressource[]>([]);
   const [sessions, setSessions] = useState<Session[]>([]);
   const [praticiens, setPraticiens] = useState<Praticien[]>([]);
+  const [formationExamples, setFormationExamples] = useState<FormationExample[]>([]);
 
   // Edit states
   const [editingItem, setEditingItem] = useState<any>(null);
@@ -66,17 +70,19 @@ export default function AdminPanel() {
   const fetchAllData = async () => {
     setLoading(true);
 
-    const [catsRes, ressRes, sessRes, pratRes] = await Promise.all([
+    const [catsRes, ressRes, sessRes, pratRes, examplesRes] = await Promise.all([
       supabase.from("ressource_categories").select("*").order("display_order"),
       supabase.from("ressources").select("*, category:ressource_categories(*)").order("display_order"),
       supabase.from("sessions").select("*").order("date_start"),
       supabase.from("praticiens").select("*").order("name"),
+      supabase.from("formation_examples").select("*").order("display_order"),
     ]);
 
     if (catsRes.data) setCategories(catsRes.data);
     if (ressRes.data) setRessources(ressRes.data);
     if (sessRes.data) setSessions(sessRes.data);
     if (pratRes.data) setPraticiens(pratRes.data);
+    if (examplesRes.data) setFormationExamples(examplesRes.data);
 
     setLoading(false);
   };
@@ -127,6 +133,7 @@ export default function AdminPanel() {
     { id: "categories" as Tab, label: "Catégories", icon: FolderOpen },
     { id: "sessions" as Tab, label: "Sessions", icon: Calendar },
     { id: "praticiens" as Tab, label: "Praticiens", icon: Users },
+    { id: "exemples" as Tab, label: "Exemples Formation", icon: Video },
   ];
 
   return (
@@ -208,6 +215,16 @@ export default function AdminPanel() {
             {activeTab === "praticiens" && (
               <PraticiensTab
                 praticiens={praticiens}
+                onRefresh={fetchAllData}
+                editingItem={editingItem}
+                setEditingItem={setEditingItem}
+                isCreating={isCreating}
+                setIsCreating={setIsCreating}
+              />
+            )}
+            {activeTab === "exemples" && (
+              <FormationExamplesTab
+                examples={formationExamples}
                 onRefresh={fetchAllData}
                 editingItem={editingItem}
                 setEditingItem={setEditingItem}
@@ -1313,6 +1330,298 @@ function PraticiensTab({
             </div>
 
             <div className="flex items-center gap-2">
+              <button
+                onClick={() => setEditingItem(item)}
+                className="p-2 hover:bg-clair rounded-lg transition-colors"
+              >
+                <Pencil size={18} className="text-noir-light" />
+              </button>
+              <button
+                onClick={() => handleDelete(item.id)}
+                className="p-2 hover:bg-red-50 rounded-lg transition-colors"
+              >
+                <Trash2 size={18} className="text-red-500" />
+              </button>
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
+  );
+}
+
+// ============================================
+// FORMATION EXAMPLES TAB
+// ============================================
+function FormationExamplesTab({
+  examples,
+  onRefresh,
+  editingItem,
+  setEditingItem,
+  isCreating,
+  setIsCreating,
+}: {
+  examples: FormationExample[];
+  onRefresh: () => void;
+  editingItem: any;
+  setEditingItem: (item: any) => void;
+  isCreating: boolean;
+  setIsCreating: (v: boolean) => void;
+}) {
+  const [form, setForm] = useState({
+    type: "pdf" as "pdf" | "video",
+    title: "",
+    description: "",
+    file_url: "",
+    thumbnail_url: "",
+    display_order: 0,
+    is_published: true,
+  });
+  const [saving, setSaving] = useState(false);
+
+  useEffect(() => {
+    if (editingItem) {
+      setForm({
+        type: editingItem.type || "pdf",
+        title: editingItem.title || "",
+        description: editingItem.description || "",
+        file_url: editingItem.file_url || "",
+        thumbnail_url: editingItem.thumbnail_url || "",
+        display_order: editingItem.display_order || 0,
+        is_published: editingItem.is_published ?? true,
+      });
+    } else if (isCreating) {
+      setForm({
+        type: "pdf",
+        title: "",
+        description: "",
+        file_url: "",
+        thumbnail_url: "",
+        display_order: examples.length,
+        is_published: true,
+      });
+    }
+  }, [editingItem, isCreating, examples.length]);
+
+  const handleSave = async () => {
+    setSaving(true);
+    const data = {
+      ...form,
+      updated_at: new Date().toISOString(),
+    };
+
+    if (editingItem) {
+      await supabase.from("formation_examples").update(data).eq("id", editingItem.id);
+    } else {
+      await supabase.from("formation_examples").insert(data);
+    }
+
+    setSaving(false);
+    setEditingItem(null);
+    setIsCreating(false);
+    onRefresh();
+  };
+
+  const handleDelete = async (id: string) => {
+    if (!confirm("Supprimer cet exemple ?")) return;
+    await supabase.from("formation_examples").delete().eq("id", id);
+    onRefresh();
+  };
+
+  const handleTogglePublish = async (item: FormationExample) => {
+    await supabase
+      .from("formation_examples")
+      .update({ is_published: !item.is_published })
+      .eq("id", item.id);
+    onRefresh();
+  };
+
+  // Edit/Create form view
+  if (editingItem || isCreating) {
+    return (
+      <div className="bg-blanc rounded-2xl p-6 shadow-soft">
+        <div className="flex items-center justify-between mb-6">
+          <h2 className="text-xl font-serif text-noir">
+            {editingItem ? "Modifier l'exemple" : "Nouvel exemple"}
+          </h2>
+          <button
+            onClick={() => {
+              setEditingItem(null);
+              setIsCreating(false);
+            }}
+            className="text-noir-light hover:text-noir"
+          >
+            <X size={24} />
+          </button>
+        </div>
+
+        <div className="grid md:grid-cols-2 gap-6">
+          <div>
+            <label className="block text-sm font-medium text-noir mb-2">Type *</label>
+            <select
+              value={form.type}
+              onChange={(e) => setForm({ ...form, type: e.target.value as "pdf" | "video" })}
+              className="w-full px-4 py-3 rounded-lg border border-beige focus:border-dore outline-none"
+            >
+              <option value="pdf">PDF</option>
+              <option value="video">Vidéo</option>
+            </select>
+          </div>
+
+          <div>
+            <label className="block text-sm font-medium text-noir mb-2">Titre *</label>
+            <input
+              type="text"
+              value={form.title}
+              onChange={(e) => setForm({ ...form, title: e.target.value })}
+              className="w-full px-4 py-3 rounded-lg border border-beige focus:border-dore outline-none"
+            />
+          </div>
+
+          <div className="md:col-span-2">
+            <label className="block text-sm font-medium text-noir mb-2">Description</label>
+            <textarea
+              value={form.description}
+              onChange={(e) => setForm({ ...form, description: e.target.value })}
+              rows={2}
+              className="w-full px-4 py-3 rounded-lg border border-beige focus:border-dore outline-none"
+            />
+          </div>
+
+          <div className="md:col-span-2">
+            <label className="block text-sm font-medium text-noir mb-2">URL du fichier *</label>
+            <input
+              type="url"
+              value={form.file_url}
+              onChange={(e) => setForm({ ...form, file_url: e.target.value })}
+              className="w-full px-4 py-3 rounded-lg border border-beige focus:border-dore outline-none"
+              placeholder="https://materis.schoolmaker.co/... ou https://youtube.com/..."
+            />
+            <p className="text-xs text-noir-light mt-1">
+              Schoolmaker, YouTube, Google Drive, ou tout autre lien externe
+            </p>
+          </div>
+
+          <div>
+            <label className="block text-sm font-medium text-noir mb-2">URL miniature (optionnel)</label>
+            <input
+              type="url"
+              value={form.thumbnail_url}
+              onChange={(e) => setForm({ ...form, thumbnail_url: e.target.value })}
+              className="w-full px-4 py-3 rounded-lg border border-beige focus:border-dore outline-none"
+              placeholder="https://..."
+            />
+          </div>
+
+          <div>
+            <label className="block text-sm font-medium text-noir mb-2">Ordre d&apos;affichage</label>
+            <input
+              type="number"
+              value={form.display_order}
+              onChange={(e) => setForm({ ...form, display_order: parseInt(e.target.value) || 0 })}
+              className="w-full px-4 py-3 rounded-lg border border-beige focus:border-dore outline-none"
+            />
+          </div>
+
+          <div className="md:col-span-2">
+            <label className="flex items-center gap-3 cursor-pointer">
+              <input
+                type="checkbox"
+                checked={form.is_published}
+                onChange={(e) => setForm({ ...form, is_published: e.target.checked })}
+                className="w-5 h-5 rounded border-beige text-dore focus:ring-dore"
+              />
+              <span className="text-sm font-medium text-noir">Publié</span>
+            </label>
+          </div>
+        </div>
+
+        <div className="flex justify-end gap-4 mt-8">
+          <button
+            onClick={() => {
+              setEditingItem(null);
+              setIsCreating(false);
+            }}
+            className="px-6 py-2.5 text-noir-light hover:text-noir transition-colors"
+          >
+            Annuler
+          </button>
+          <button
+            onClick={handleSave}
+            disabled={saving || !form.title || !form.file_url}
+            className="flex items-center gap-2 px-6 py-2.5 btn-gradient text-blanc rounded-full disabled:opacity-50"
+          >
+            {saving ? <Loader2 size={18} className="animate-spin" /> : <Save size={18} />}
+            Enregistrer
+          </button>
+        </div>
+      </div>
+    );
+  }
+
+  // List view
+  const pdfExamples = examples.filter(e => e.type === "pdf");
+  const videoExamples = examples.filter(e => e.type === "video");
+
+  return (
+    <div>
+      <div className="flex items-center justify-between mb-6">
+        <h2 className="text-xl font-serif text-noir">
+          {examples.length} exemple(s) ({pdfExamples.length} PDF, {videoExamples.length} vidéos)
+        </h2>
+        <button
+          onClick={() => setIsCreating(true)}
+          className="flex items-center gap-2 px-5 py-2.5 btn-gradient text-blanc rounded-full"
+        >
+          <Plus size={18} />
+          Nouvel exemple
+        </button>
+      </div>
+
+      <div className="space-y-4">
+        {examples.map((item) => (
+          <div
+            key={item.id}
+            className="bg-blanc rounded-xl p-5 shadow-soft flex items-center justify-between"
+          >
+            <div className="flex items-center gap-4">
+              <div className="w-10 h-10 rounded-lg bg-dore/10 flex items-center justify-center">
+                {item.type === "pdf" ? (
+                  <FileText size={20} className="text-dore" />
+                ) : (
+                  <PlayCircle size={20} className="text-dore" />
+                )}
+              </div>
+              <div>
+                <div className="flex items-center gap-3">
+                  <h3 className="font-medium text-noir">{item.title}</h3>
+                  <span className="text-xs bg-dore/10 text-dore px-2 py-0.5 rounded uppercase">
+                    {item.type}
+                  </span>
+                  {!item.is_published && (
+                    <span className="text-xs bg-beige text-noir-light px-2 py-1 rounded">
+                      Brouillon
+                    </span>
+                  )}
+                </div>
+                {item.description && (
+                  <p className="text-sm text-noir-light line-clamp-1">{item.description}</p>
+                )}
+              </div>
+            </div>
+
+            <div className="flex items-center gap-2">
+              <button
+                onClick={() => handleTogglePublish(item)}
+                className="p-2 hover:bg-clair rounded-lg transition-colors"
+                title={item.is_published ? "Dépublier" : "Publier"}
+              >
+                {item.is_published ? (
+                  <Eye size={18} className="text-dore" />
+                ) : (
+                  <EyeOff size={18} className="text-noir-light" />
+                )}
+              </button>
               <button
                 onClick={() => setEditingItem(item)}
                 className="p-2 hover:bg-clair rounded-lg transition-colors"

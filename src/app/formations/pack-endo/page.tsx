@@ -19,7 +19,7 @@ export default function PackEndoPage() {
     <>
       <PageHeader
         overtitle="Formation digitale"
-        title="Pack ENDO"
+        title="Pack Endométriose"
         subtitle="Un parcours 100% digital pour intégrer pas à pas les fondamentaux de l'ostéopathie gynécologique et les spécificités de l'endométriose."
       />
       <Suspense fallback={<SectionSkeleton />}>

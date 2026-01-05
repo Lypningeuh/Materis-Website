@@ -24,7 +24,7 @@ const piliers = [
       "Documents PDF téléchargeables",
       "Vidéos de démonstration",
       "Support WhatsApp",
-      "1 coaching inclus",
+      "Coaching inclus\n(Nombre en fonction de la formule)",
     ],
   },
   {
@@ -33,8 +33,8 @@ const piliers = [
     description: "Vous n'êtes jamais seul(e) dans votre apprentissage",
     details: [
       "Groupe WhatsApp : réponse garantie",
-      "Lives BI-mensuels : études de cas en direct",
-      "Communauté de praticiens formés",
+      "Lives BI-mensuels : études de cas en direct pour In situ et Aurizon",
+      "Réseau et communauté de praticiens formés",
       "Échanges et partages d'expériences",
     ],
   },
@@ -70,7 +70,7 @@ const comparatif = [
   },
   {
     classique: "Week-ends sacrifiés",
-    materis: "Pas de perte de revenus",
+    materis: "Moins de perte de revenus",
   },
 ];
 
@@ -100,7 +100,7 @@ export default function MethodeContent() {
             viewport={{ once: true }}
             className="text-3xl md:text-4xl font-serif text-noir"
           >
-            Les 3 piliers de la méthode
+            Les 3 piliers de la méthode en ligne
           </motion.h2>
         </div>
 
@@ -123,7 +123,7 @@ export default function MethodeContent() {
                 {pilier.details.map((detail) => (
                   <li key={detail} className="flex items-start gap-3">
                     <Check size={18} className="text-dore mt-0.5 flex-shrink-0" />
-                    <span className="text-sm text-noir-light">{detail}</span>
+                    <span className="text-sm text-noir-light whitespace-pre-line">{detail}</span>
                   </li>
                 ))}
               </ul>

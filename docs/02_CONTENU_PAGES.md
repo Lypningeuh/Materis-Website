@@ -625,9 +625,9 @@ Boutons : Formations / Réseau
 
 | Canal | Coordonnées |
 |-------|-------------|
-| **Téléphone** | 06 82 94 06 18 / 06 87 52 88 22 |
+| **Téléphone** | 06 31 70 28 48 / 06 87 52 88 22 |
 | **WhatsApp** | 06 31 70 28 48 |
-| **Email** | sandrine_osteo@yahoo.fr / legorrecyannig@yahoo.fr |
+| **Email** | sandrine.mosse@materis.fr / legorrecyannig@yahoo.fr |
 
 ### Section 4 — Pour les praticiens déjà formés
 

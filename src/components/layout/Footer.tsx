@@ -9,8 +9,8 @@ const contactChannels = [
   {
     icon: Phone,
     label: "M'appeler",
-    href: "tel:+33682940618",
-    text: "06 82 94 06 18",
+    href: "tel:+33631702848",
+    text: "06 31 70 28 48",
   },
   {
     icon: MessageCircle,
@@ -21,8 +21,8 @@ const contactChannels = [
   {
     icon: Mail,
     label: "Email",
-    href: "mailto:sandrine_osteo@yahoo.fr",
-    text: "sandrine_osteo@yahoo.fr",
+    href: "mailto:sandrine.mosse@materis.fr",
+    text: "sandrine.mosse@materis.fr",
   },
 ];
 
@@ -101,7 +101,7 @@ export default function Footer() {
               <p className="text-blanc/60 max-w-md mb-6 leading-relaxed">
                 Former des praticiens qui prennent vraiment soin des femmes.
                 Endométriose, douleurs pelviennes, santé féminine — des formations
-                ancrées dans 25 ans de pratique.
+                ancrées dans 28 ans de pratique.
               </p>
               {/* Sandrine signature */}
               <div className="flex items-center gap-4">

@@ -61,7 +61,7 @@ export default function HeroSection() {
         >
           <Sparkles className="w-4 h-4 text-dore" />
           <span className="text-sm font-medium text-blanc/90 tracking-wide">
-            25+ ans d&apos;expérience en santé féminine
+            28+ ans d&apos;expérience en santé féminine
           </span>
         </motion.div>
 
@@ -72,11 +72,9 @@ export default function HeroSection() {
           transition={{ duration: 0.9, delay: 0.2, ease: "easeOut" }}
           className="text-4xl md:text-5xl lg:text-7xl font-serif text-blanc leading-[1.1] md:leading-[0.95] mb-8"
         >
-          Former des praticiens
-          <br />
-          qui prennent{" "}
+          Former des praticiens qui{" "}
           <span className="relative inline-block">
-            <span className="text-dore">vraiment</span>
+            <span className="text-dore">écoutent</span>
             <motion.span
               initial={{ scaleX: 0 }}
               animate={{ scaleX: 1 }}
@@ -84,8 +82,7 @@ export default function HeroSection() {
               className="absolute -bottom-2 left-0 right-0 h-0.5 bg-gradient-to-r from-transparent via-dore to-transparent origin-center"
             />
           </span>
-          <br />
-          soin des femmes
+          {" "}ce que le corps des femmes leur dit
         </motion.h1>
 
         {/* Subtitle */}
@@ -116,7 +113,7 @@ export default function HeroSection() {
             Découvrir les formations
           </Button>
           <button
-            onClick={() => window.open("https://calendly.com", "_blank")}
+            onClick={() => window.open("https://calendly.com/sandrine-mosse-materis/30min", "_blank")}
             className="group flex items-center justify-center gap-3 px-8 py-4 rounded-full border border-blanc/30 text-blanc font-medium transition-all duration-300 hover:bg-blanc/10 hover:border-blanc/50"
           >
             <Calendar size={20} />

@@ -59,3 +59,16 @@ export interface Praticien {
   updated_at: string;
 }
 
+export interface FormationExample {
+  id: string;
+  type: 'pdf' | 'video';
+  title: string;
+  description: string | null;
+  file_url: string;
+  thumbnail_url: string | null;
+  display_order: number;
+  is_published: boolean;
+  created_at: string;
+  updated_at: string;
+}
+

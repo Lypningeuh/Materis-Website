@@ -82,7 +82,7 @@ export default function Header() {
           {/* CTA Button */}
           <div className="hidden lg:flex items-center gap-4">
             <a
-              href="https://calendly.com"
+              href="https://calendly.com/sandrine-mosse-materis/30min"
               target="_blank"
               rel="noopener noreferrer"
               className={`flex items-center gap-2 px-6 py-2.5 text-sm font-medium rounded-full transition-all duration-300 ${
@@ -144,7 +144,7 @@ export default function Header() {
                 className="pt-4"
               >
                 <a
-                  href="https://calendly.com"
+                  href="https://calendly.com/sandrine-mosse-materis/30min"
                   target="_blank"
                   rel="noopener noreferrer"
                   className="inline-flex items-center gap-2 px-6 py-3 btn-gradient text-blanc font-medium rounded-full"

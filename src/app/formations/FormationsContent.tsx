@@ -1,198 +1,22 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { 
-  Smartphone, 
-  Users, 
-  Sparkles, 
+import {
   Calendar,
   ArrowRight,
   Shield,
   AlertTriangle,
-  Check,
-  Zap,
-  Clock,
-  MapPin
+  Check
 } from "lucide-react";
 import SectionWrapper from "@/components/ui/SectionWrapper";
 import Button from "@/components/ui/Button";
-
-const chemins = [
-  {
-    icon: Smartphone,
-    name: "PRAKTIKA",
-    tagline: "J'aime l'autonomie",
-    description: "Formation digitale, je vous guide à distance via le Pack ENDO.",
-    longDesc: "Pour celles et ceux qui préfèrent avancer à leur rythme, en autonomie. Modules vidéo, PDF, et support WhatsApp inclus.",
-    features: [
-      { icon: Zap, text: "Formation 100% digitale" },
-      { icon: Clock, text: "À votre rythme" },
-      { icon: Check, text: "Modules vidéo + PDF" },
-      { icon: Users, text: "Support WhatsApp" },
-    ],
-    href: "/formations/pack-endo",
-    gradient: "from-dore/20 to-dore/5",
-  },
-  {
-    icon: Users,
-    name: "IN SITU",
-    tagline: "J'ai besoin d'être accompagnée",
-    description: "Je viens chez vous, dans VOTRE cabinet.",
-    longDesc: "Formation personnalisée sur vos vraies patientes. Pas de perte de revenus, je m'adapte à votre rythme.",
-    features: [
-      { icon: MapPin, text: "Dans votre cabinet" },
-      { icon: Users, text: "Sur vos patientes" },
-      { icon: Clock, text: "Pas de perte de CA" },
-      { icon: Check, text: "Places limitées" },
-    ],
-    href: "/formations/in-situ-aurizon",
-    gradient: "from-noir/10 to-noir/5",
-    highlight: true,
-  },
-  {
-    icon: Sparkles,
-    name: "AURIZON",
-    tagline: "Je veux tout changer",
-    description: "Transformation complète de votre pratique.",
-    longDesc: "Parcours premium sur plusieurs mois. Accompagnement intensif pour révolutionner votre approche.",
-    features: [
-      { icon: Sparkles, text: "Parcours premium" },
-      { icon: Clock, text: "Sur plusieurs mois" },
-      { icon: Users, text: "Accompagnement intensif" },
-      { icon: Check, text: "Transformation complète" },
-    ],
-    href: "/formations/in-situ-aurizon",
-    gradient: "from-dore/30 to-dore/10",
-    premium: true,
-  },
-];
+import CheminsSection from "@/components/sections/CheminsSection";
 
 export default function FormationsContent() {
   return (
     <>
-      {/* Les 3 chemins - IMPROVED */}
-      <SectionWrapper background="clair" immediate>
-        <div className="text-center mb-16">
-          <motion.p
-            initial={{ opacity: 0 }}
-            whileInView={{ opacity: 1 }}
-            viewport={{ once: true }}
-            className="text-sm font-medium tracking-widest uppercase text-dore mb-4"
-          >
-            Votre chemin
-          </motion.p>
-          <motion.h2
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            className="text-3xl md:text-5xl font-serif text-noir mb-6"
-          >
-            3 chemins possibles
-          </motion.h2>
-          <motion.p
-            initial={{ opacity: 0 }}
-            whileInView={{ opacity: 1 }}
-            viewport={{ once: true }}
-            transition={{ delay: 0.2 }}
-            className="text-noir-light text-lg max-w-2xl mx-auto"
-          >
-            Chaque praticien est différent. Choisissez le format qui correspond 
-            à votre façon d&apos;apprendre et à vos contraintes.
-          </motion.p>
-        </div>
-
-        <div className="grid lg:grid-cols-3 gap-8">
-          {chemins.map((chemin, index) => (
-            <motion.div
-              key={chemin.name}
-              initial={{ opacity: 0, y: 40 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ delay: index * 0.15 }}
-              className={`relative group ${chemin.highlight ? "lg:-mt-4 lg:mb-4" : ""}`}
-            >
-              {/* Card */}
-              <div className={`relative h-full bg-blanc rounded-3xl overflow-hidden transition-all duration-500 ${
-                chemin.premium 
-                  ? "ring-2 ring-dore shadow-lg hover:shadow-xl" 
-                  : "shadow-soft hover:shadow-lg"
-              }`}>
-                {/* Premium badge */}
-                {chemin.premium && (
-                  <div className="absolute top-0 left-0 right-0 bg-gradient-to-r from-dore to-dore-dark py-2 text-center">
-                    <span className="text-blanc text-sm font-medium tracking-wide">
-                      ✨ Parcours Premium
-                    </span>
-                  </div>
-                )}
-
-                {/* Gradient header */}
-                <div className={`bg-gradient-to-br ${chemin.gradient} p-8 ${chemin.premium ? "pt-14" : ""}`}>
-                  <div className="w-14 h-14 rounded-2xl bg-blanc/80 shadow-soft flex items-center justify-center mb-4">
-                    <chemin.icon size={28} className="text-dore" />
-                  </div>
-                  <h3 className="text-2xl md:text-3xl font-serif text-noir mb-2">{chemin.name}</h3>
-                  <p className="text-dore font-medium">&quot;{chemin.tagline}&quot;</p>
-                </div>
-
-                {/* Content */}
-                <div className="p-8">
-                  <p className="text-noir-light mb-6 leading-relaxed">
-                    {chemin.longDesc}
-                  </p>
-
-                  {/* Features */}
-                  <div className="space-y-3 mb-8">
-                    {chemin.features.map((feature) => (
-                      <div key={feature.text} className="flex items-center gap-3">
-                        <div className="w-8 h-8 rounded-full bg-creme flex items-center justify-center flex-shrink-0">
-                          <feature.icon size={16} className="text-dore" />
-                        </div>
-                        <span className="text-sm text-noir">{feature.text}</span>
-                      </div>
-                    ))}
-                  </div>
-
-                  {/* CTA */}
-                  <Button
-                    href={chemin.href}
-                    variant={chemin.premium ? "primary" : "outline"}
-                    className="w-full justify-center"
-                    icon={<ArrowRight size={18} />}
-                  >
-                    Découvrir {chemin.name}
-                  </Button>
-                </div>
-              </div>
-
-              {/* Highlight effect for middle card */}
-              {chemin.highlight && (
-                <div className="hidden lg:block absolute -inset-1 bg-gradient-to-b from-dore/20 via-transparent to-transparent rounded-3xl -z-10 blur-xl opacity-0 group-hover:opacity-100 transition-opacity" />
-              )}
-            </motion.div>
-          ))}
-        </div>
-
-        {/* Help choosing */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          className="mt-12 text-center"
-        >
-          <p className="text-noir-light mb-4">
-            Pas sûr(e) de quel chemin choisir ?
-          </p>
-          <Button
-            href="https://calendly.com"
-            external
-            variant="outline"
-            icon={<Calendar size={18} />}
-          >
-            On en parle en 20 min
-          </Button>
-        </motion.div>
-      </SectionWrapper>
+      {/* Votre chemin - Selection e-learning / présentiel */}
+      <CheminsSection background="clair" />
 
       {/* Présentiel */}
       <SectionWrapper background="creme" immediate>
@@ -350,7 +174,7 @@ export default function FormationsContent() {
             transition={{ delay: 0.2 }}
           >
             <Button
-              href="https://calendly.com"
+              href="https://calendly.com/sandrine-mosse-materis/30min"
               external
               variant="primary"
               size="lg"

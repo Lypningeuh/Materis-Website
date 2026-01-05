@@ -59,7 +59,7 @@ export default function PageHeader({
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: 0.2 }}
-            className="mt-6 text-lg md:text-xl text-noir-light leading-relaxed max-w-2xl mx-auto"
+            className="mt-6 text-lg md:text-xl text-noir-light leading-relaxed max-w-3xl mx-auto"
           >
             {subtitle}
           </motion.p>

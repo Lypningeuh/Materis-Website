@@ -55,7 +55,7 @@
 ### Section 4 — Histoire & confession courte
 | Élément | Contenu |
 |---------|---------|
-| **Récit court** | Accident → parcours → 25 ans de pratique → maladie des mains → "Il est temps de transmettre" |
+| **Récit court** | Accident → parcours → 28 ans de pratique → maladie des mains → "Il est temps de transmettre" |
 | **CTA** | "Découvrir mon parcours" → /a-propos |
 
 ### Section 5 — Trois chemins possibles
@@ -315,9 +315,9 @@ Bloc Calendly intégré
 ### Section 3 — Contact direct
 | Canal | Coordonnées |
 |-------|-------------|
-| **Téléphone** | 06 82 94 06 18 / 06 87 52 88 22 |
+| **Téléphone** | 06 31 70 28 48 / 06 87 52 88 22 |
 | **WhatsApp** | 06 31 70 28 48 |
-| **Email** | sandrine_osteo@yahoo.fr / legorrecyannig@yahoo.fr |
+| **Email** | sandrine.mosse@materis.fr / legorrecyannig@yahoo.fr |
 
 ### Section 4 — Pour les praticiens déjà formés
 Lien vers groupe WhatsApp (réservé membres réseau Materis)

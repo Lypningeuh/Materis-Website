@@ -20,7 +20,7 @@ export default function MethodePage() {
       <PageHeader
         overtitle="La méthode"
         title="La signature pédagogique MATERIS"
-        subtitle="Une approche unique qui allie technique, accompagnement continu et application terrain."
+        subtitle="Un accompagnement e-learning complet : autonomie, coaching personnalisé et lives de groupe pour ne plus être seule dans votre cabinet."
       />
       <Suspense fallback={<SectionSkeleton />}>
         <MethodeContent />

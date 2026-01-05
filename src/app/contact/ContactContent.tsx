@@ -18,9 +18,9 @@ const contactChannels = [
   {
     icon: Phone,
     label: "Téléphone",
-    value: "06 82 94 06 18",
+    value: "06 31 70 28 48",
     secondValue: "06 87 52 88 22",
-    href: "tel:+33682940618",
+    href: "tel:+33631702848",
   },
   {
     icon: MessageCircle,
@@ -31,9 +31,9 @@ const contactChannels = [
   {
     icon: Mail,
     label: "Email",
-    value: "sandrine_osteo@yahoo.fr",
+    value: "sandrine.mosse@materis.fr",
     secondValue: "legorrecyannig@yahoo.fr",
-    href: "mailto:sandrine_osteo@yahoo.fr",
+    href: "mailto:sandrine.mosse@materis.fr",
   },
 ];
 
@@ -208,7 +208,7 @@ export default function ContactContent() {
             </div>
 
             <Button
-              href="https://calendly.com"
+              href="https://calendly.com/sandrine-mosse-materis/30min"
               external
               variant="primary"
               size="lg"

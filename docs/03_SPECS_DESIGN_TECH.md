@@ -155,10 +155,10 @@ Les photos seront dans un **dossier dédié** du projet (pas de liens externes).
 
 | Canal | Coordonnées |
 |-------|-------------|
-| **Téléphone 1** | 06 82 94 06 18 |
+| **Téléphone 1** | 06 31 70 28 48 |
 | **Téléphone 2** | 06 87 52 88 22 |
 | **WhatsApp** | 06 31 70 28 48 |
-| **Email 1** | sandrine_osteo@yahoo.fr |
+| **Email 1** | sandrine.mosse@materis.fr |
 | **Email 2** | legorrecyannig@yahoo.fr |
 
 ### Formulaire Lead Magnet

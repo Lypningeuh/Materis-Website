@@ -1,8 +1,9 @@
 "use client";
 
+import { useState } from "react";
 import Image from "next/image";
 import { motion } from "framer-motion";
-import { ArrowRight, Heart, Users, BookOpen, Stethoscope, Quote, MessageCircle } from "lucide-react";
+import { ArrowRight, Heart, Users, BookOpen, Stethoscope, Quote, MessageCircle, ChevronDown } from "lucide-react";
 import SectionWrapper from "@/components/ui/SectionWrapper";
 import Button from "@/components/ui/Button";
 
@@ -20,6 +21,8 @@ const timeline = [
 ];
 
 export default function AProposContent() {
+  const [isStoryExpanded, setIsStoryExpanded] = useState(false);
+
   return (
     <>
       {/* Section Parcours */}
@@ -84,10 +87,76 @@ export default function AProposContent() {
                 <em> je voulais faire ce métier.</em>
               </p>
               <p>
-                De la kinésithérapie à l&apos;ostéopathie, puis à l&apos;ostéopathie gynécologique, 
-                chaque étape m&apos;a rapprochée de ce qui allait devenir ma spécialité : 
+                De la kinésithérapie à l&apos;ostéopathie, puis à l&apos;ostéopathie gynécologique,
+                chaque étape m&apos;a rapprochée de ce qui allait devenir ma spécialité :
                 <strong> accompagner les femmes </strong> dans leurs douleurs les plus intimes.
               </p>
+            </motion.div>
+
+            {/* Suite de l'histoire - Expandable */}
+            <motion.div
+              initial={{ opacity: 0 }}
+              whileInView={{ opacity: 1 }}
+              viewport={{ once: true }}
+              transition={{ delay: 0.3 }}
+              className="mt-6"
+            >
+              <div className="relative">
+                {/* Conteneur du texte avec overflow contrôlé */}
+                <div
+                  className={`transition-all duration-500 ease-out overflow-hidden ${
+                    isStoryExpanded
+                      ? "max-h-[600px]"
+                      : "max-h-[120px]"
+                  }`}
+                >
+                  <div className="prose prose-lg text-noir-light space-y-4">
+                    <p>
+                      C&apos;est à ce moment que j&apos;ai rencontré l&apos;une de mes futures associées.
+                      Ensemble avec une autre amie qui nous a fait découvrir l&apos;ostéopathie, nous avons
+                      rejoint ensemble l&apos;école d&apos;ostéopathie de Toulouse de André Ratio, qui se
+                      situait alors dans un lieu hors du commun : <strong>le domaine de Richard Rampin,
+                      à Avignonet-Lauragais</strong>. Nous avons étudié pendant <strong>six années</strong>
+                      (et oui avant c&apos;était 6 ans !) dans ce cadre inspirant, avec une petite promo
+                      de 15 étudiants — un vrai luxe pour apprendre dans l&apos;intimité, au contact de
+                      professeurs venus de toute la France et de l&apos;étranger. Grâce à un partenariat
+                      avec l&apos;école de Maidstone (UK), notre diplôme avait une reconnaissance malgré
+                      l&apos;absence de cadre légal en France.
+                    </p>
+                    <p>
+                      C&apos;est dans ce contexte que j&apos;ai découvert l&apos;<strong>ostéopathie
+                      gynécologique</strong>. Et ce fut un <strong>véritable bouleversement</strong>.
+                      Nous étions jeunes mamans, confrontées à nos propres douleurs, nos silences,
+                      nos histoires corporelles. Comprendre, soulager, libérer : ces techniques ont
+                      été une véritable délivrance. Dès la formation, j&apos;ai commencé à les appliquer
+                      en rééducation périnéale.
+                    </p>
+                    <p>
+                      J&apos;ai été diplômée en <strong>2004</strong>, avec une remise officielle en
+                      janvier 2005. Très vite, ma pratique s&apos;est naturellement orientée vers
+                      <strong> l&apos;accompagnement des femmes</strong>. Ma patientèle s&apos;est
+                      féminisée, et mon approche est devenue plus intuitive, plus globale.
+                    </p>
+                  </div>
+                </div>
+
+                {/* Dégradé visible uniquement quand collapsed */}
+                {!isStoryExpanded && (
+                  <div className="absolute bottom-0 left-0 right-0 h-20 bg-gradient-to-t from-clair via-clair/80 to-transparent pointer-events-none" />
+                )}
+              </div>
+
+              {/* Bouton Lire plus / Réduire */}
+              <button
+                onClick={() => setIsStoryExpanded(!isStoryExpanded)}
+                className="mt-4 flex items-center gap-2 text-dore hover:text-dore-dark font-medium transition-colors"
+              >
+                <span>{isStoryExpanded ? "Réduire" : "Lire la suite"}</span>
+                <ChevronDown
+                  size={18}
+                  className={`transition-transform duration-300 ${isStoryExpanded ? "rotate-180" : ""}`}
+                />
+              </button>
             </motion.div>
           </div>
         </div>
@@ -102,7 +171,7 @@ export default function AProposContent() {
             viewport={{ once: true }}
             className="text-3xl md:text-4xl font-serif text-noir text-center mb-12"
           >
-            25 ans de parcours
+            28 ans de parcours
           </motion.h2>
 
           <div className="relative">
@@ -212,9 +281,7 @@ export default function AProposContent() {
               transition={{ delay: 0.4 }}
               className="text-lg text-blanc/70 leading-relaxed"
             >
-              J&apos;ai décidé de ne pas subir cet arrêt, mais d&apos;en faire un espace fertile. 
-              J&apos;ai exploré des approches plus subtiles : reiki, magnétisme, quantum énergie, 
-              soins énergétiques, féminin sacré...
+              J’ai décidé de ne pas subir cet arrêt, mais d’en faire un espace fertile. J’ai exploré des approches plus subtiles : reiki, magnétisme, énergie quantique, soins énergétiques, féminin sacré… jusqu’au jour où l’évidence s’est imposée : ce que j’aime profondément, c’est accompagner le corps et le féminin. Tout était déjà là, en moi. Il est temps de transmettre.
             </motion.p>
 
             {/* Quote highlight */}

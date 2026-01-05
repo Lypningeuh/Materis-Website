@@ -1,9 +1,10 @@
 "use client";
 
+import { useState } from "react";
 import { motion } from "framer-motion";
-import { 
-  PlayCircle, 
-  FileText, 
+import {
+  PlayCircle,
+  FileText,
   MessageCircle,
   Check,
   ArrowRight,
@@ -11,6 +12,7 @@ import {
 } from "lucide-react";
 import SectionWrapper from "@/components/ui/SectionWrapper";
 import Button from "@/components/ui/Button";
+import ExamplesModal from "@/components/formations/ExamplesModal";
 
 const modules = [
   {
@@ -62,12 +64,20 @@ const modules = [
 ];
 
 const ressources = [
-  { icon: FileText, title: "PDF pédagogiques", desc: "Rappels anat/physio, protocoles, checklists" },
-  { icon: PlayCircle, title: "Vidéos", desc: "Démonstrations détaillées, focus posture & ressenti" },
-  { icon: MessageCircle, title: "Support WhatsApp", desc: "Questions en temps réel avec Sandrine" },
+  { icon: FileText, title: "PDF pédagogiques", desc: "Rappels anat/physio, protocoles, checklists", hasExamples: true, exampleType: "pdf" as const },
+  { icon: PlayCircle, title: "Vidéos", desc: "Démonstrations détaillées, focus posture & ressenti", hasExamples: true, exampleType: "video" as const },
+  { icon: MessageCircle, title: "Support WhatsApp", desc: "Questions en temps réel avec Sandrine", hasExamples: false, exampleType: null },
 ];
 
 export default function PackEndoContent() {
+  const [modalOpen, setModalOpen] = useState(false);
+  const [modalType, setModalType] = useState<"pdf" | "video">("pdf");
+
+  const openExamplesModal = (type: "pdf" | "video") => {
+    setModalType(type);
+    setModalOpen(true);
+  };
+
   return (
     <>
       {/* Présentation */}
@@ -87,7 +97,15 @@ export default function PackEndoContent() {
                   <item.icon size={24} className="text-dore" />
                 </div>
                 <h3 className="font-medium text-noir mb-2">{item.title}</h3>
-                <p className="text-sm text-noir-light">{item.desc}</p>
+                <p className="text-sm text-noir-light mb-4">{item.desc}</p>
+                {item.hasExamples && item.exampleType && (
+                  <button
+                    onClick={() => openExamplesModal(item.exampleType!)}
+                    className="text-sm text-dore hover:text-dore-dark font-medium transition-colors"
+                  >
+                    Voir des exemples →
+                  </button>
+                )}
               </motion.div>
             ))}
           </div>
@@ -210,7 +228,7 @@ export default function PackEndoContent() {
             className="flex flex-col sm:flex-row gap-4 justify-center"
           >
             <Button
-              href="https://calendly.com"
+              href="https://calendly.com/sandrine-mosse-materis/30min"
               external
               variant="primary"
               size="lg"
@@ -224,6 +242,13 @@ export default function PackEndoContent() {
           </motion.div>
         </div>
       </SectionWrapper>
+
+      {/* Examples Modal */}
+      <ExamplesModal
+        isOpen={modalOpen}
+        onClose={() => setModalOpen(false)}
+        type={modalType}
+      />
     </>
   );
 }

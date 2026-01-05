@@ -82,7 +82,7 @@ export default function HistoireSection() {
             <p>
               Un accident de mobylette m&apos;a conduite vers la kinésithérapie.
               Puis l&apos;ostéopathie. Puis l&apos;ostéopathie gynécologique — un
-              bouleversement qui a orienté 25 ans de pratique auprès des femmes.
+              bouleversement qui a orienté 28 ans de pratique auprès des femmes.
             </p>
             <p>
               En 2024, une maladie aux mains m&apos;a stoppée. Et un message

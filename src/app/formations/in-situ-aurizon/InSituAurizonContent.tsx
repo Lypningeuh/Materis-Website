@@ -1,16 +1,17 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { 
-  Users, 
-  Sparkles, 
+import {
+  Users,
+  Sparkles,
   MapPin,
   Clock,
-  Euro,
   Check,
   AlertTriangle,
   Calendar,
-  ArrowRight
+  ArrowRight,
+  Smartphone,
+  Video
 } from "lucide-react";
 import SectionWrapper from "@/components/ui/SectionWrapper";
 import Button from "@/components/ui/Button";
@@ -60,12 +61,12 @@ export default function InSituAurizonContent() {
 
             <div className="prose prose-lg text-noir-light mb-8">
               <p>
-                Oubliez les formations classiques. Je ne veux pas vous faire perdre 
+                Oubliez les formations classiques. Je ne veux pas vous faire perdre
                 vos week-ends. Je ne veux pas vous faire perdre vos consultations.
               </p>
               <p>
-                <strong>Je viens chez vous.</strong> Dans VOTRE cabinet. On travaille 
-                sur VOS patientes. Je m&apos;adapte à VOTRE rythme.
+                <strong>3 mois d&apos;accompagnement</strong> pour une vraie transformation
+                de votre pratique. Pas juste des techniques, mais une nouvelle façon d&apos;exercer.
               </p>
             </div>
 
@@ -87,15 +88,15 @@ export default function InSituAurizonContent() {
           >
             <h3 className="text-xl font-serif text-noir mb-6">Le concept</h3>
 
-            <div className="space-y-6">
+            <div className="space-y-5">
               <div className="flex items-start gap-4">
                 <div className="w-10 h-10 rounded-full bg-dore/10 flex items-center justify-center flex-shrink-0">
-                  <MapPin size={20} className="text-dore" />
+                  <Smartphone size={20} className="text-dore" />
                 </div>
                 <div>
-                  <p className="font-medium text-noir mb-1">Dans votre cabinet</p>
+                  <p className="font-medium text-noir mb-1">Accès complet à Praktika</p>
                   <p className="text-sm text-noir-light">
-                    Sandrine se déplace chez vous, partout en France
+                    Toute la formation digitale incluse
                   </p>
                 </div>
               </div>
@@ -105,9 +106,21 @@ export default function InSituAurizonContent() {
                   <Users size={20} className="text-dore" />
                 </div>
                 <div>
-                  <p className="font-medium text-noir mb-1">Sur vos patientes</p>
+                  <p className="font-medium text-noir mb-1">4 sessions de coaching</p>
                   <p className="text-sm text-noir-light">
-                    Formation sur cas réels, pas de simulation
+                    Accompagnement individuel personnalisé
+                  </p>
+                </div>
+              </div>
+
+              <div className="flex items-start gap-4">
+                <div className="w-10 h-10 rounded-full bg-dore/10 flex items-center justify-center flex-shrink-0">
+                  <Video size={20} className="text-dore" />
+                </div>
+                <div>
+                  <p className="font-medium text-noir mb-1">Lives bi-mensuels</p>
+                  <p className="text-sm text-noir-light">
+                    Masterclass en direct incluses
                   </p>
                 </div>
               </div>
@@ -117,27 +130,31 @@ export default function InSituAurizonContent() {
                   <Clock size={20} className="text-dore" />
                 </div>
                 <div>
-                  <p className="font-medium text-noir mb-1">À votre rythme</p>
+                  <p className="font-medium text-noir mb-1">Suivi sur 3 mois</p>
                   <p className="text-sm text-noir-light">
-                    Accompagnement étalé sur plusieurs mois
-                  </p>
-                </div>
-              </div>
-
-              <div className="flex items-start gap-4">
-                <div className="w-10 h-10 rounded-full bg-dore/10 flex items-center justify-center flex-shrink-0">
-                  <Euro size={20} className="text-dore" />
-                </div>
-                <div>
-                  <p className="font-medium text-noir mb-1">Pas de perte de CA</p>
-                  <p className="text-sm text-noir-light">
-                    Continuez à exercer pendant la formation
+                    Accompagnement étalé dans le temps
                   </p>
                 </div>
               </div>
             </div>
 
-            <div className="mt-8 p-4 bg-dore/10 rounded-lg flex items-center gap-3">
+            {/* Special feature with scarcity */}
+            <div className="mt-6 p-4 bg-blanc border border-dore/40 rounded-xl shadow-sm">
+              <div className="flex items-center gap-3">
+                <div className="w-10 h-10 rounded-full bg-dore/10 flex items-center justify-center flex-shrink-0">
+                  <MapPin size={18} className="text-dore" />
+                </div>
+                <div className="flex-1 min-w-0">
+                  <p className="text-sm font-medium text-noir">1 journée présentiel dans votre cabinet</p>
+                  <p className="text-xs text-dore mt-0.5 flex items-center gap-1.5">
+                    <span className="w-1.5 h-1.5 rounded-full bg-dore animate-pulse" />
+                    Plus que 2 places disponibles
+                  </p>
+                </div>
+              </div>
+            </div>
+
+            <div className="mt-6 p-4 bg-dore/10 rounded-lg flex items-center gap-3">
               <AlertTriangle size={20} className="text-dore flex-shrink-0" />
               <p className="text-sm text-noir">
                 <strong>Places très limitées</strong> : 5-10 accompagnements maximum par an
@@ -202,7 +219,7 @@ export default function InSituAurizonContent() {
                 Parcours sur-mesure • Tarif sur devis
               </p>
               <Button
-                href="https://calendly.com"
+                href="https://calendly.com/sandrine-mosse-materis/30min"
                 external
                 variant="primary"
                 size="lg"
@@ -242,16 +259,17 @@ export default function InSituAurizonContent() {
             </div>
 
             {[
-              { critere: "Durée", inSitu: "Quelques jours", aurizon: "Plusieurs mois" },
-              { critere: "Lieu", inSitu: "Votre cabinet", aurizon: "Votre cabinet + distance" },
-              { critere: "Accompagnement", inSitu: "Ponctuel", aurizon: "Intensif & continu" },
-              { critere: "Suivi", inSitu: "WhatsApp", aurizon: "WhatsApp + coaching hebdo" },
-              { critere: "Objectif", inSitu: "Compétences ciblées", aurizon: "Transformation complète" },
+              { critere: "Durée", inSitu: "3 Mois", aurizon: "4 Mois" },
+              { critere: "Lieu", inSitu: "Distanciel & Pratique avec Sandrine", aurizon: "Distanciel & Pratique avec Sandrine" },
+              { critere: "Temps présentiel", inSitu: "1 Jour", aurizon: "2 Jours pour les 3 premiers" },
+              { critere: "Accompagnement", inSitu: "Intensif & Continu", aurizon: "Intensif & continu avec développement de votre cabinet" },
+              { critere: "Suivi", inSitu: "WhatsApp + 4 Coaching Hebdo", aurizon: "WhatsApp + 5 Coaching Hebdo" },
+              { critere: "Objectif", inSitu: "Compétences ciblées & Transformation", aurizon: "Transformation complète Pratique & Cabinet" },
             ].map((row, index) => (
               <div key={index} className="grid grid-cols-3 border-b border-beige last:border-b-0">
-                <div className="p-4 font-medium text-noir">{row.critere}</div>
-                <div className="p-4 text-center text-noir-light">{row.inSitu}</div>
-                <div className="p-4 text-center text-noir bg-dore/5">{row.aurizon}</div>
+                <div className="p-4 flex items-center text-left font-medium text-noir">{row.critere}</div>
+                <div className="p-4 flex items-center justify-center text-center text-noir-light">{row.inSitu}</div>
+                <div className="p-4 flex items-center justify-center text-center text-noir bg-dore/5">{row.aurizon}</div>
               </div>
             ))}
           </motion.div>
@@ -286,7 +304,7 @@ export default function InSituAurizonContent() {
             className="flex flex-col sm:flex-row gap-4 justify-center"
           >
             <Button
-              href="https://calendly.com"
+              href="https://calendly.com/sandrine-mosse-materis/30min"
               external
               variant="primary"
               size="lg"

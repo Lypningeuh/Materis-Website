@@ -48,8 +48,8 @@ export default function ReseauSection() {
             viewport={{ once: true }}
             className="text-3xl md:text-4xl lg:text-5xl font-serif text-noir leading-tight mb-6"
           >
-            Un réseau français d&apos;ostéopathes gynéco formés à une{" "}
-            <span className="text-dore">même méthode</span>
+            Un réseau français d&apos;ostéopathes {" "}
+            <span className="text-dore">formés en santé féminine</span>
           </motion.h2>
 
           <motion.p
@@ -59,9 +59,7 @@ export default function ReseauSection() {
             transition={{ delay: 0.2 }}
             className="text-lg text-noir-light leading-relaxed mb-8"
           >
-            Materis, c&apos;est le projet d&apos;un réseau national de praticiens
-            en ostéopathie gynécologique, partageant les mêmes valeurs et la même
-            approche du soin.
+            Materis, c&apos;est des praticiens spécialisés en techniques ostéopathique uro-gynéco... Mais bien plus aussi en partageant avec vous les liens, le subtil et les valeurs.
           </motion.p>
 
           {/* Stats */}

@@ -36,7 +36,7 @@ export default function PiliersSection() {
       <SectionHeader
         eyebrow="La méthode MATERIS"
         title="3 piliers pour une transformation durable"
-        subtitle="Une approche unique qui combine digital, accompagnement humain et pratique terrain."
+        subtitle="Un accompagnement e-learning complet : autonomie, coaching personnalisé et lives de groupe pour ne plus être seule dans votre cabinet."
       />
 
       <div className="grid md:grid-cols-3 gap-8">

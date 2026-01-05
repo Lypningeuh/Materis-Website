@@ -276,18 +276,18 @@ export default function PresentielContent() {
 
           <div className="grid sm:grid-cols-2 gap-6 mb-8">
             <a
-              href="mailto:sandrine_osteo@yahoo.fr"
+              href="mailto:sandrine.mosse@materis.fr"
               className="flex items-center justify-center gap-3 p-6 bg-blanc rounded-xl shadow-soft hover:shadow-lg transition-shadow"
             >
               <Mail size={20} className="text-dore" />
-              <span className="text-noir">sandrine_osteo@yahoo.fr</span>
+              <span className="text-noir">sandrine.mosse@materis.fr</span>
             </a>
             <a
-              href="tel:+33682940618"
+              href="tel:+33631702848"
               className="flex items-center justify-center gap-3 p-6 bg-blanc rounded-xl shadow-soft hover:shadow-lg transition-shadow"
             >
               <Phone size={20} className="text-dore" />
-              <span className="text-noir">06 82 94 06 18</span>
+              <span className="text-noir">06 31 70 28 48</span>
             </a>
           </div>
 

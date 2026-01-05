@@ -11,7 +11,7 @@ const InSituAurizonContent = dynamic(() => import("./InSituAurizonContent"), {
 export const metadata: Metadata = {
   title: "Formation In Situ & Aurizon — MATERIS vient chez vous",
   description:
-    "Formation personnalisée dans votre cabinet. In Situ : accompagnement sur vos patientes. Aurizon : transformation complète de votre pratique.",
+    "Accompagnement personnalisée dans votre cabinet. In Situ : accompagnement sur vos patientes. Aurizon : transformation complète de votre pratique.",
 };
 
 export default function InSituAurizonPage() {

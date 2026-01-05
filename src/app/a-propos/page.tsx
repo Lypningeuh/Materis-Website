@@ -11,7 +11,7 @@ const AProposContent = dynamic(() => import("./AProposContent"), {
 export const metadata: Metadata = {
   title: "Sandrine & l'histoire de MATERIS — À propos",
   description:
-    "Découvrez le parcours de Sandrine, ostéopathe depuis 25 ans, et l'histoire de MATERIS. De l'accident de mobylette à la création du réseau français d'ostéopathes gynéco.",
+    "Découvrez le parcours de Sandrine, ostéopathe depuis 28 ans, et l'histoire de MATERIS. De l'accident de mobylette à la création du réseau français d'ostéopathes gynéco.",
 };
 
 export default function AProposPage() {
@@ -20,7 +20,7 @@ export default function AProposPage() {
       <PageHeader
         overtitle="À propos"
         title="Sandrine & l'histoire de MATERIS"
-        subtitle="Un parcours de 25 ans au service des femmes, une transmission née d'une épreuve."
+        subtitle="Un parcours de 28 ans au service des femmes, une transmission née d'une épreuve."
       />
       <Suspense fallback={<SectionSkeleton />}>
         <AProposContent />

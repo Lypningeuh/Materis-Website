@@ -123,7 +123,7 @@ export default function QuizSection() {
           transition={{ delay: 0.5 }}
         >
           <Button
-            href="https://calendly.com"
+            href="https://calendly.com/sandrine-mosse-materis/30min"
             variant="primary"
             size="lg"
             external

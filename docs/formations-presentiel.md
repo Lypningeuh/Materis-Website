@@ -61,8 +61,8 @@ Ostéopathes, sages-femmes, kinésithérapeutes impliqués en santé féminine.
 - **Pré-requis** : Diplôme et assurance professionnelle en règle
 
 ## Contact & inscriptions
-- **E-mail** : sandrine_osteo@yaoo.fr · legorrecyannig@yahoo.fr
-- **Téléphone** : 06 82 94 06 18 · 06 87 52 88 22
+- **E-mail** : sandrine.mosse@materis.fr · legorrecyannig@yahoo.fr
+- **Téléphone** : 06 31 70 28 48 · 06 87 52 88 22
 
 ## Cadre & responsabilités
 Cette formation n'est **pas un acte médical**. Elle s'inscrit en **complément** des parcours de soins. Respect du **consentement**, de la **douleur** et des **contre-indications**.
