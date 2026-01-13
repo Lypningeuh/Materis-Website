@@ -1,6 +1,7 @@
 import { NextResponse } from "next/server";
 import { Resend } from "resend";
 import { createClient } from "@supabase/supabase-js";
+import type { EmailTemplateSettings } from "@/lib/types";
 
 const resend = new Resend(process.env.RESEND_API_KEY);
 
@@ -10,8 +11,62 @@ const supabase = createClient(
   process.env.SUPABASE_SERVICE_ROLE_KEY!
 );
 
-// Email template HTML
-const getEmailTemplate = (prenom: string) => `
+// Default template settings
+const DEFAULT_TEMPLATE: EmailTemplateSettings = {
+  subject: "{prenom}, voici vos 3 techniques !",
+  intro_text: "Merci pour votre confiance. Comme promis, voici **3 techniques** que j'utilise quotidiennement avec mes patientes.",
+  main_text: "Ces techniques sont simples, efficaces, et vos patientes vont adorer !",
+  button_text: "Accéder aux 3 techniques",
+  button_url: "https://materis.fr/ressources/3-techniques",
+  features: [
+    "Vidéo explicative pas à pas",
+    "PDF récapitulatif téléchargeable",
+    "Conseils d'application clinique"
+  ],
+  closing_text: "Si vous avez la moindre question, n'hésitez pas à me répondre directement à cet email.",
+  signature_name: "Sandrine"
+};
+
+// Fetch template settings from database
+async function getTemplateSettings(): Promise<EmailTemplateSettings> {
+  const { data } = await supabase
+    .from("site_settings")
+    .select("key, value")
+    .like("key", "email_template_%");
+
+  if (!data || data.length === 0) {
+    return DEFAULT_TEMPLATE;
+  }
+
+  const settings: Record<string, string> = {};
+  data.forEach((item: { key: string; value: string }) => {
+    settings[item.key.replace("email_template_", "")] = item.value;
+  });
+
+  return {
+    subject: settings.subject || DEFAULT_TEMPLATE.subject,
+    intro_text: settings.intro_text || DEFAULT_TEMPLATE.intro_text,
+    main_text: settings.main_text || DEFAULT_TEMPLATE.main_text,
+    button_text: settings.button_text || DEFAULT_TEMPLATE.button_text,
+    button_url: settings.button_url || DEFAULT_TEMPLATE.button_url,
+    features: settings.features ? JSON.parse(settings.features) : DEFAULT_TEMPLATE.features,
+    closing_text: settings.closing_text || DEFAULT_TEMPLATE.closing_text,
+    signature_name: settings.signature_name || DEFAULT_TEMPLATE.signature_name,
+  };
+}
+
+// Format text with markdown-like bold
+function formatText(text: string): string {
+  return text.replace(/\*\*(.*?)\*\*/g, '<strong style="color: #B8860B;">$1</strong>');
+}
+
+// Generate email HTML from template settings
+function generateEmailHtml(prenom: string, template: EmailTemplateSettings): string {
+  const featuresHtml = template.features
+    .map(f => `<li>${f}</li>`)
+    .join("\n                  ");
+
+  return `
 <!DOCTYPE html>
 <html>
 <head>
@@ -39,20 +94,20 @@ const getEmailTemplate = (prenom: string) => `
               </h1>
 
               <p style="color: #4A4A4A; font-size: 16px; line-height: 1.7; margin: 0 0 20px 0;">
-                Merci pour votre confiance. Comme promis, voici <strong style="color: #B8860B;">3 techniques</strong> que j'utilise quotidiennement avec mes patientes.
+                ${formatText(template.intro_text)}
               </p>
 
               <p style="color: #4A4A4A; font-size: 16px; line-height: 1.7; margin: 0 0 30px 0;">
-                Ces techniques sont simples, efficaces, et vos patientes vont adorer !
+                ${formatText(template.main_text)}
               </p>
 
               <!-- CTA Button -->
               <table role="presentation" style="margin: 0 auto 30px auto;">
                 <tr>
                   <td style="background: linear-gradient(135deg, #B8860B, #DAA520); border-radius: 50px; text-align: center;">
-                    <a href="https://materis.fr/ressources/3-techniques"
+                    <a href="${template.button_url}"
                        style="display: inline-block; padding: 16px 32px; color: #FFFFFF; text-decoration: none; font-size: 16px; font-weight: 500;">
-                      Accéder aux 3 techniques
+                      ${template.button_text}
                     </a>
                   </td>
                 </tr>
@@ -64,19 +119,17 @@ const getEmailTemplate = (prenom: string) => `
                   Ce qui vous attend :
                 </p>
                 <ul style="color: #4A4A4A; font-size: 15px; line-height: 1.8; margin: 0; padding-left: 20px;">
-                  <li>Vidéo explicative pas à pas</li>
-                  <li>PDF récapitulatif téléchargeable</li>
-                  <li>Conseils d'application clinique</li>
+                  ${featuresHtml}
                 </ul>
               </div>
 
               <p style="color: #4A4A4A; font-size: 16px; line-height: 1.7; margin: 0 0 10px 0;">
-                Si vous avez la moindre question, n'hésitez pas à me répondre directement à cet email.
+                ${formatText(template.closing_text)}
               </p>
 
               <p style="color: #4A4A4A; font-size: 16px; line-height: 1.7; margin: 0;">
                 À très vite,<br/>
-                <strong style="color: #B8860B;">Sandrine</strong>
+                <strong style="color: #B8860B;">${template.signature_name}</strong>
               </p>
             </td>
           </tr>
@@ -99,6 +152,7 @@ const getEmailTemplate = (prenom: string) => `
 </body>
 </html>
 `;
+}
 
 export async function POST(request: Request) {
   try {
@@ -132,12 +186,16 @@ export async function POST(request: Request) {
       );
     }
 
-    // 2. Send email via Resend
+    // 2. Get template settings
+    const template = await getTemplateSettings();
+
+    // 3. Send email via Resend
+    const subject = template.subject.replace("{prenom}", prenom);
     const { error: emailError } = await resend.emails.send({
       from: "Sandrine MATERIS <onboarding@resend.dev>",
       to: email,
-      subject: `${prenom}, voici vos 3 techniques !`,
-      html: getEmailTemplate(prenom),
+      subject,
+      html: generateEmailHtml(prenom, template),
     });
 
     if (emailError) {
@@ -150,7 +208,7 @@ export async function POST(request: Request) {
       });
     }
 
-    // 3. Update email_sent status
+    // 4. Update email_sent status
     await supabase
       .from("lead_submissions")
       .update({ email_sent: true })

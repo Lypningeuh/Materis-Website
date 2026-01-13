@@ -26,9 +26,9 @@ import {
   Check,
 } from "lucide-react";
 import { supabase } from "@/lib/supabase";
-import type { RessourceCategory, Ressource, Session, Praticien, FormationExample, SiteSetting, ContactSubmission, LeadSubmission } from "@/lib/types";
+import type { RessourceCategory, Ressource, Session, Praticien, FormationExample, SiteSetting, ContactSubmission, LeadSubmission, EmailTemplateSettings } from "@/lib/types";
 
-type Tab = "ressources" | "sessions" | "praticiens" | "categories" | "exemples" | "messages" | "leads" | "settings";
+type Tab = "ressources" | "sessions" | "praticiens" | "categories" | "exemples" | "messages" | "leads" | "email" | "settings";
 
 // Simple password protection (à remplacer par une vraie auth plus tard)
 const ADMIN_PASSWORD = "materis2025";
@@ -152,6 +152,7 @@ export default function AdminPanel() {
     { id: "exemples" as Tab, label: "Exemples Formation", icon: Video },
     { id: "messages" as Tab, label: `Messages${unreadMessages > 0 ? ` (${unreadMessages})` : ""}`, icon: MessageSquare },
     { id: "leads" as Tab, label: `Leads (${leadSubmissions.length})`, icon: Gift },
+    { id: "email" as Tab, label: "Email Template", icon: Mail },
     { id: "settings" as Tab, label: "Paramètres", icon: Settings },
   ];
 
@@ -260,6 +261,12 @@ export default function AdminPanel() {
             {activeTab === "leads" && (
               <LeadSubmissionsTab
                 submissions={leadSubmissions}
+                onRefresh={fetchAllData}
+              />
+            )}
+            {activeTab === "email" && (
+              <EmailTemplateTab
+                settings={siteSettings}
                 onRefresh={fetchAllData}
               />
             )}
@@ -1966,6 +1973,285 @@ function ContactSubmissionsTab({
           </div>
         </div>
       )}
+    </div>
+  );
+}
+
+// ============================================
+// EMAIL TEMPLATE TAB
+// ============================================
+function EmailTemplateTab({
+  settings,
+  onRefresh,
+}: {
+  settings: SiteSetting[];
+  onRefresh: () => void;
+}) {
+  const DEFAULT_TEMPLATE: EmailTemplateSettings = {
+    subject: "{prenom}, voici vos 3 techniques !",
+    intro_text: "Merci pour votre confiance. Comme promis, voici **3 techniques** que j'utilise quotidiennement avec mes patientes.",
+    main_text: "Ces techniques sont simples, efficaces, et vos patientes vont adorer !",
+    button_text: "Accéder aux 3 techniques",
+    button_url: "https://materis.fr/ressources/3-techniques",
+    features: [
+      "Vidéo explicative pas à pas",
+      "PDF récapitulatif téléchargeable",
+      "Conseils d'application clinique"
+    ],
+    closing_text: "Si vous avez la moindre question, n'hésitez pas à me répondre directement à cet email.",
+    signature_name: "Sandrine"
+  };
+
+  const [form, setForm] = useState<EmailTemplateSettings>(DEFAULT_TEMPLATE);
+  const [saving, setSaving] = useState(false);
+  const [newFeature, setNewFeature] = useState("");
+
+  useEffect(() => {
+    // Load settings from database
+    const loadedSettings: Record<string, string> = {};
+    settings
+      .filter((s) => s.key.startsWith("email_template_"))
+      .forEach((s) => {
+        loadedSettings[s.key.replace("email_template_", "")] = s.value;
+      });
+
+    if (Object.keys(loadedSettings).length > 0) {
+      setForm({
+        subject: loadedSettings.subject || DEFAULT_TEMPLATE.subject,
+        intro_text: loadedSettings.intro_text || DEFAULT_TEMPLATE.intro_text,
+        main_text: loadedSettings.main_text || DEFAULT_TEMPLATE.main_text,
+        button_text: loadedSettings.button_text || DEFAULT_TEMPLATE.button_text,
+        button_url: loadedSettings.button_url || DEFAULT_TEMPLATE.button_url,
+        features: loadedSettings.features ? JSON.parse(loadedSettings.features) : DEFAULT_TEMPLATE.features,
+        closing_text: loadedSettings.closing_text || DEFAULT_TEMPLATE.closing_text,
+        signature_name: loadedSettings.signature_name || DEFAULT_TEMPLATE.signature_name,
+      });
+    }
+  }, [settings]);
+
+  const handleSave = async () => {
+    setSaving(true);
+
+    const templateFields = [
+      { key: "email_template_subject", value: form.subject },
+      { key: "email_template_intro_text", value: form.intro_text },
+      { key: "email_template_main_text", value: form.main_text },
+      { key: "email_template_button_text", value: form.button_text },
+      { key: "email_template_button_url", value: form.button_url },
+      { key: "email_template_features", value: JSON.stringify(form.features) },
+      { key: "email_template_closing_text", value: form.closing_text },
+      { key: "email_template_signature_name", value: form.signature_name },
+    ];
+
+    for (const field of templateFields) {
+      const existingSetting = settings.find((s) => s.key === field.key);
+
+      if (existingSetting) {
+        await supabase
+          .from("site_settings")
+          .update({ value: field.value, updated_at: new Date().toISOString() })
+          .eq("id", existingSetting.id);
+      } else {
+        await supabase.from("site_settings").insert({
+          key: field.key,
+          value: field.value,
+          label: field.key.replace("email_template_", "").replace(/_/g, " "),
+          description: "Email template setting",
+        });
+      }
+    }
+
+    setSaving(false);
+    onRefresh();
+  };
+
+  const addFeature = () => {
+    if (newFeature.trim()) {
+      setForm({ ...form, features: [...form.features, newFeature.trim()] });
+      setNewFeature("");
+    }
+  };
+
+  const removeFeature = (index: number) => {
+    setForm({ ...form, features: form.features.filter((_, i) => i !== index) });
+  };
+
+  const handleReset = () => {
+    if (confirm("Remettre les valeurs par défaut ?")) {
+      setForm(DEFAULT_TEMPLATE);
+    }
+  };
+
+  return (
+    <div>
+      <div className="flex items-center justify-between mb-6">
+        <h2 className="text-xl font-serif text-noir">Template Email - 3 Techniques</h2>
+        <button
+          onClick={handleReset}
+          className="text-sm text-noir-light hover:text-noir"
+        >
+          Réinitialiser
+        </button>
+      </div>
+
+      <div className="bg-blanc rounded-2xl p-6 shadow-soft space-y-6">
+        {/* Subject */}
+        <div>
+          <label className="block text-sm font-medium text-noir mb-2">
+            Objet de l&apos;email
+          </label>
+          <input
+            type="text"
+            value={form.subject}
+            onChange={(e) => setForm({ ...form, subject: e.target.value })}
+            className="w-full px-4 py-3 rounded-lg border border-beige focus:border-dore outline-none"
+            placeholder="{prenom}, voici vos 3 techniques !"
+          />
+          <p className="text-xs text-noir-light mt-1">
+            Utilisez {"{prenom}"} pour insérer le prénom du destinataire
+          </p>
+        </div>
+
+        {/* Intro text */}
+        <div>
+          <label className="block text-sm font-medium text-noir mb-2">
+            Texte d&apos;introduction
+          </label>
+          <textarea
+            value={form.intro_text}
+            onChange={(e) => setForm({ ...form, intro_text: e.target.value })}
+            rows={2}
+            className="w-full px-4 py-3 rounded-lg border border-beige focus:border-dore outline-none"
+          />
+          <p className="text-xs text-noir-light mt-1">
+            Utilisez **texte** pour mettre en gras (ex: **3 techniques**)
+          </p>
+        </div>
+
+        {/* Main text */}
+        <div>
+          <label className="block text-sm font-medium text-noir mb-2">
+            Texte principal
+          </label>
+          <textarea
+            value={form.main_text}
+            onChange={(e) => setForm({ ...form, main_text: e.target.value })}
+            rows={2}
+            className="w-full px-4 py-3 rounded-lg border border-beige focus:border-dore outline-none"
+          />
+        </div>
+
+        {/* Button */}
+        <div className="grid md:grid-cols-2 gap-4">
+          <div>
+            <label className="block text-sm font-medium text-noir mb-2">
+              Texte du bouton
+            </label>
+            <input
+              type="text"
+              value={form.button_text}
+              onChange={(e) => setForm({ ...form, button_text: e.target.value })}
+              className="w-full px-4 py-3 rounded-lg border border-beige focus:border-dore outline-none"
+            />
+          </div>
+          <div>
+            <label className="block text-sm font-medium text-noir mb-2">
+              URL du bouton
+            </label>
+            <input
+              type="url"
+              value={form.button_url}
+              onChange={(e) => setForm({ ...form, button_url: e.target.value })}
+              className="w-full px-4 py-3 rounded-lg border border-beige focus:border-dore outline-none"
+              placeholder="https://..."
+            />
+          </div>
+        </div>
+
+        {/* Features */}
+        <div>
+          <label className="block text-sm font-medium text-noir mb-2">
+            Liste &quot;Ce qui vous attend&quot;
+          </label>
+          <div className="space-y-2 mb-3">
+            {form.features.map((feature, index) => (
+              <div key={index} className="flex items-center gap-2">
+                <span className="flex-1 px-4 py-2 bg-clair rounded-lg text-noir">
+                  {feature}
+                </span>
+                <button
+                  onClick={() => removeFeature(index)}
+                  className="p-2 hover:bg-red-50 rounded-lg transition-colors"
+                >
+                  <Trash2 size={16} className="text-red-500" />
+                </button>
+              </div>
+            ))}
+          </div>
+          <div className="flex gap-2">
+            <input
+              type="text"
+              value={newFeature}
+              onChange={(e) => setNewFeature(e.target.value)}
+              onKeyPress={(e) => e.key === "Enter" && addFeature()}
+              className="flex-1 px-4 py-2 rounded-lg border border-beige focus:border-dore outline-none"
+              placeholder="Ajouter un élément..."
+            />
+            <button
+              onClick={addFeature}
+              className="px-4 py-2 bg-dore/10 text-dore rounded-lg hover:bg-dore/20 transition-colors"
+            >
+              <Plus size={18} />
+            </button>
+          </div>
+        </div>
+
+        {/* Closing text */}
+        <div>
+          <label className="block text-sm font-medium text-noir mb-2">
+            Texte de conclusion
+          </label>
+          <textarea
+            value={form.closing_text}
+            onChange={(e) => setForm({ ...form, closing_text: e.target.value })}
+            rows={2}
+            className="w-full px-4 py-3 rounded-lg border border-beige focus:border-dore outline-none"
+          />
+        </div>
+
+        {/* Signature */}
+        <div>
+          <label className="block text-sm font-medium text-noir mb-2">
+            Signature (prénom)
+          </label>
+          <input
+            type="text"
+            value={form.signature_name}
+            onChange={(e) => setForm({ ...form, signature_name: e.target.value })}
+            className="w-full px-4 py-3 rounded-lg border border-beige focus:border-dore outline-none"
+          />
+        </div>
+
+        {/* Save button */}
+        <div className="flex justify-end pt-4 border-t border-beige">
+          <button
+            onClick={handleSave}
+            disabled={saving}
+            className="flex items-center gap-2 px-6 py-2.5 btn-gradient text-blanc rounded-full disabled:opacity-50"
+          >
+            {saving ? <Loader2 size={18} className="animate-spin" /> : <Save size={18} />}
+            Enregistrer le template
+          </button>
+        </div>
+      </div>
+
+      {/* Preview hint */}
+      <div className="mt-6 p-4 bg-dore/10 rounded-xl">
+        <p className="text-sm text-noir-light">
+          <strong className="text-noir">Astuce :</strong> Pour tester le rendu de l&apos;email,
+          remplissez le formulaire &quot;3 techniques&quot; sur le site avec votre propre adresse email.
+        </p>
+      </div>
     </div>
   );
 }

@@ -102,3 +102,14 @@ export interface LeadSubmission {
   created_at: string;
 }
 
+export interface EmailTemplateSettings {
+  subject: string;
+  intro_text: string;
+  main_text: string;
+  button_text: string;
+  button_url: string;
+  features: string[];
+  closing_text: string;
+  signature_name: string;
+}
+
