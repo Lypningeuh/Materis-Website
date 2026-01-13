@@ -2,8 +2,9 @@
 
 import Link from "next/link";
 import Image from "next/image";
+import Script from "next/script";
 import { usePathname } from "next/navigation";
-import { Phone, MessageCircle, Mail, MapPin, Heart } from "lucide-react";
+import { Phone, MessageCircle, Mail, MapPin, Heart, Sparkles } from "lucide-react";
 
 const contactChannels = [
   {
@@ -82,6 +83,30 @@ export default function Footer() {
           </div>
         </div>
       </div>
+
+      {/* Newsletter */}
+      <div className="py-12 border-t border-blanc/10">
+        <div className="max-w-7xl mx-auto px-6 lg:px-8">
+          <div className="max-w-xl mx-auto text-center">
+            <div className="flex items-center justify-center gap-2 mb-4">
+              <Sparkles size={20} className="text-dore" />
+              <h3 className="font-serif text-xl text-blanc">Newsletter</h3>
+            </div>
+            <p className="text-blanc/60 mb-6">
+              Recevez mes conseils, actualités et offres exclusives directement dans votre boîte mail.
+            </p>
+            <div
+              data-supascribe-embed-id="429247623568"
+              data-supascribe-subscribe
+              className="supascribe-embed"
+            />
+          </div>
+        </div>
+      </div>
+      <Script
+        src="https://js.supascribe.com/v1/loader/ljWE2iHeyihPhVTdpbthVdzCHxJ3.js"
+        strategy="lazyOnload"
+      />
 
       {/* Main footer */}
       <div className="py-16 border-t border-blanc/10">

@@ -17,6 +17,7 @@ import {
 import SectionWrapper from "@/components/ui/SectionWrapper";
 import Button from "@/components/ui/Button";
 import { supabase } from "@/lib/supabase";
+import { useSiteSettings } from "@/lib/useSiteSettings";
 import type { Praticien } from "@/lib/types";
 
 const charteItems = [
@@ -28,6 +29,9 @@ const charteItems = [
 ];
 
 export default function ReseauContent() {
+  const { settings } = useSiteSettings();
+  const whatsappLink = settings.whatsapp_link;
+
   const [praticiens, setPraticiens] = useState<Praticien[]>([]);
   const [loading, setLoading] = useState(true);
 
@@ -268,7 +272,7 @@ export default function ReseauContent() {
               poser vos questions et partager vos cas cliniques.
             </p>
             <Button
-              href="https://wa.me/33631702848"
+              href={whatsappLink}
               external
               variant="primary"
               icon={<MessageCircle size={18} />}

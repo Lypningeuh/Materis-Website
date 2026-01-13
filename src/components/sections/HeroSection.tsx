@@ -144,7 +144,7 @@ export default function HeroSection() {
           </div>
           <div className="w-px h-12 bg-blanc/20 hidden md:block" />
           <div className="flex items-center gap-3">
-            <span className="text-3xl md:text-4xl font-serif text-dore">25</span>
+            <span className="text-3xl md:text-4xl font-serif text-dore">28</span>
             <span className="text-sm text-blanc/70 text-left leading-tight">
               années<br />d&apos;expertise
             </span>

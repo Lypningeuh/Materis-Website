@@ -24,26 +24,7 @@ const elearningFormations = [
     ],
     color: "from-dore/25 to-dore-light/15",
     href: "/formations/pack-endo",
-    featured: true,
   },
-  {
-    icon: Sparkles,
-    name: "AURIZON",
-    accroche: "Je veux tout changer",
-    description:
-      "Transformation complète de votre pratique. Accompagnement intensif sur plusieurs mois en e-learning avancé.",
-    features: [
-      "Parcours premium personnalisé",
-      "Accompagnement intensif à distance",
-      "Transformation totale",
-      "Suivi sur plusieurs mois",
-    ],
-    color: "from-noir/5 to-beige/30",
-    href: "/formations/in-situ-aurizon",
-  },
-];
-
-const presentielFormations = [
   {
     icon: Users,
     name: "IN SITU",
@@ -58,12 +39,30 @@ const presentielFormations = [
     ],
     specialFeature: {
       text: "1 journée présentiel dans votre cabinet",
-      placesLeft: 2,
+      placesLeft: 11,
     },
     color: "from-bronze/15 to-dore-dark/10",
     href: "/formations/in-situ-aurizon",
     featured: true,
   },
+  {
+    icon: Sparkles,
+    name: "AURIZON",
+    accroche: "Je veux tout changer",
+    description:
+      "Transformation complète de votre pratique. Accompagnement intensif sur plusieurs mois en e-learning avancé.",
+    features: [
+      "TOUT IN SITU Complet",
+      "de 4 à 6 coaching",
+      "4 mois d'accompagnement",
+      "Boosttoncab.fr à prix préférentiel",
+    ],
+    color: "from-noir/5 to-beige/30",
+    href: "/formations/in-situ-aurizon",
+  },
+];
+
+const presentielFormations = [
   {
     icon: Calendar,
     name: "SESSIONS PRÉSENTIELLES",
@@ -227,7 +226,7 @@ export default function CheminsSection({ background = "creme" }: CheminsSectionP
               </p>
             </div>
 
-            <div className="grid md:grid-cols-2 gap-6 lg:gap-8">
+            <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-8">
               {elearningFormations.map((formation, index) => (
                 <div
                   key={formation.name}
@@ -260,7 +259,7 @@ export default function CheminsSection({ background = "creme" }: CheminsSectionP
                       {formation.description}
                     </p>
 
-                    <ul className="space-y-2 mb-8">
+                    <ul className="space-y-2 mb-6">
                       {formation.features.map((feature) => (
                         <li
                           key={feature}
@@ -271,6 +270,26 @@ export default function CheminsSection({ background = "creme" }: CheminsSectionP
                         </li>
                       ))}
                     </ul>
+
+                    {/* Special feature with scarcity */}
+                    {"specialFeature" in formation && formation.specialFeature && (
+                      <div className="mb-6 relative overflow-hidden">
+                        <div className="p-4 bg-blanc border border-dore/40 rounded-xl shadow-sm">
+                          <div className="flex items-center gap-3">
+                            <div className="w-10 h-10 rounded-full bg-dore/10 flex items-center justify-center flex-shrink-0">
+                              <MapPin size={18} className="text-dore" />
+                            </div>
+                            <div className="flex-1 min-w-0">
+                              <p className="text-sm font-medium text-noir">{formation.specialFeature.text}</p>
+                              <p className="text-xs text-dore mt-0.5 flex items-center gap-1.5">
+                                <span className="w-1.5 h-1.5 rounded-full bg-dore animate-pulse" />
+                                {formation.specialFeature.placesLeft} de disponibles
+                              </p>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    )}
 
                     <Button
                       href={formation.href}
@@ -315,30 +334,17 @@ export default function CheminsSection({ background = "creme" }: CheminsSectionP
               </p>
             </div>
 
-            <div className="grid md:grid-cols-2 gap-6 lg:gap-8">
+            <div className="max-w-lg mx-auto">
               {presentielFormations.map((formation) => (
                 <div
                   key={formation.name}
                   className="relative group"
                 >
-                  {formation.featured && (
-                    <div className="absolute -top-3 left-1/2 -translate-x-1/2 z-10 flex items-center gap-2">
-                      <span className="px-4 py-1.5 bg-dore text-blanc text-xs font-medium rounded-full shadow-lg flex items-center gap-1.5">
-                        <Sparkles size={12} />
-                        Recommandé
-                      </span>
-                    </div>
-                  )}
-
                   <div
-                    className={`h-full p-8 rounded-2xl bg-gradient-to-br ${formation.color} border-2 ${
-                      formation.featured ? "border-dore shadow-lg" : "border-transparent"
-                    } hover:border-dore/50 transition-all duration-400 group-hover:shadow-soft`}
+                    className={`h-full p-8 rounded-2xl bg-gradient-to-br ${formation.color} border-2 border-transparent hover:border-dore/50 transition-all duration-400 group-hover:shadow-soft`}
                   >
-                    <div className={`w-16 h-16 rounded-2xl flex items-center justify-center mb-6 shadow-soft group-hover:scale-105 transition-transform ${
-                      formation.featured ? "bg-dore" : "bg-blanc/80"
-                    }`}>
-                      <formation.icon size={32} className={formation.featured ? "text-blanc" : "text-dore"} />
+                    <div className="w-16 h-16 rounded-2xl flex items-center justify-center mb-6 shadow-soft group-hover:scale-105 transition-transform bg-blanc/80">
+                      <formation.icon size={32} className="text-dore" />
                     </div>
 
                     <h3 className="text-2xl font-serif text-noir mb-1">{formation.name}</h3>
@@ -348,41 +354,21 @@ export default function CheminsSection({ background = "creme" }: CheminsSectionP
                       {formation.description}
                     </p>
 
-                    <ul className="space-y-2 mb-6">
+                    <ul className="space-y-2 mb-8">
                       {formation.features.map((feature) => (
                         <li
                           key={feature}
                           className="flex items-center gap-2 text-sm text-noir-light"
                         >
-                          <span className={`w-1.5 h-1.5 rounded-full ${formation.featured ? "bg-dore" : "bg-dore/60"}`} />
+                          <span className="w-1.5 h-1.5 rounded-full bg-dore/60" />
                           {feature}
                         </li>
                       ))}
                     </ul>
 
-                    {/* Special feature with scarcity */}
-                    {formation.specialFeature && (
-                      <div className="mb-6 relative overflow-hidden">
-                        <div className="p-4 bg-blanc border border-dore/40 rounded-xl shadow-sm">
-                          <div className="flex items-center gap-3">
-                            <div className="w-10 h-10 rounded-full bg-dore/10 flex items-center justify-center flex-shrink-0">
-                              <MapPin size={18} className="text-dore" />
-                            </div>
-                            <div className="flex-1 min-w-0">
-                              <p className="text-sm font-medium text-noir">{formation.specialFeature.text}</p>
-                              <p className="text-xs text-dore mt-0.5 flex items-center gap-1.5">
-                                <span className="w-1.5 h-1.5 rounded-full bg-dore animate-pulse" />
-                                Plus que {formation.specialFeature.placesLeft} places disponibles
-                              </p>
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-                    )}
-
                     <Button
                       href={formation.href}
-                      variant={formation.featured ? "primary" : "outline"}
+                      variant="outline"
                       size="sm"
                       className="w-full"
                       icon={<ArrowRight size={16} />}

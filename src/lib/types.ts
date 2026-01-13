@@ -72,3 +72,33 @@ export interface FormationExample {
   updated_at: string;
 }
 
+export interface SiteSetting {
+  id: string;
+  key: string;
+  value: string;
+  label: string;
+  description: string | null;
+  created_at: string;
+  updated_at: string;
+}
+
+export interface ContactSubmission {
+  id: string;
+  profil: string | null;
+  message: string;
+  aide: string | null;
+  email: string | null;
+  name: string | null;
+  is_read: boolean;
+  created_at: string;
+}
+
+export interface LeadSubmission {
+  id: string;
+  prenom: string;
+  email: string;
+  telephone: string | null;
+  email_sent: boolean;
+  created_at: string;
+}
+

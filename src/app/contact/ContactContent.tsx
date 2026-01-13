@@ -2,52 +2,83 @@
 
 import { useState } from "react";
 import { motion } from "framer-motion";
-import { 
-  Phone, 
-  Mail, 
+import {
+  Phone,
+  Mail,
   MessageCircle,
   Calendar,
   Send,
   MapPin,
-  Users
+  Users,
+  Loader2,
+  CheckCircle
 } from "lucide-react";
 import SectionWrapper from "@/components/ui/SectionWrapper";
 import Button from "@/components/ui/Button";
-
-const contactChannels = [
-  {
-    icon: Phone,
-    label: "Téléphone",
-    value: "06 31 70 28 48",
-    secondValue: "06 87 52 88 22",
-    href: "tel:+33631702848",
-  },
-  {
-    icon: MessageCircle,
-    label: "WhatsApp",
-    value: "06 31 70 28 48",
-    href: "https://wa.me/33631702848",
-  },
-  {
-    icon: Mail,
-    label: "Email",
-    value: "sandrine.mosse@materis.fr",
-    secondValue: "legorrecyannig@yahoo.fr",
-    href: "mailto:sandrine.mosse@materis.fr",
-  },
-];
+import { useSiteSettings } from "@/lib/useSiteSettings";
+import { supabase } from "@/lib/supabase";
 
 export default function ContactContent() {
+  const { settings } = useSiteSettings();
+  const whatsappLink = settings.whatsapp_link;
+
   const [formData, setFormData] = useState({
+    name: "",
+    email: "",
     profil: "",
     message: "",
     aide: "",
   });
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [isSubmitted, setIsSubmitted] = useState(false);
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const contactChannels = [
+    {
+      icon: Phone,
+      label: "Téléphone",
+      value: "06 31 70 28 48",
+      secondValue: "06 87 52 88 22",
+      href: "tel:+33631702848",
+    },
+    {
+      icon: MessageCircle,
+      label: "WhatsApp",
+      value: "06 31 70 28 48",
+      href: whatsappLink,
+    },
+    {
+      icon: Mail,
+      label: "Email",
+      value: "sandrine.mosse@materis.fr",
+      secondValue: "legorrecyannig@yahoo.fr",
+      href: "mailto:sandrine.mosse@materis.fr",
+    },
+  ];
+
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    // Handle form submission
-    alert("Merci ! Je vous répondrai très rapidement.");
+    setIsSubmitting(true);
+
+    try {
+      const { error } = await supabase.from("contact_submissions").insert({
+        name: formData.name || null,
+        email: formData.email || null,
+        profil: formData.profil || null,
+        message: formData.message,
+        aide: formData.aide || null,
+        is_read: false,
+      });
+
+      if (error) throw error;
+
+      setIsSubmitted(true);
+      setFormData({ name: "", email: "", profil: "", message: "", aide: "" });
+    } catch (err) {
+      console.error("Error submitting form:", err);
+      alert("Une erreur est survenue. Veuillez réessayer.");
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   return (
@@ -65,62 +96,117 @@ export default function ContactContent() {
               Envoyez-moi un message
             </h2>
 
-            <form onSubmit={handleSubmit} className="space-y-5">
-              <div>
-                <label htmlFor="profil" className="block text-sm font-medium text-noir mb-2">
-                  Votre profil
-                </label>
-                <select
-                  id="profil"
-                  value={formData.profil}
-                  onChange={(e) => setFormData({ ...formData, profil: e.target.value })}
-                  className="w-full px-4 py-3 rounded-lg border border-beige focus:border-dore focus:ring-2 focus:ring-dore/20 outline-none transition-all bg-blanc"
+            {isSubmitted ? (
+              <div className="bg-blanc p-8 rounded-2xl shadow-soft text-center">
+                <CheckCircle size={48} className="mx-auto text-dore mb-4" />
+                <h3 className="text-xl font-serif text-noir mb-2">Message envoyé !</h3>
+                <p className="text-noir-light mb-6">
+                  Merci pour votre message. Je vous répondrai très rapidement.
+                </p>
+                <button
+                  onClick={() => setIsSubmitted(false)}
+                  className="text-dore hover:underline"
                 >
-                  <option value="">Sélectionnez votre profil</option>
-                  <option value="osteopathe">Ostéopathe</option>
-                  <option value="sage-femme">Sage-femme</option>
-                  <option value="kine">Kinésithérapeute</option>
-                  <option value="autre">Autre</option>
-                </select>
+                  Envoyer un autre message
+                </button>
               </div>
+            ) : (
+              <form onSubmit={handleSubmit} className="space-y-5">
+                <div className="grid sm:grid-cols-2 gap-4">
+                  <div>
+                    <label htmlFor="name" className="block text-sm font-medium text-noir mb-2">
+                      Votre nom
+                    </label>
+                    <input
+                      type="text"
+                      id="name"
+                      value={formData.name}
+                      onChange={(e) => setFormData({ ...formData, name: e.target.value })}
+                      className="w-full px-4 py-3 rounded-lg border border-beige focus:border-dore focus:ring-2 focus:ring-dore/20 outline-none transition-all"
+                      placeholder="Prénom Nom"
+                    />
+                  </div>
+                  <div>
+                    <label htmlFor="email" className="block text-sm font-medium text-noir mb-2">
+                      Email
+                    </label>
+                    <input
+                      type="email"
+                      id="email"
+                      value={formData.email}
+                      onChange={(e) => setFormData({ ...formData, email: e.target.value })}
+                      className="w-full px-4 py-3 rounded-lg border border-beige focus:border-dore focus:ring-2 focus:ring-dore/20 outline-none transition-all"
+                      placeholder="vous@exemple.com"
+                    />
+                  </div>
+                </div>
 
-              <div>
-                <label htmlFor="message" className="block text-sm font-medium text-noir mb-2">
-                  Votre message *
-                </label>
-                <textarea
-                  id="message"
-                  required
-                  rows={5}
-                  value={formData.message}
-                  onChange={(e) => setFormData({ ...formData, message: e.target.value })}
-                  className="w-full px-4 py-3 rounded-lg border border-beige focus:border-dore focus:ring-2 focus:ring-dore/20 outline-none transition-all resize-none"
-                  placeholder="Décrivez votre situation ou posez votre question..."
-                />
-              </div>
+                <div>
+                  <label htmlFor="profil" className="block text-sm font-medium text-noir mb-2">
+                    Votre profil
+                  </label>
+                  <select
+                    id="profil"
+                    value={formData.profil}
+                    onChange={(e) => setFormData({ ...formData, profil: e.target.value })}
+                    className="w-full px-4 py-3 rounded-lg border border-beige focus:border-dore focus:ring-2 focus:ring-dore/20 outline-none transition-all bg-blanc"
+                  >
+                    <option value="">Sélectionnez votre profil</option>
+                    <option value="osteopathe">Ostéopathe</option>
+                    <option value="sage-femme">Sage-femme</option>
+                    <option value="kine">Kinésithérapeute</option>
+                    <option value="autre">Autre</option>
+                  </select>
+                </div>
 
-              <div>
-                <label htmlFor="aide" className="block text-sm font-medium text-noir mb-2">
-                  Comment puis-je vous aider ?
-                </label>
-                <input
-                  type="text"
-                  id="aide"
-                  value={formData.aide}
-                  onChange={(e) => setFormData({ ...formData, aide: e.target.value })}
-                  className="w-full px-4 py-3 rounded-lg border border-beige focus:border-dore focus:ring-2 focus:ring-dore/20 outline-none transition-all"
-                  placeholder="Ex: Je cherche une formation adaptée à mon niveau..."
-                />
-              </div>
+                <div>
+                  <label htmlFor="message" className="block text-sm font-medium text-noir mb-2">
+                    Votre message *
+                  </label>
+                  <textarea
+                    id="message"
+                    required
+                    rows={5}
+                    value={formData.message}
+                    onChange={(e) => setFormData({ ...formData, message: e.target.value })}
+                    className="w-full px-4 py-3 rounded-lg border border-beige focus:border-dore focus:ring-2 focus:ring-dore/20 outline-none transition-all resize-none"
+                    placeholder="Décrivez votre situation ou posez votre question..."
+                  />
+                </div>
 
-              <button
-                type="submit"
-                className="w-full btn-gradient text-blanc py-4 rounded-full font-medium flex items-center justify-center gap-2 hover:shadow-lg transition-shadow"
-              >
-                <Send size={18} />
-                Envoyer mon message
-              </button>
-            </form>
+                <div>
+                  <label htmlFor="aide" className="block text-sm font-medium text-noir mb-2">
+                    Comment puis-je vous aider ?
+                  </label>
+                  <input
+                    type="text"
+                    id="aide"
+                    value={formData.aide}
+                    onChange={(e) => setFormData({ ...formData, aide: e.target.value })}
+                    className="w-full px-4 py-3 rounded-lg border border-beige focus:border-dore focus:ring-2 focus:ring-dore/20 outline-none transition-all"
+                    placeholder="Ex: Je cherche une formation adaptée à mon niveau..."
+                  />
+                </div>
+
+                <button
+                  type="submit"
+                  disabled={isSubmitting}
+                  className="w-full btn-gradient text-blanc py-4 rounded-full font-medium flex items-center justify-center gap-2 hover:shadow-lg transition-shadow disabled:opacity-70"
+                >
+                  {isSubmitting ? (
+                    <>
+                      <Loader2 size={18} className="animate-spin" />
+                      Envoi en cours...
+                    </>
+                  ) : (
+                    <>
+                      <Send size={18} />
+                      Envoyer mon message
+                    </>
+                  )}
+                </button>
+              </form>
+            )}
           </motion.div>
 
           {/* Contacts directs */}
@@ -238,7 +324,7 @@ export default function ContactContent() {
               WhatsApp privé pour échanger avec la communauté.
             </p>
             <Button
-              href="https://wa.me/33631702848"
+              href={whatsappLink}
               external
               variant="outline"
               icon={<MessageCircle size={18} />}

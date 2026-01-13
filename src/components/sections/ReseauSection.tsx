@@ -1,33 +1,270 @@
 "use client";
 
+import { useEffect, useState, useMemo } from "react";
 import { motion } from "framer-motion";
 import { Users, ArrowRight } from "lucide-react";
 import SectionWrapper from "@/components/ui/SectionWrapper";
 import Button from "@/components/ui/Button";
+import { supabase } from "@/lib/supabase";
+import { Praticien } from "@/lib/types";
 
-const stats = [
-  { value: "12+", label: "Praticiens formés" },
-  { value: "8", label: "Régions couvertes" },
-  { value: "100%", label: "Accompagnement" },
-];
+// Dictionnaire des villes françaises avec coordonnées sur la carte SVG
+const CITY_COORDINATES: Record<string, { top: string; left: string }> = {
+  // Nord
+  "Lille": { top: "12%", left: "52%" },
+  "Amiens": { top: "18%", left: "48%" },
+  // Est
+  "Strasbourg": { top: "20%", left: "72%" },
+  "Metz": { top: "22%", left: "62%" },
+  "Nancy": { top: "25%", left: "64%" },
+  "Dijon": { top: "38%", left: "58%" },
+  // Île-de-France
+  "Paris": { top: "26%", left: "52%" },
+  // Ouest
+  "Rennes": { top: "28%", left: "29%" },
+  "Nantes": { top: "38%", left: "25%" },
+  "Brest": { top: "25%", left: "15%" },
+  // Centre
+  "Orléans": { top: "32%", left: "48%" },
+  "Tours": { top: "36%", left: "40%" },
+  "Clermont-Ferrand": { top: "48%", left: "48%" },
+  // Sud-Ouest
+  "Bordeaux": { top: "62%", left: "31%" },
+  "Toulouse": { top: "72%", left: "42%" },
+  "Montpellier": { top: "72%", left: "55%" },
+  "Pau": { top: "75%", left: "30%" },
+  // Sud-Est
+  "Lyon": { top: "52%", left: "58%" },
+  "Grenoble": { top: "55%", left: "62%" },
+  "Marseille": { top: "78%", left: "60%" },
+  "Nice": { top: "72%", left: "72%" },
+  "Toulon": { top: "80%", left: "64%" },
+  // Autres
+  "Limoges": { top: "50%", left: "40%" },
+  "Poitiers": { top: "42%", left: "38%" },
+  "Angers": { top: "38%", left: "32%" },
+  "Le Mans": { top: "32%", left: "38%" },
+  "Caen": { top: "22%", left: "32%" },
+  "Rouen": { top: "20%", left: "44%" },
+  "Reims": { top: "22%", left: "56%" },
+  "Besançon": { top: "38%", left: "64%" },
+  "Saint-Étienne": { top: "55%", left: "55%" },
+  "Perpignan": { top: "82%", left: "48%" },
+  "Avignon": { top: "72%", left: "58%" },
+  "Aix-en-Provence": { top: "76%", left: "62%" },
+  "Cannes": { top: "75%", left: "70%" },
+  "Annecy": { top: "50%", left: "64%" },
+  "Chambéry": { top: "52%", left: "64%" },
+  "Valence": { top: "58%", left: "58%" },
+  "Nîmes": { top: "72%", left: "55%" },
+  "Béziers": { top: "78%", left: "52%" },
+  "Carcassonne": { top: "78%", left: "46%" },
+  "Tarbes": { top: "78%", left: "34%" },
+  "Agen": { top: "68%", left: "36%" },
+  "La Rochelle": { top: "48%", left: "28%" },
+  "Angoulême": { top: "52%", left: "34%" },
+  "Périgueux": { top: "55%", left: "38%" },
+  "Bayonne": { top: "78%", left: "26%" },
+  "Biarritz": { top: "78%", left: "24%" },
+  // Petites villes ajoutées
+  "Saint-Gaudens": { top: "78%", left: "38%" },
+  "Saint Marcel Les Valence": { top: "58%", left: "58%" },
+  "Le Porge": { top: "60%", left: "26%" },
+  "Saint-Jean": { top: "72%", left: "44%" },
+  "Quint-Fonsegrives": { top: "72%", left: "44%" },
+  "Colomiers": { top: "72%", left: "40%" },
+  "Blagnac": { top: "71%", left: "41%" },
+  "Muret": { top: "74%", left: "42%" },
+  "Balma": { top: "72%", left: "44%" },
+  "L'Union": { top: "71%", left: "44%" },
+  "Ramonville": { top: "73%", left: "44%" },
+  "Castanet-Tolosan": { top: "74%", left: "44%" },
+  "Labège": { top: "73%", left: "45%" },
+  "Tournefeuille": { top: "72%", left: "40%" },
+  "Cugnaux": { top: "73%", left: "41%" },
+  "Portet-sur-Garonne": { top: "74%", left: "42%" },
+};
 
-// Positions des villes sur la carte (basées sur viewBox 512x512)
-const cities = [
-  { top: "12%", left: "52%", city: "Lille" },
-  { top: "20%", left: "72%", city: "Strasbourg" },
-  { top: "28%", left: "29%", city: "Rennes" },
-  { top: "26%", left: "52%", city: "Paris" },
-  { top: "52%", left: "62%", city: "Lyon" },
-  { top: "79%", left: "31%", city: "Bordeaux" },
-  { top: "82%", left: "49%", city: "Toulouse", main: true },
-  { top: "78%", left: "76%", city: "Marseille" },
-  { top: "72%", left: "80%", city: "Nice" },
-  { top: "55%", left: "68%", city: "Grenoble" },
-  { top: "38%", left: "25%", city: "Nantes" },
-  { top: "48%", left: "48%", city: "Clermont-F." },
-];
+// Mapping département → ville principale pour regrouper les praticiens
+const DEPARTMENT_TO_CITY: Record<string, string> = {
+  "01": "Lyon",           // Ain
+  "06": "Nice",           // Alpes-Maritimes
+  "13": "Marseille",      // Bouches-du-Rhône
+  "26": "Valence",        // Drôme
+  "31": "Toulouse",       // Haute-Garonne
+  "33": "Bordeaux",       // Gironde
+  "34": "Montpellier",    // Hérault
+  "35": "Rennes",         // Ille-et-Vilaine
+  "38": "Grenoble",       // Isère
+  "44": "Nantes",         // Loire-Atlantique
+  "59": "Lille",          // Nord
+  "64": "Pau",            // Pyrénées-Atlantiques
+  "67": "Strasbourg",     // Bas-Rhin
+  "69": "Lyon",           // Rhône
+  "75": "Paris",          // Paris
+  "76": "Rouen",          // Seine-Maritime
+  "77": "Paris",          // Seine-et-Marne
+  "78": "Paris",          // Yvelines
+  "83": "Toulon",         // Var
+  "84": "Avignon",        // Vaucluse
+  "91": "Paris",          // Essonne
+  "92": "Paris",          // Hauts-de-Seine
+  "93": "Paris",          // Seine-Saint-Denis
+  "94": "Paris",          // Val-de-Marne
+  "95": "Paris",          // Val-d'Oise
+};
+
+// Liste des villes disponibles (exportée pour l'admin)
+export const AVAILABLE_CITIES = Object.keys(CITY_COORDINATES).sort();
+
+// Fonction pour normaliser les noms de villes
+function normalizeCity(city: string): string {
+  return city.trim().normalize("NFD").replace(/[\u0300-\u036f]/g, "");
+}
+
+// Trouver les coordonnées d'une ville (case-insensitive)
+function findCityCoordinates(city: string): { top: string; left: string } | null {
+  const normalized = normalizeCity(city).toLowerCase();
+  for (const [key, coords] of Object.entries(CITY_COORDINATES)) {
+    if (normalizeCity(key).toLowerCase() === normalized) {
+      return coords;
+    }
+  }
+  return null;
+}
+
+// Fonction pour extraire le département du format "Ville (XX)" ou du champ department
+function extractDepartment(city: string | null, department: string | null): string | null {
+  // D'abord essayer le champ department
+  if (department) {
+    const deptClean = department.trim().replace(/[()]/g, "");
+    if (deptClean && DEPARTMENT_TO_CITY[deptClean]) {
+      return deptClean;
+    }
+  }
+  // Sinon extraire du city format "Toulouse (31)"
+  if (city) {
+    const match = city.match(/\((\d{2,3})\)/);
+    if (match && DEPARTMENT_TO_CITY[match[1]]) {
+      return match[1];
+    }
+  }
+  return null;
+}
 
 export default function ReseauSection() {
+  const [praticiens, setPraticiens] = useState<Praticien[]>([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    async function fetchPraticiens() {
+      const { data } = await supabase
+        .from("praticiens")
+        .select("*")
+        .eq("is_published", true);
+
+      if (data) setPraticiens(data);
+      setLoading(false);
+    }
+    fetchPraticiens();
+  }, []);
+
+  // Grouper les praticiens par département (pour regrouper les villes d'un même département)
+  const citiesWithPraticiens = useMemo(() => {
+    const grouped = new Map<string, { count: number; coords: { top: string; left: string }; displayName: string }>();
+
+    // Debug: log les praticiens reçus
+    if (process.env.NODE_ENV === "development" && praticiens.length > 0) {
+      console.log("[ReseauSection] Praticiens reçus:", praticiens.map(p => ({
+        name: p.name,
+        city: p.city,
+        department: p.department
+      })));
+    }
+
+    praticiens.forEach((p) => {
+      const dept = extractDepartment(p.city, p.department);
+      const cityRaw = p.city?.trim();
+      // Nettoyer le nom de ville (enlever le (XX) si présent)
+      const city = cityRaw?.replace(/\s*\(\d{2,3}\)\s*$/, "").trim();
+
+      if (dept) {
+        // Grouper par département
+        const mainCity = DEPARTMENT_TO_CITY[dept];
+        const existing = grouped.get(dept);
+        if (existing) {
+          existing.count += 1;
+        } else {
+          grouped.set(dept, {
+            count: 1,
+            coords: CITY_COORDINATES[mainCity],
+            displayName: mainCity
+          });
+        }
+      } else if (city) {
+        // Pas de département reconnu, essayer la ville directement
+        // Vérifier si c'est une ville principale d'un département connu
+        const deptForCity = Object.entries(DEPARTMENT_TO_CITY).find(
+          ([, mainCity]) => mainCity.toLowerCase() === city.toLowerCase()
+        );
+
+        if (deptForCity) {
+          // C'est une ville principale (ex: Toulouse) → grouper avec son département
+          const [deptCode, mainCity] = deptForCity;
+          const existing = grouped.get(deptCode);
+          if (existing) {
+            existing.count += 1;
+          } else {
+            grouped.set(deptCode, {
+              count: 1,
+              coords: CITY_COORDINATES[mainCity],
+              displayName: mainCity
+            });
+          }
+        } else {
+          // Ville non principale, utiliser son nom comme clé
+          const coords = findCityCoordinates(city);
+          if (coords) {
+            const existing = grouped.get(city);
+            if (existing) {
+              existing.count += 1;
+            } else {
+              grouped.set(city, { count: 1, coords, displayName: city });
+            }
+          } else if (process.env.NODE_ENV === "development") {
+            console.log("[ReseauSection] Ville non reconnue:", city, "pour", p.name);
+          }
+        }
+      }
+    });
+
+    // Toujours inclure Toulouse (siège) si pas déjà présent
+    if (!grouped.has("31") && !grouped.has("Toulouse")) {
+      grouped.set("31", { count: 0, coords: CITY_COORDINATES["Toulouse"], displayName: "Toulouse" });
+    }
+
+    return Array.from(grouped.entries()).map(([key, data]) => ({
+      id: key, // Clé unique (code département ou nom de ville)
+      city: data.displayName,
+      count: data.count,
+      top: data.coords.top,
+      left: data.coords.left,
+      main: key === "31",
+    }));
+  }, [praticiens]);
+
+  // Stats dynamiques
+  const stats = useMemo(() => {
+    const uniqueDepts = new Set(praticiens.map((p) => p.department).filter(Boolean));
+    return [
+      { value: loading ? "..." : `${praticiens.length}+`, label: "Praticiens formés" },
+      { value: loading ? "..." : `${uniqueDepts.size || 8}`, label: "Départements" },
+      { value: "100%", label: "Accompagnement" },
+    ];
+  }, [praticiens, loading]);
+
+  // Utiliser uniquement les villes avec praticiens (pas de fallback)
+  const displayCities = citiesWithPraticiens;
   return (
     <SectionWrapper background="creme">
       <div className="grid lg:grid-cols-2 gap-12 lg:gap-16 items-center">
@@ -125,9 +362,9 @@ export default function ReseauSection() {
               </svg>
               
               {/* City dots */}
-              {cities.map((loc, i) => (
+              {displayCities.map((loc, i) => (
                 <motion.div
-                  key={loc.city}
+                  key={loc.id}
                   initial={{ opacity: 0, scale: 0 }}
                   whileInView={{ opacity: 1, scale: 1 }}
                   viewport={{ once: true }}
@@ -136,25 +373,25 @@ export default function ReseauSection() {
                   style={{ top: loc.top, left: loc.left, transform: "translate(-50%, -50%)" }}
                 >
                   {/* Pulse effect for main city */}
-                  {"main" in loc && loc.main && (
+                  {loc.main && (
                     <span className="absolute inset-0 w-6 h-6 -m-1 rounded-full bg-dore/30 animate-ping" />
                   )}
                   <div
                     className={`relative w-4 h-4 rounded-full transition-all duration-300 ${
-                      "main" in loc && loc.main
+                      loc.main
                         ? "bg-dore ring-4 ring-dore/30 scale-125"
                         : "bg-dore/70 hover:bg-dore hover:scale-125"
                     }`}
                   />
-                  {/* City label */}
-                  <span 
+                  {/* City label with count */}
+                  <span
                     className={`absolute left-1/2 -translate-x-1/2 text-xs font-medium whitespace-nowrap transition-all duration-300 ${
-                      "main" in loc && loc.main 
-                        ? "opacity-100 -bottom-5 text-dore" 
+                      loc.main
+                        ? "opacity-100 -bottom-5 text-dore"
                         : "opacity-0 group-hover:opacity-100 -bottom-5 text-noir-light"
                     }`}
                   >
-                    {loc.city}
+                    {loc.city}{loc.count > 0 && ` (${loc.count})`}
                   </span>
                 </motion.div>
               ))}

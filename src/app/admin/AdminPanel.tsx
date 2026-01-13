@@ -19,11 +19,16 @@ import {
   FileText,
   PlayCircle,
   Video,
+  Settings,
+  MessageSquare,
+  Mail,
+  Gift,
+  Check,
 } from "lucide-react";
 import { supabase } from "@/lib/supabase";
-import type { RessourceCategory, Ressource, Session, Praticien, FormationExample } from "@/lib/types";
+import type { RessourceCategory, Ressource, Session, Praticien, FormationExample, SiteSetting, ContactSubmission, LeadSubmission } from "@/lib/types";
 
-type Tab = "ressources" | "sessions" | "praticiens" | "categories" | "exemples";
+type Tab = "ressources" | "sessions" | "praticiens" | "categories" | "exemples" | "messages" | "leads" | "settings";
 
 // Simple password protection (à remplacer par une vraie auth plus tard)
 const ADMIN_PASSWORD = "materis2025";
@@ -40,6 +45,9 @@ export default function AdminPanel() {
   const [sessions, setSessions] = useState<Session[]>([]);
   const [praticiens, setPraticiens] = useState<Praticien[]>([]);
   const [formationExamples, setFormationExamples] = useState<FormationExample[]>([]);
+  const [siteSettings, setSiteSettings] = useState<SiteSetting[]>([]);
+  const [contactSubmissions, setContactSubmissions] = useState<ContactSubmission[]>([]);
+  const [leadSubmissions, setLeadSubmissions] = useState<LeadSubmission[]>([]);
 
   // Edit states
   const [editingItem, setEditingItem] = useState<any>(null);
@@ -70,12 +78,15 @@ export default function AdminPanel() {
   const fetchAllData = async () => {
     setLoading(true);
 
-    const [catsRes, ressRes, sessRes, pratRes, examplesRes] = await Promise.all([
+    const [catsRes, ressRes, sessRes, pratRes, examplesRes, settingsRes, messagesRes, leadsRes] = await Promise.all([
       supabase.from("ressource_categories").select("*").order("display_order"),
       supabase.from("ressources").select("*, category:ressource_categories(*)").order("display_order"),
       supabase.from("sessions").select("*").order("date_start"),
       supabase.from("praticiens").select("*").order("name"),
       supabase.from("formation_examples").select("*").order("display_order"),
+      supabase.from("site_settings").select("*").order("key"),
+      supabase.from("contact_submissions").select("*").order("created_at", { ascending: false }),
+      supabase.from("lead_submissions").select("*").order("created_at", { ascending: false }),
     ]);
 
     if (catsRes.data) setCategories(catsRes.data);
@@ -83,6 +94,9 @@ export default function AdminPanel() {
     if (sessRes.data) setSessions(sessRes.data);
     if (pratRes.data) setPraticiens(pratRes.data);
     if (examplesRes.data) setFormationExamples(examplesRes.data);
+    if (settingsRes.data) setSiteSettings(settingsRes.data);
+    if (messagesRes.data) setContactSubmissions(messagesRes.data);
+    if (leadsRes.data) setLeadSubmissions(leadsRes.data);
 
     setLoading(false);
   };
@@ -128,12 +142,17 @@ export default function AdminPanel() {
     );
   }
 
+  const unreadMessages = contactSubmissions.filter(m => !m.is_read).length;
+
   const tabs = [
     { id: "ressources" as Tab, label: "Ressources", icon: BookOpen },
     { id: "categories" as Tab, label: "Catégories", icon: FolderOpen },
     { id: "sessions" as Tab, label: "Sessions", icon: Calendar },
     { id: "praticiens" as Tab, label: "Praticiens", icon: Users },
     { id: "exemples" as Tab, label: "Exemples Formation", icon: Video },
+    { id: "messages" as Tab, label: `Messages${unreadMessages > 0 ? ` (${unreadMessages})` : ""}`, icon: MessageSquare },
+    { id: "leads" as Tab, label: `Leads (${leadSubmissions.length})`, icon: Gift },
+    { id: "settings" as Tab, label: "Paramètres", icon: Settings },
   ];
 
   return (
@@ -230,6 +249,24 @@ export default function AdminPanel() {
                 setEditingItem={setEditingItem}
                 isCreating={isCreating}
                 setIsCreating={setIsCreating}
+              />
+            )}
+            {activeTab === "messages" && (
+              <ContactSubmissionsTab
+                submissions={contactSubmissions}
+                onRefresh={fetchAllData}
+              />
+            )}
+            {activeTab === "leads" && (
+              <LeadSubmissionsTab
+                submissions={leadSubmissions}
+                onRefresh={fetchAllData}
+              />
+            )}
+            {activeTab === "settings" && (
+              <SiteSettingsTab
+                settings={siteSettings}
+                onRefresh={fetchAllData}
               />
             )}
           </>
@@ -1638,6 +1675,443 @@ function FormationExamplesTab({
           </div>
         ))}
       </div>
+    </div>
+  );
+}
+
+// ============================================
+// SITE SETTINGS TAB
+// ============================================
+function SiteSettingsTab({
+  settings,
+  onRefresh,
+}: {
+  settings: SiteSetting[];
+  onRefresh: () => void;
+}) {
+  const [whatsappLink, setWhatsappLink] = useState("");
+  const [saving, setSaving] = useState(false);
+  const [initializing, setInitializing] = useState(false);
+
+  // Default WhatsApp link
+  const DEFAULT_WHATSAPP = "https://wa.me/33631702848";
+
+  useEffect(() => {
+    const whatsappSetting = settings.find((s) => s.key === "whatsapp_link");
+    setWhatsappLink(whatsappSetting?.value || DEFAULT_WHATSAPP);
+  }, [settings]);
+
+  const handleSave = async () => {
+    setSaving(true);
+
+    const existingSetting = settings.find((s) => s.key === "whatsapp_link");
+
+    if (existingSetting) {
+      await supabase
+        .from("site_settings")
+        .update({
+          value: whatsappLink,
+          updated_at: new Date().toISOString(),
+        })
+        .eq("id", existingSetting.id);
+    } else {
+      await supabase.from("site_settings").insert({
+        key: "whatsapp_link",
+        value: whatsappLink,
+        label: "Lien WhatsApp",
+        description: "Lien WhatsApp affiché sur les pages Contact et Réseau",
+      });
+    }
+
+    setSaving(false);
+    onRefresh();
+  };
+
+  const handleInitialize = async () => {
+    setInitializing(true);
+
+    // Create default setting if table exists but is empty
+    await supabase.from("site_settings").insert({
+      key: "whatsapp_link",
+      value: DEFAULT_WHATSAPP,
+      label: "Lien WhatsApp",
+      description: "Lien WhatsApp affiché sur les pages Contact et Réseau",
+    });
+
+    setInitializing(false);
+    onRefresh();
+  };
+
+  return (
+    <div>
+      <div className="flex items-center justify-between mb-6">
+        <h2 className="text-xl font-serif text-noir">Paramètres du site</h2>
+      </div>
+
+      <div className="bg-blanc rounded-2xl p-6 shadow-soft">
+        <h3 className="text-lg font-medium text-noir mb-4">Liens de contact</h3>
+
+        <div className="space-y-6">
+          <div>
+            <label className="block text-sm font-medium text-noir mb-2">
+              Lien WhatsApp
+            </label>
+            <input
+              type="url"
+              value={whatsappLink}
+              onChange={(e) => setWhatsappLink(e.target.value)}
+              className="w-full px-4 py-3 rounded-lg border border-beige focus:border-dore outline-none"
+              placeholder="https://wa.me/33..."
+            />
+            <p className="text-xs text-noir-light mt-2">
+              Ce lien sera utilisé sur les pages Contact et Réseau (le bouton WhatsApp du footer reste fixe).
+            </p>
+          </div>
+
+          <div className="flex items-center gap-4">
+            <button
+              onClick={handleSave}
+              disabled={saving}
+              className="flex items-center gap-2 px-6 py-2.5 btn-gradient text-blanc rounded-full disabled:opacity-50"
+            >
+              {saving ? <Loader2 size={18} className="animate-spin" /> : <Save size={18} />}
+              Enregistrer
+            </button>
+
+            {settings.length === 0 && (
+              <button
+                onClick={handleInitialize}
+                disabled={initializing}
+                className="flex items-center gap-2 px-6 py-2.5 bg-beige text-noir rounded-full disabled:opacity-50"
+              >
+                {initializing ? <Loader2 size={18} className="animate-spin" /> : <Plus size={18} />}
+                Initialiser les paramètres
+              </button>
+            )}
+          </div>
+        </div>
+
+      </div>
+    </div>
+  );
+}
+
+// ============================================
+// CONTACT SUBMISSIONS TAB
+// ============================================
+function ContactSubmissionsTab({
+  submissions,
+  onRefresh,
+}: {
+  submissions: ContactSubmission[];
+  onRefresh: () => void;
+}) {
+  const [selectedMessage, setSelectedMessage] = useState<ContactSubmission | null>(null);
+
+  const handleMarkAsRead = async (id: string) => {
+    await supabase
+      .from("contact_submissions")
+      .update({ is_read: true })
+      .eq("id", id);
+    onRefresh();
+  };
+
+  const handleDelete = async (id: string) => {
+    if (!confirm("Supprimer ce message ?")) return;
+    await supabase.from("contact_submissions").delete().eq("id", id);
+    setSelectedMessage(null);
+    onRefresh();
+  };
+
+  const formatDate = (dateString: string) => {
+    return new Date(dateString).toLocaleDateString("fr-FR", {
+      day: "numeric",
+      month: "long",
+      year: "numeric",
+      hour: "2-digit",
+      minute: "2-digit",
+    });
+  };
+
+  const profilLabels: Record<string, string> = {
+    osteopathe: "Ostéopathe",
+    "sage-femme": "Sage-femme",
+    kine: "Kinésithérapeute",
+    autre: "Autre",
+  };
+
+  return (
+    <div>
+      <div className="flex items-center justify-between mb-6">
+        <h2 className="text-xl font-serif text-noir">
+          {submissions.length} message(s)
+        </h2>
+      </div>
+
+      {submissions.length === 0 ? (
+        <div className="bg-blanc rounded-2xl p-12 shadow-soft text-center">
+          <Mail size={48} className="mx-auto text-beige mb-4" />
+          <p className="text-noir-light">Aucun message pour le moment.</p>
+        </div>
+      ) : (
+        <div className="grid lg:grid-cols-2 gap-6">
+          {/* Liste des messages */}
+          <div className="space-y-3">
+            {submissions.map((msg) => (
+              <button
+                key={msg.id}
+                onClick={() => {
+                  setSelectedMessage(msg);
+                  if (!msg.is_read) handleMarkAsRead(msg.id);
+                }}
+                className={`w-full text-left p-4 rounded-xl transition-all ${
+                  selectedMessage?.id === msg.id
+                    ? "bg-dore/10 border-2 border-dore"
+                    : "bg-blanc shadow-soft hover:shadow-lg border-2 border-transparent"
+                }`}
+              >
+                <div className="flex items-start justify-between gap-3">
+                  <div className="flex-1 min-w-0">
+                    <div className="flex items-center gap-2 mb-1">
+                      {!msg.is_read && (
+                        <span className="w-2 h-2 rounded-full bg-dore flex-shrink-0" />
+                      )}
+                      <span className="font-medium text-noir truncate">
+                        {msg.name || "Anonyme"}
+                      </span>
+                      {msg.profil && (
+                        <span className="text-xs bg-beige text-noir-light px-2 py-0.5 rounded">
+                          {profilLabels[msg.profil] || msg.profil}
+                        </span>
+                      )}
+                    </div>
+                    <p className="text-sm text-noir-light line-clamp-2">{msg.message}</p>
+                  </div>
+                  <span className="text-xs text-noir-light/60 flex-shrink-0">
+                    {formatDate(msg.created_at).split(" à ")[0]}
+                  </span>
+                </div>
+              </button>
+            ))}
+          </div>
+
+          {/* Détail du message */}
+          <div className="bg-blanc rounded-2xl p-6 shadow-soft">
+            {selectedMessage ? (
+              <>
+                <div className="flex items-start justify-between mb-6">
+                  <div>
+                    <h3 className="font-medium text-noir text-lg">
+                      {selectedMessage.name || "Anonyme"}
+                    </h3>
+                    {selectedMessage.email && (
+                      <a
+                        href={`mailto:${selectedMessage.email}`}
+                        className="text-dore hover:underline text-sm"
+                      >
+                        {selectedMessage.email}
+                      </a>
+                    )}
+                  </div>
+                  <button
+                    onClick={() => handleDelete(selectedMessage.id)}
+                    className="p-2 hover:bg-red-50 rounded-lg transition-colors"
+                  >
+                    <Trash2 size={18} className="text-red-500" />
+                  </button>
+                </div>
+
+                <div className="space-y-4">
+                  {selectedMessage.profil && (
+                    <div>
+                      <p className="text-xs text-noir-light/60 uppercase tracking-wide mb-1">Profil</p>
+                      <p className="text-noir">{profilLabels[selectedMessage.profil] || selectedMessage.profil}</p>
+                    </div>
+                  )}
+
+                  <div>
+                    <p className="text-xs text-noir-light/60 uppercase tracking-wide mb-1">Message</p>
+                    <p className="text-noir whitespace-pre-wrap">{selectedMessage.message}</p>
+                  </div>
+
+                  {selectedMessage.aide && (
+                    <div>
+                      <p className="text-xs text-noir-light/60 uppercase tracking-wide mb-1">Comment puis-je aider ?</p>
+                      <p className="text-noir">{selectedMessage.aide}</p>
+                    </div>
+                  )}
+
+                  <div className="pt-4 border-t border-beige">
+                    <p className="text-xs text-noir-light/60">
+                      Reçu le {formatDate(selectedMessage.created_at)}
+                    </p>
+                  </div>
+                </div>
+
+                {selectedMessage.email && (
+                  <a
+                    href={`mailto:${selectedMessage.email}?subject=Re: Votre message sur MATERIS`}
+                    className="mt-6 w-full flex items-center justify-center gap-2 px-6 py-3 btn-gradient text-blanc rounded-full"
+                  >
+                    <Mail size={18} />
+                    Répondre par email
+                  </a>
+                )}
+              </>
+            ) : (
+              <div className="h-full flex items-center justify-center text-noir-light">
+                <p>Sélectionnez un message pour le lire</p>
+              </div>
+            )}
+          </div>
+        </div>
+      )}
+    </div>
+  );
+}
+
+// ============================================
+// LEAD SUBMISSIONS TAB
+// ============================================
+function LeadSubmissionsTab({
+  submissions,
+  onRefresh,
+}: {
+  submissions: LeadSubmission[];
+  onRefresh: () => void;
+}) {
+  const handleDelete = async (id: string) => {
+    if (!confirm("Supprimer ce lead ?")) return;
+    await supabase.from("lead_submissions").delete().eq("id", id);
+    onRefresh();
+  };
+
+  const formatDate = (dateString: string) => {
+    return new Date(dateString).toLocaleDateString("fr-FR", {
+      day: "numeric",
+      month: "long",
+      year: "numeric",
+      hour: "2-digit",
+      minute: "2-digit",
+    });
+  };
+
+  const handleExportCSV = () => {
+    const headers = ["Prénom", "Email", "Téléphone", "Email envoyé", "Date"];
+    const rows = submissions.map((s) => [
+      s.prenom,
+      s.email,
+      s.telephone || "",
+      s.email_sent ? "Oui" : "Non",
+      formatDate(s.created_at),
+    ]);
+
+    const csvContent = [
+      headers.join(","),
+      ...rows.map((row) => row.map((cell) => `"${cell}"`).join(",")),
+    ].join("\n");
+
+    const blob = new Blob([csvContent], { type: "text/csv;charset=utf-8;" });
+    const url = URL.createObjectURL(blob);
+    const link = document.createElement("a");
+    link.href = url;
+    link.download = `leads_materis_${new Date().toISOString().split("T")[0]}.csv`;
+    link.click();
+  };
+
+  return (
+    <div>
+      <div className="flex items-center justify-between mb-6">
+        <h2 className="text-xl font-serif text-noir">
+          {submissions.length} lead(s) - 3 Techniques
+        </h2>
+        {submissions.length > 0 && (
+          <button
+            onClick={handleExportCSV}
+            className="flex items-center gap-2 px-5 py-2.5 bg-blanc text-noir rounded-full shadow-soft hover:shadow-lg transition-shadow"
+          >
+            <FileText size={18} />
+            Exporter CSV
+          </button>
+        )}
+      </div>
+
+      {submissions.length === 0 ? (
+        <div className="bg-blanc rounded-2xl p-12 shadow-soft text-center">
+          <Gift size={48} className="mx-auto text-beige mb-4" />
+          <p className="text-noir-light">Aucun lead pour le moment.</p>
+          <p className="text-sm text-noir-light/60 mt-2">
+            Les leads apparaîtront ici quand quelqu&apos;un remplira le formulaire &quot;3 techniques&quot;.
+          </p>
+        </div>
+      ) : (
+        <div className="bg-blanc rounded-2xl shadow-soft overflow-hidden">
+          <table className="w-full">
+            <thead className="bg-clair">
+              <tr>
+                <th className="text-left px-6 py-4 text-sm font-medium text-noir">Prénom</th>
+                <th className="text-left px-6 py-4 text-sm font-medium text-noir">Email</th>
+                <th className="text-left px-6 py-4 text-sm font-medium text-noir hidden md:table-cell">Téléphone</th>
+                <th className="text-left px-6 py-4 text-sm font-medium text-noir hidden lg:table-cell">Date</th>
+                <th className="text-center px-6 py-4 text-sm font-medium text-noir">Email</th>
+                <th className="px-6 py-4"></th>
+              </tr>
+            </thead>
+            <tbody className="divide-y divide-beige">
+              {submissions.map((lead) => (
+                <tr key={lead.id} className="hover:bg-clair/50 transition-colors">
+                  <td className="px-6 py-4">
+                    <span className="font-medium text-noir">{lead.prenom}</span>
+                  </td>
+                  <td className="px-6 py-4">
+                    <a
+                      href={`mailto:${lead.email}`}
+                      className="text-dore hover:underline"
+                    >
+                      {lead.email}
+                    </a>
+                  </td>
+                  <td className="px-6 py-4 hidden md:table-cell">
+                    {lead.telephone ? (
+                      <a
+                        href={`tel:${lead.telephone}`}
+                        className="text-noir-light hover:text-dore"
+                      >
+                        {lead.telephone}
+                      </a>
+                    ) : (
+                      <span className="text-noir-light/50">-</span>
+                    )}
+                  </td>
+                  <td className="px-6 py-4 text-sm text-noir-light hidden lg:table-cell">
+                    {formatDate(lead.created_at)}
+                  </td>
+                  <td className="px-6 py-4 text-center">
+                    {lead.email_sent ? (
+                      <span className="inline-flex items-center gap-1 text-xs bg-green-100 text-green-700 px-2 py-1 rounded-full">
+                        <Check size={12} />
+                        Envoyé
+                      </span>
+                    ) : (
+                      <span className="text-xs bg-amber-100 text-amber-700 px-2 py-1 rounded-full">
+                        En attente
+                      </span>
+                    )}
+                  </td>
+                  <td className="px-6 py-4">
+                    <button
+                      onClick={() => handleDelete(lead.id)}
+                      className="p-2 hover:bg-red-50 rounded-lg transition-colors"
+                    >
+                      <Trash2 size={16} className="text-red-500" />
+                    </button>
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+      )}
     </div>
   );
 }

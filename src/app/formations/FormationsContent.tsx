@@ -45,8 +45,8 @@ export default function FormationsContent() {
             <div className="bg-blanc p-6 rounded-xl shadow-soft mb-6">
               <h4 className="font-medium text-noir mb-4">Intervenants</h4>
               <ul className="space-y-2 text-noir-light text-sm">
-                <li>• <strong>Sandrine</strong> — Ostéopathe formatrice, 25+ ans</li>
-                <li>• <strong>Yannig</strong> — Sage-femme, ostéopathe</li>
+                <li>• <strong>Sandrine</strong> — Ostéopathe formatrice, 28+ ans</li>
+                <li>• <strong>Yannig</strong> — Sage-femme, Ostéopathe, 25+ ans</li>
                 <li>• Chirurgien spécialisé en endométriose</li>
                 <li>• Médecin</li>
               </ul>

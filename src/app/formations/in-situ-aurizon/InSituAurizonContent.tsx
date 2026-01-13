@@ -19,7 +19,7 @@ import Button from "@/components/ui/Button";
 const inSituAvantages = [
   "Pas de déplacement pour vous",
   "Cas réels (vos patientes)",
-  "Pas de perte de revenus",
+  "Moins de perte de revenus",
   "Personnalisé à votre niveau",
   "Accompagnement sur plusieurs mois",
 ];
@@ -148,7 +148,7 @@ export default function InSituAurizonContent() {
                   <p className="text-sm font-medium text-noir">1 journée présentiel dans votre cabinet</p>
                   <p className="text-xs text-dore mt-0.5 flex items-center gap-1.5">
                     <span className="w-1.5 h-1.5 rounded-full bg-dore animate-pulse" />
-                    Plus que 2 places disponibles
+                    11 de disponibles
                   </p>
                 </div>
               </div>
@@ -157,7 +157,7 @@ export default function InSituAurizonContent() {
             <div className="mt-6 p-4 bg-dore/10 rounded-lg flex items-center gap-3">
               <AlertTriangle size={20} className="text-dore flex-shrink-0" />
               <p className="text-sm text-noir">
-                <strong>Places très limitées</strong> : 5-10 accompagnements maximum par an
+                <strong>Places très limitées</strong> : 12 par trimestre limité
               </p>
             </div>
           </motion.div>
@@ -264,7 +264,7 @@ export default function InSituAurizonContent() {
               { critere: "Temps présentiel", inSitu: "1 Jour", aurizon: "2 Jours pour les 3 premiers" },
               { critere: "Accompagnement", inSitu: "Intensif & Continu", aurizon: "Intensif & continu avec développement de votre cabinet" },
               { critere: "Suivi", inSitu: "WhatsApp + 4 Coaching Hebdo", aurizon: "WhatsApp + 5 Coaching Hebdo" },
-              { critere: "Objectif", inSitu: "Compétences ciblées & Transformation", aurizon: "Transformation complète Pratique & Cabinet" },
+              { critere: "Objectif", inSitu: "Compétences ciblées & Transformation", aurizon: "Transformation complète Pratique & Cabinet Boosttoncab.fr" },
             ].map((row, index) => (
               <div key={index} className="grid grid-cols-3 border-b border-beige last:border-b-0">
                 <div className="p-4 flex items-center text-left font-medium text-noir">{row.critere}</div>

@@ -2,21 +2,39 @@
 
 import { useState } from "react";
 import { motion } from "framer-motion";
-import { Gift, Send, Check } from "lucide-react";
+import { Gift, Send, Check, Loader2 } from "lucide-react";
 import SectionWrapper from "@/components/ui/SectionWrapper";
 
 export default function LeadMagnetSection() {
   const [isSubmitted, setIsSubmitted] = useState(false);
+  const [isSubmitting, setIsSubmitting] = useState(false);
   const [formData, setFormData] = useState({
     prenom: "",
     email: "",
     telephone: "",
   });
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    // Simulation d'envoi
-    setIsSubmitted(true);
+    setIsSubmitting(true);
+
+    try {
+      const res = await fetch("/api/lead-magnet", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(formData),
+      });
+
+      if (!res.ok) throw new Error("Erreur lors de l'envoi");
+
+      setIsSubmitted(true);
+      setFormData({ prenom: "", email: "", telephone: "" });
+    } catch (err) {
+      console.error("Error:", err);
+      alert("Une erreur est survenue. Veuillez réessayer.");
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -152,10 +170,20 @@ export default function LeadMagnetSection() {
                   {/* Submit */}
                   <button
                     type="submit"
-                    className="w-full flex items-center justify-center gap-2 px-6 py-4 btn-gradient text-blanc font-medium rounded-xl"
+                    disabled={isSubmitting}
+                    className="w-full flex items-center justify-center gap-2 px-6 py-4 btn-gradient text-blanc font-medium rounded-xl disabled:opacity-70"
                   >
-                    <Send size={18} />
-                    Je vous les envoie avec plaisir
+                    {isSubmitting ? (
+                      <>
+                        <Loader2 size={18} className="animate-spin" />
+                        Envoi en cours...
+                      </>
+                    ) : (
+                      <>
+                        <Send size={18} />
+                        Je vous les envoie avec plaisir
+                      </>
+                    )}
                   </button>
                 </form>
 
