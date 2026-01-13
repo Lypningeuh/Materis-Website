@@ -82,7 +82,7 @@ function generateEmailHtml(prenom: string, template: EmailTemplateSettings): str
           <!-- Header -->
           <tr>
             <td style="background-color: #1A1A1A; padding: 30px; text-align: center; border-radius: 16px 16px 0 0;">
-              <img src="https://materis.fr/logo_white.svg" alt="MATERIS" style="height: 50px; width: auto;" />
+              <span style="font-family: Georgia, 'Times New Roman', serif; font-size: 28px; font-weight: 400; color: #FFFFFF; letter-spacing: 4px;">MATERIS</span>
             </td>
           </tr>
 
