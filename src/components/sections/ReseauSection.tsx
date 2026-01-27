@@ -11,78 +11,78 @@ import { Praticien } from "@/lib/types";
 // Dictionnaire des villes françaises avec coordonnées sur la carte SVG
 const CITY_COORDINATES: Record<string, { top: string; left: string }> = {
   // Nord
-  "Lille": { top: "12%", left: "52%" },
-  "Amiens": { top: "18%", left: "48%" },
+  "Lille": { top: "22%", left: "59%" },
+  "Amiens": { top: "28%", left: "55%" },
   // Est
-  "Strasbourg": { top: "20%", left: "72%" },
-  "Metz": { top: "22%", left: "62%" },
-  "Nancy": { top: "25%", left: "64%" },
-  "Dijon": { top: "38%", left: "58%" },
+  "Strasbourg": { top: "30%", left: "79%" },
+  "Metz": { top: "32%", left: "69%" },
+  "Nancy": { top: "35%", left: "71%" },
+  "Dijon": { top: "48%", left: "65%" },
   // Île-de-France
-  "Paris": { top: "26%", left: "52%" },
+  "Paris": { top: "36%", left: "59%" },
   // Ouest
-  "Rennes": { top: "28%", left: "29%" },
-  "Nantes": { top: "38%", left: "25%" },
-  "Brest": { top: "25%", left: "15%" },
+  "Rennes": { top: "38%", left: "36%" },
+  "Nantes": { top: "48%", left: "32%" },
+  "Brest": { top: "35%", left: "22%" },
   // Centre
-  "Orléans": { top: "32%", left: "48%" },
-  "Tours": { top: "36%", left: "40%" },
-  "Clermont-Ferrand": { top: "48%", left: "48%" },
+  "Orléans": { top: "42%", left: "55%" },
+  "Tours": { top: "46%", left: "47%" },
+  "Clermont-Ferrand": { top: "58%", left: "55%" },
   // Sud-Ouest
-  "Bordeaux": { top: "62%", left: "31%" },
-  "Toulouse": { top: "72%", left: "42%" },
-  "Montpellier": { top: "72%", left: "55%" },
-  "Pau": { top: "75%", left: "30%" },
+  "Bordeaux": { top: "72%", left: "38%" },
+  "Toulouse": { top: "83%", left: "49%" },
+  "Montpellier": { top: "83%", left: "62%" },
+  "Pau": { top: "86%", left: "37%" },
   // Sud-Est
-  "Lyon": { top: "52%", left: "58%" },
-  "Grenoble": { top: "55%", left: "62%" },
-  "Marseille": { top: "78%", left: "60%" },
-  "Nice": { top: "72%", left: "72%" },
-  "Toulon": { top: "80%", left: "64%" },
+  "Lyon": { top: "62%", left: "65%" },
+  "Grenoble": { top: "65%", left: "69%" },
+  "Marseille": { top: "89%", left: "67%" },
+  "Nice": { top: "83%", left: "79%" },
+  "Toulon": { top: "91%", left: "71%" },
   // Autres
-  "Limoges": { top: "50%", left: "40%" },
-  "Poitiers": { top: "42%", left: "38%" },
-  "Angers": { top: "38%", left: "32%" },
-  "Le Mans": { top: "32%", left: "38%" },
-  "Caen": { top: "22%", left: "32%" },
-  "Rouen": { top: "20%", left: "44%" },
-  "Reims": { top: "22%", left: "56%" },
-  "Besançon": { top: "38%", left: "64%" },
-  "Saint-Étienne": { top: "55%", left: "55%" },
-  "Perpignan": { top: "82%", left: "48%" },
-  "Avignon": { top: "72%", left: "58%" },
-  "Aix-en-Provence": { top: "76%", left: "62%" },
-  "Cannes": { top: "75%", left: "70%" },
-  "Annecy": { top: "50%", left: "64%" },
-  "Chambéry": { top: "52%", left: "64%" },
-  "Valence": { top: "58%", left: "58%" },
-  "Nîmes": { top: "72%", left: "55%" },
-  "Béziers": { top: "78%", left: "52%" },
-  "Carcassonne": { top: "78%", left: "46%" },
-  "Tarbes": { top: "78%", left: "34%" },
-  "Agen": { top: "68%", left: "36%" },
-  "La Rochelle": { top: "48%", left: "28%" },
-  "Angoulême": { top: "52%", left: "34%" },
-  "Périgueux": { top: "55%", left: "38%" },
-  "Bayonne": { top: "78%", left: "26%" },
-  "Biarritz": { top: "78%", left: "24%" },
+  "Limoges": { top: "60%", left: "47%" },
+  "Poitiers": { top: "52%", left: "45%" },
+  "Angers": { top: "48%", left: "39%" },
+  "Le Mans": { top: "42%", left: "45%" },
+  "Caen": { top: "32%", left: "39%" },
+  "Rouen": { top: "30%", left: "51%" },
+  "Reims": { top: "32%", left: "63%" },
+  "Besançon": { top: "48%", left: "71%" },
+  "Saint-Étienne": { top: "65%", left: "62%" },
+  "Perpignan": { top: "93%", left: "55%" },
+  "Avignon": { top: "83%", left: "65%" },
+  "Aix-en-Provence": { top: "87%", left: "69%" },
+  "Cannes": { top: "86%", left: "77%" },
+  "Annecy": { top: "60%", left: "71%" },
+  "Chambéry": { top: "62%", left: "71%" },
+  "Valence": { top: "69%", left: "65%" },
+  "Nîmes": { top: "83%", left: "62%" },
+  "Béziers": { top: "89%", left: "59%" },
+  "Carcassonne": { top: "89%", left: "53%" },
+  "Tarbes": { top: "89%", left: "41%" },
+  "Agen": { top: "79%", left: "43%" },
+  "La Rochelle": { top: "58%", left: "35%" },
+  "Angoulême": { top: "62%", left: "41%" },
+  "Périgueux": { top: "65%", left: "45%" },
+  "Bayonne": { top: "89%", left: "33%" },
+  "Biarritz": { top: "89%", left: "31%" },
   // Petites villes ajoutées
-  "Saint-Gaudens": { top: "78%", left: "38%" },
-  "Saint Marcel Les Valence": { top: "58%", left: "58%" },
-  "Le Porge": { top: "60%", left: "26%" },
-  "Saint-Jean": { top: "72%", left: "44%" },
-  "Quint-Fonsegrives": { top: "72%", left: "44%" },
-  "Colomiers": { top: "72%", left: "40%" },
-  "Blagnac": { top: "71%", left: "41%" },
-  "Muret": { top: "74%", left: "42%" },
-  "Balma": { top: "72%", left: "44%" },
-  "L'Union": { top: "71%", left: "44%" },
-  "Ramonville": { top: "73%", left: "44%" },
-  "Castanet-Tolosan": { top: "74%", left: "44%" },
-  "Labège": { top: "73%", left: "45%" },
-  "Tournefeuille": { top: "72%", left: "40%" },
-  "Cugnaux": { top: "73%", left: "41%" },
-  "Portet-sur-Garonne": { top: "74%", left: "42%" },
+  "Saint-Gaudens": { top: "89%", left: "45%" },
+  "Saint Marcel Les Valence": { top: "69%", left: "65%" },
+  "Le Porge": { top: "71%", left: "33%" },
+  "Saint-Jean": { top: "83%", left: "51%" },
+  "Quint-Fonsegrives": { top: "83%", left: "51%" },
+  "Colomiers": { top: "83%", left: "47%" },
+  "Blagnac": { top: "82%", left: "48%" },
+  "Muret": { top: "85%", left: "49%" },
+  "Balma": { top: "83%", left: "51%" },
+  "L'Union": { top: "82%", left: "51%" },
+  "Ramonville": { top: "84%", left: "51%" },
+  "Castanet-Tolosan": { top: "85%", left: "51%" },
+  "Labège": { top: "84%", left: "52%" },
+  "Tournefeuille": { top: "83%", left: "47%" },
+  "Cugnaux": { top: "84%", left: "48%" },
+  "Portet-sur-Garonne": { top: "85%", left: "49%" },
 };
 
 // Mapping département → ville principale pour regrouper les praticiens
@@ -135,18 +135,18 @@ function findCityCoordinates(city: string): { top: string; left: string } | null
 
 // Fonction pour extraire le département du format "Ville (XX)" ou du champ department
 function extractDepartment(city: string | null, department: string | null): string | null {
-  // D'abord essayer le champ department
-  if (department) {
-    const deptClean = department.trim().replace(/[()]/g, "");
-    if (deptClean && DEPARTMENT_TO_CITY[deptClean]) {
-      return deptClean;
-    }
-  }
-  // Sinon extraire du city format "Toulouse (31)"
+  // D'abord extraire du city format "Toulouse (31)" (plus fiable)
   if (city) {
     const match = city.match(/\((\d{2,3})\)/);
     if (match && DEPARTMENT_TO_CITY[match[1]]) {
       return match[1];
+    }
+  }
+  // Sinon essayer le champ department
+  if (department) {
+    const deptClean = department.trim().replace(/[()]/g, "");
+    if (deptClean && DEPARTMENT_TO_CITY[deptClean]) {
+      return deptClean;
     }
   }
   return null;
