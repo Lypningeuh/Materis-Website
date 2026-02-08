@@ -13,74 +13,15 @@ import {
 } from "lucide-react";
 import SectionWrapper from "@/components/ui/SectionWrapper";
 import Button from "@/components/ui/Button";
+import methodeContent from "../../../content/methode.json";
 
-const piliers = [
-  {
-    icon: BookOpen,
-    title: "Formation Technique Complète",
-    description: "Un socle solide de connaissances et de pratiques",
-    details: [
-      "Plateforme vschool avec modules structurés",
-      "Documents PDF téléchargeables",
-      "Vidéos de démonstration",
-      "Support WhatsApp",
-      "Coaching inclus\n(Nombre en fonction de la formule)",
-    ],
-  },
-  {
-    icon: MessageCircle,
-    title: "Accompagnement Continu",
-    description: "Vous n'êtes jamais seul(e) dans votre apprentissage",
-    details: [
-      "Groupe WhatsApp : réponse garantie",
-      "Lives BI-mensuels : études de cas en direct pour In situ et Aurizon",
-      "Réseau et communauté de praticiens formés",
-      "Échanges et partages d'expériences",
-    ],
-  },
-  {
-    icon: Target,
-    title: "Application Terrain",
-    description: "La théorie prend vie dans votre pratique quotidienne",
-    details: [
-      "Formation dans votre cabinet",
-      "Travail sur vos vraies patientes",
-      "Pas de perte de revenus",
-      "Adaptation à votre rythme",
-    ],
-  },
-];
-
-const comparatif = [
-  {
-    classique: "2 jours de séminaire isolé",
-    materis: "Un parcours sur plusieurs mois",
-  },
-  {
-    classique: "Exercices sur modèles",
-    materis: "Application sur vraies patientes",
-  },
-  {
-    classique: "Fin de formation = fin du lien",
-    materis: "Accompagnement continu WhatsApp + lives",
-  },
-  {
-    classique: "Théorie descendante",
-    materis: "Pratique terrain immédiate",
-  },
-  {
-    classique: "Week-ends sacrifiés",
-    materis: "Moins de perte de revenus",
-  },
-];
-
-const profils = [
-  { title: "Ostéopathes", desc: "Expérimentés ou débutants en gynéco" },
-  { title: "Sages-femmes", desc: "Souhaitant élargir leur pratique" },
-  { title: "Kinésithérapeutes", desc: "En rééducation périnéale" },
-];
+// Map icon names to components (icons can't be stored in JSON)
+const pilierIcons = [BookOpen, MessageCircle, Target];
+const gesteIcons = [Hand, Target, Heart];
 
 export default function MethodeContent() {
+  const content = methodeContent;
+
   return (
     <>
       {/* Les 3 piliers */}
@@ -92,7 +33,7 @@ export default function MethodeContent() {
             viewport={{ once: true }}
             className="text-sm font-medium tracking-widest uppercase text-dore mb-4"
           >
-            Les fondamentaux
+            {content.piliersLabel}
           </motion.p>
           <motion.h2
             initial={{ opacity: 0, y: 20 }}
@@ -100,35 +41,38 @@ export default function MethodeContent() {
             viewport={{ once: true }}
             className="text-3xl md:text-4xl font-serif text-noir"
           >
-            Les 3 piliers de la méthode en ligne
+            {content.piliersTitle}
           </motion.h2>
         </div>
 
         <div className="grid md:grid-cols-3 gap-8">
-          {piliers.map((pilier, index) => (
-            <motion.div
-              key={pilier.title}
-              initial={{ opacity: 0, y: 30 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ delay: index * 0.15 }}
-              className="bg-blanc p-8 rounded-2xl shadow-soft"
-            >
-              <div className="w-14 h-14 mb-6 rounded-xl bg-dore/10 flex items-center justify-center">
-                <pilier.icon size={28} className="text-dore" />
-              </div>
-              <h3 className="text-xl font-serif text-noir mb-3">{pilier.title}</h3>
-              <p className="text-noir-light mb-6">{pilier.description}</p>
-              <ul className="space-y-3">
-                {pilier.details.map((detail) => (
-                  <li key={detail} className="flex items-start gap-3">
-                    <Check size={18} className="text-dore mt-0.5 flex-shrink-0" />
-                    <span className="text-sm text-noir-light whitespace-pre-line">{detail}</span>
-                  </li>
-                ))}
-              </ul>
-            </motion.div>
-          ))}
+          {content.piliers.map((pilier, index) => {
+            const Icon = pilierIcons[index] || BookOpen;
+            return (
+              <motion.div
+                key={pilier.title}
+                initial={{ opacity: 0, y: 30 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ delay: index * 0.15 }}
+                className="bg-blanc p-8 rounded-2xl shadow-soft"
+              >
+                <div className="w-14 h-14 mb-6 rounded-xl bg-dore/10 flex items-center justify-center">
+                  <Icon size={28} className="text-dore" />
+                </div>
+                <h3 className="text-xl font-serif text-noir mb-3">{pilier.title}</h3>
+                <p className="text-noir-light mb-6">{pilier.description}</p>
+                <ul className="space-y-3">
+                  {pilier.details.map((detail) => (
+                    <li key={detail} className="flex items-start gap-3">
+                      <Check size={18} className="text-dore mt-0.5 flex-shrink-0" />
+                      <span className="text-sm text-noir-light whitespace-pre-line">{detail}</span>
+                    </li>
+                  ))}
+                </ul>
+              </motion.div>
+            );
+          })}
         </div>
       </SectionWrapper>
 
@@ -142,7 +86,7 @@ export default function MethodeContent() {
               viewport={{ once: true }}
               className="text-sm font-medium tracking-widest uppercase text-dore mb-4"
             >
-              La différence
+              {content.comparatifLabel}
             </motion.p>
             <motion.h2
               initial={{ opacity: 0, y: 20 }}
@@ -150,7 +94,7 @@ export default function MethodeContent() {
               viewport={{ once: true }}
               className="text-3xl md:text-4xl font-serif text-noir"
             >
-              Ce qui change par rapport à une formation classique
+              {content.comparatifTitle}
             </motion.h2>
           </div>
 
@@ -162,7 +106,7 @@ export default function MethodeContent() {
             </div>
 
             {/* Rows */}
-            {comparatif.map((row, index) => (
+            {content.comparatif.map((row, index) => (
               <motion.div
                 key={index}
                 initial={{ opacity: 0 }}
@@ -194,20 +138,17 @@ export default function MethodeContent() {
             viewport={{ once: true }}
           >
             <p className="text-sm font-medium tracking-widest uppercase text-dore mb-4">
-              L&apos;essence de la méthode
+              {content.gesteLabel}
             </p>
             <h2 className="text-3xl md:text-4xl font-serif text-noir mb-6">
-              Le geste juste & le ressenti
+              {content.gesteTitle}
             </h2>
             <div className="prose prose-lg text-noir-light">
-              <p>
-                Ensemble, nous allons travailler ce <strong>ressenti subtil</strong> qui permet, 
-                en quelques secondes, de savoir :
-              </p>
+              <p>{content.gesteIntro}</p>
               <ul>
-                <li>Si l&apos;on doit poser les mains… ou au contraire ne pas toucher</li>
-                <li>Comment accueillir pleinement la patiente</li>
-                <li>À quel moment intervenir pour que le soin devienne réellement transformateur</li>
+                {content.gesteBullets.map((bullet) => (
+                  <li key={bullet}>{bullet}</li>
+                ))}
               </ul>
             </div>
           </motion.div>
@@ -219,28 +160,27 @@ export default function MethodeContent() {
             className="bg-creme rounded-2xl p-8 md:p-10"
           >
             <h3 className="text-xl font-serif text-noir mb-6">
-              Ce &quot;petit plus&quot; qui fait la différence
+              {content.gesteBoxTitle}
             </h3>
             <div className="space-y-6">
-              {[
-                { icon: Hand, text: "Percevoir ce que le corps raconte avant même qu'il ne parle" },
-                { icon: Target, text: "Choisir le bon timing d'intervention" },
-                { icon: Heart, text: "Adapter son geste à chaque situation unique" },
-              ].map((item, index) => (
-                <motion.div
-                  key={index}
-                  initial={{ opacity: 0, y: 10 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: true }}
-                  transition={{ delay: 0.3 + index * 0.1 }}
-                  className="flex items-start gap-4"
-                >
-                  <div className="w-10 h-10 rounded-full bg-dore/20 flex items-center justify-center flex-shrink-0">
-                    <item.icon size={20} className="text-dore" />
-                  </div>
-                  <p className="text-noir-light pt-2">{item.text}</p>
-                </motion.div>
-              ))}
+              {content.gesteItems.map((item, index) => {
+                const Icon = gesteIcons[index] || Target;
+                return (
+                  <motion.div
+                    key={index}
+                    initial={{ opacity: 0, y: 10 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    viewport={{ once: true }}
+                    transition={{ delay: 0.3 + index * 0.1 }}
+                    className="flex items-start gap-4"
+                  >
+                    <div className="w-10 h-10 rounded-full bg-dore/20 flex items-center justify-center flex-shrink-0">
+                      <Icon size={20} className="text-dore" />
+                    </div>
+                    <p className="text-noir-light pt-2">{item}</p>
+                  </motion.div>
+                );
+              })}
             </div>
           </motion.div>
         </div>
@@ -256,7 +196,7 @@ export default function MethodeContent() {
               viewport={{ once: true }}
               className="text-sm font-medium tracking-widest uppercase text-dore mb-4"
             >
-              Pour qui ?
+              {content.profilsLabel}
             </motion.p>
             <motion.h2
               initial={{ opacity: 0, y: 20 }}
@@ -264,12 +204,12 @@ export default function MethodeContent() {
               viewport={{ once: true }}
               className="text-3xl md:text-4xl font-serif text-noir"
             >
-              Pour quels praticiens ?
+              {content.profilsTitle}
             </motion.h2>
           </div>
 
           <div className="grid md:grid-cols-3 gap-6 mb-10">
-            {profils.map((profil, index) => (
+            {content.profils.map((profil, index) => (
               <motion.div
                 key={profil.title}
                 initial={{ opacity: 0, y: 20 }}
@@ -292,7 +232,7 @@ export default function MethodeContent() {
           >
             <p className="text-noir font-medium mb-2">Pré-requis</p>
             <p className="text-noir-light">
-              Diplôme en règle • Assurance professionnelle • Base en anatomie/physiologie recommandée
+              {content.prerequis}
             </p>
           </motion.div>
         </div>
@@ -307,7 +247,7 @@ export default function MethodeContent() {
             viewport={{ once: true }}
             className="text-3xl md:text-4xl font-serif text-noir mb-6"
           >
-            Prêt(e) à découvrir nos formations ?
+            {content.ctaTitle}
           </motion.h2>
           <motion.p
             initial={{ opacity: 0 }}
@@ -315,7 +255,7 @@ export default function MethodeContent() {
             viewport={{ once: true }}
             className="text-noir-light mb-8 max-w-xl mx-auto"
           >
-            Choisissez le format qui vous correspond : digital, présentiel ou accompagnement personnalisé.
+            {content.ctaSubtitle}
           </motion.p>
           <motion.div
             initial={{ opacity: 0, y: 20 }}
@@ -323,8 +263,8 @@ export default function MethodeContent() {
             viewport={{ once: true }}
             transition={{ delay: 0.2 }}
           >
-            <Button href="/formations" variant="primary" size="lg" icon={<ArrowRight size={20} />}>
-              Voir les formations
+            <Button href={content.ctaButtonHref} variant="primary" size="lg" icon={<ArrowRight size={20} />}>
+              {content.ctaButtonText}
             </Button>
           </motion.div>
         </div>
@@ -332,4 +272,3 @@ export default function MethodeContent() {
     </>
   );
 }
-

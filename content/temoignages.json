@@ -1,0 +1,25 @@
+{
+  "eyebrow": "Témoignages",
+  "title": "Ce qu'ils disent de Sandrine",
+  "subtitle": "Découvrez les retours authentiques des patients et praticiens formés.",
+  "videoTestimonials": [
+    { "id": "e2eaa810", "title": "Expérience Transformatrice" },
+    { "id": "06e9a9ad", "title": "Témoignage Formation" },
+    { "id": "4458d5ea", "title": "Retour d'expérience" },
+    { "id": "f51923f9", "title": "Avis praticienne" },
+    { "id": "e288458a", "title": "Mon parcours Materis" }
+  ],
+  "googleReviews": [
+    { "author": "Lauriane Jammes", "text": "Depuis presque 15ans..... Une personne au top professionnellement parlant et toujours attentionnée", "rating": 5 },
+    { "author": "Lucile Florac", "text": "Impossible de savoir ce que mon genou avait : médecins diverses radio irm ... et depuis remise en place! Super", "rating": 5 },
+    { "author": "Huhu Patafix", "text": "Ma mère avais un gros problème de santé grâce à Sandrine elle n'a plus rien. Merci", "rating": 5 },
+    { "author": "Sophie Garcia", "text": "Super rencontre avec cette professionnelle qui est à la fois humaine et compétente dans son domaine... elle prend le temps de vous écouter ce qui aide pour la suite de la séance. Je vous recommande fortement Sandrine.", "rating": 5 },
+    { "author": "Le Pisciniste", "text": "Sandrine et ses collaborateurs sont des magiciens à l'écoute de leurs patients. Ils sont juste au top du top et je les consulte plus que mon généraliste. Je commande et recommande", "rating": 5 },
+    { "author": "Stéphanie", "text": "Vu pour mes deux grossesses. Aide a la préparation du bassin et du périné, rassure, enlève les tensions dùes à la grossesse, avec bienveillance et douceur. A sauver ma vie intime apres ma 1ere grossesse ! Je recommande a 100%!", "rating": 5 },
+    { "author": "Alison Payne", "text": "Sandrine a l'habitude des nourrissons et ça se voit ! Elle a su soulager les douleurs de notre nouveau-né avec une grande douceur. C'est grâce à elle que j'ai pu continuer l'allaitement !", "rating": 5 },
+    { "author": "Laura", "text": "Sandrine est une excellente ostéopathe, humaine, douce et de très bon conseils. Elle m'a suivie durant ma grossesse et m'a beaucoup soulagée. Je recommande vivement !", "rating": 5 },
+    { "author": "Sonia Borull", "text": "Sandrine est une ostéopathe exceptionnelle tant au niveau professionnel et qu'humain. J'ai pu beneficier de ses multiples compétences. Ses soins très précieux m'ont beaucoup aidés et soulagés. Je la recommande fortement.", "rating": 5 },
+    { "author": "Marion", "text": "Sandrine, Sandrine, Sandrine, Milles merci. Ma magicienne, fée Marabout. J'ai passé une bonne nuit. Je me sens comme la reine des neiges … libérée, délivrée de la cage thoracique et du bassin. Je me sens tellement mieux. Mais qu'est ce que je suis contente de te connaître et d'être accompagnée et chouchoutée par toi pendant cette grossesse.", "rating": 5 },
+    { "author": "Manon", "text": "Un grand grand merci. Mon dos va beaucoup mieux, je ressens encore quelques douleurs mais ça n'a pas absolument plus rien à voir. Ça s'est soulagé petit à Petit depuis notre rdv. Merci beaucoup pour ton soin, tes mots et ta présence.", "rating": 5 }
+  ]
+}

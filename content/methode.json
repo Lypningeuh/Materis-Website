@@ -1,0 +1,72 @@
+{
+  "piliersLabel": "Les fondamentaux",
+  "piliersTitle": "Les 3 piliers de la méthode en ligne",
+  "piliers": [
+    {
+      "title": "Formation Technique Complète",
+      "description": "Un socle solide de connaissances et de pratiques",
+      "details": [
+        "Plateforme vschool avec modules structurés",
+        "Documents PDF téléchargeables",
+        "Vidéos de démonstration",
+        "Support WhatsApp",
+        "Coaching inclus\n(Nombre en fonction de la formule)"
+      ]
+    },
+    {
+      "title": "Accompagnement Continu",
+      "description": "Vous n'êtes jamais seul(e) dans votre apprentissage",
+      "details": [
+        "Groupe WhatsApp : réponse garantie",
+        "Lives BI-mensuels : études de cas en direct pour In situ et Aurizon",
+        "Réseau et communauté de praticiens formés",
+        "Échanges et partages d'expériences"
+      ]
+    },
+    {
+      "title": "Application Terrain",
+      "description": "La théorie prend vie dans votre pratique quotidienne",
+      "details": [
+        "Formation dans votre cabinet",
+        "Travail sur vos vraies patientes",
+        "Moins de perte de revenus",
+        "Adaptation à votre rythme"
+      ]
+    }
+  ],
+  "comparatifLabel": "La différence",
+  "comparatifTitle": "Ce qui change par rapport à une formation classique",
+  "comparatif": [
+    { "classique": "2 jours de séminaire isolé", "materis": "Un parcours sur plusieurs mois" },
+    { "classique": "Exercices sur modèles", "materis": "Application sur vraies patientes" },
+    { "classique": "Fin de formation = fin du lien", "materis": "Accompagnement continu WhatsApp + lives" },
+    { "classique": "Théorie descendante", "materis": "Pratique terrain immédiate" },
+    { "classique": "Week-ends sacrifiés", "materis": "Moins de perte de revenus" }
+  ],
+  "gesteLabel": "L'essence de la méthode",
+  "gesteTitle": "Le geste juste & le ressenti",
+  "gesteIntro": "Ensemble, nous allons travailler ce ressenti subtil qui permet, en quelques secondes, de savoir :",
+  "gesteBullets": [
+    "Si l'on doit poser les mains… ou au contraire ne pas toucher",
+    "Comment accueillir pleinement la patiente",
+    "À quel moment intervenir pour que le soin devienne réellement transformateur"
+  ],
+  "gesteBoxTitle": "Ce \"petit plus\" qui fait la différence",
+  "gesteItems": [
+    "Percevoir ce que le corps raconte avant même qu'il ne parle",
+    "Choisir le bon timing d'intervention",
+    "Adapter son geste à chaque situation unique"
+  ],
+  "profilsLabel": "Pour qui ?",
+  "profilsTitle": "Pour quels praticiens ?",
+  "profils": [
+    { "title": "Ostéopathes", "desc": "Expérimentés ou débutants en gynéco" },
+    { "title": "Sages-femmes", "desc": "Souhaitant élargir leur pratique" },
+    { "title": "Kinésithérapeutes", "desc": "En rééducation périnéale" }
+  ],
+  "prerequis": "Diplôme en règle • Assurance professionnelle • Base en anatomie/physiologie recommandée",
+  "ctaTitle": "Prêt(e) à découvrir nos formations ?",
+  "ctaSubtitle": "Choisissez le format qui vous correspond : digital, présentiel ou accompagnement personnalisé.",
+  "ctaButtonText": "Voir les formations",
+  "ctaButtonHref": "/formations"
+}

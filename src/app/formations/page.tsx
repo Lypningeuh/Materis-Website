@@ -3,6 +3,7 @@ import { Suspense } from "react";
 import dynamic from "next/dynamic";
 import PageHeader from "@/components/ui/PageHeader";
 import SectionSkeleton from "@/components/ui/SectionSkeleton";
+import formationsContent from "../../../content/formations.json";
 
 const FormationsContent = dynamic(() => import("./FormationsContent"), {
   loading: () => <SectionSkeleton />,
@@ -18,9 +19,9 @@ export default function FormationsPage() {
   return (
     <>
       <PageHeader
-        overtitle="Formations"
-        title="Formations & Accompagnements"
-        subtitle="Choisissez le chemin qui vous correspond pour développer votre expertise en santé féminine."
+        overtitle={formationsContent.pageHeader.overtitle}
+        title={formationsContent.pageHeader.title}
+        subtitle={formationsContent.pageHeader.subtitle}
       />
       <Suspense fallback={<SectionSkeleton />}>
         <FormationsContent />
@@ -28,4 +29,3 @@ export default function FormationsPage() {
     </>
   );
 }
-

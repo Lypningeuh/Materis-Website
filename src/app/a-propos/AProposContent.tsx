@@ -6,22 +6,14 @@ import { motion } from "framer-motion";
 import { ArrowRight, Heart, Users, BookOpen, Stethoscope, Quote, MessageCircle, ChevronDown } from "lucide-react";
 import SectionWrapper from "@/components/ui/SectionWrapper";
 import Button from "@/components/ui/Button";
+import aProposContent from "../../../content/a-propos.json";
 
-const timeline = [
-  { year: "1997", event: "Diplômée kinésithérapie (Toulouse)" },
-  { year: "1997-2004", event: "6 ans d'études d'ostéopathie, école André Ratio" },
-  { year: "1998", event: "Premier cabinet à Saint-Jean avec Florence" },
-  { year: "2004", event: "Diplôme d'ostéopathie" },
-  { year: "2007", event: "Professeure en viscéral au CSO Toulouse" },
-  { year: "2014", event: "Diplôme d'étiomédecine (Max Bernardeau)" },
-  { year: "2015", event: "Conférence EndoFrance + Création Pôle Féminin" },
-  { year: "2018", event: "Formation AERO (4 ans + groupe continu)" },
-  { year: "2022", event: "Ouverture cabinet de Quint avec son fils Florian" },
-  { year: "2024", event: "Naissance de MATERIS" },
-];
+// Icons for quotidien stats cards
+const quotidienIcons = [Heart, Users, Stethoscope, BookOpen];
 
 export default function AProposContent() {
   const [isStoryExpanded, setIsStoryExpanded] = useState(false);
+  const content = aProposContent;
 
   return (
     <>
@@ -38,15 +30,14 @@ export default function AProposContent() {
             <div className="relative rounded-2xl overflow-hidden shadow-soft">
               <div className="aspect-[4/5] relative">
                 <Image
-                  src="/photo_sandrine-verticale.png"
-                  alt="Sandrine, fondatrice de MATERIS"
+                  src={content.parcoursImage}
+                  alt={content.parcoursImageAlt}
                   fill
                   className="object-cover object-top"
                   sizes="(max-width: 768px) 100vw, 50vw"
                 />
               </div>
             </div>
-            {/* Decorative element */}
             <div className="absolute -bottom-4 -right-4 w-32 h-32 bg-dore/10 rounded-full blur-2xl" />
           </motion.div>
 
@@ -58,7 +49,7 @@ export default function AProposContent() {
               viewport={{ once: true }}
               className="text-sm font-medium tracking-widest uppercase text-dore mb-4"
             >
-              Mon parcours
+              {content.parcoursLabel}
             </motion.p>
 
             <motion.h2
@@ -67,7 +58,7 @@ export default function AProposContent() {
               viewport={{ once: true }}
               className="text-3xl md:text-4xl font-serif text-noir leading-tight mb-6"
             >
-              Comment les maux ont guidé ma vocation
+              {content.parcoursTitle}
             </motion.h2>
 
             <motion.div
@@ -77,20 +68,9 @@ export default function AProposContent() {
               transition={{ delay: 0.2 }}
               className="prose prose-lg text-noir-light"
             >
-              <p>
-                Je suis née à Carcassonne, et c&apos;est là que ma vocation a pris racine… 
-                un peu malgré moi. À la suite d&apos;un <strong>accident de mobylette</strong>, 
-                j&apos;ai passé de longs mois en rééducation.
-              </p>
-              <p>
-                Une expérience marquante, parfois douloureuse — et une révélation : 
-                <em> je voulais faire ce métier.</em>
-              </p>
-              <p>
-                De la kinésithérapie à l&apos;ostéopathie, puis à l&apos;ostéopathie gynécologique,
-                chaque étape m&apos;a rapprochée de ce qui allait devenir ma spécialité :
-                <strong> accompagner les femmes </strong> dans leurs douleurs les plus intimes.
-              </p>
+              {content.parcoursParagraphs.map((paragraph, index) => (
+                <p key={index}>{paragraph}</p>
+              ))}
             </motion.div>
 
             {/* Suite de l'histoire - Expandable */}
@@ -102,7 +82,6 @@ export default function AProposContent() {
               className="mt-6"
             >
               <div className="relative">
-                {/* Conteneur du texte avec overflow contrôlé */}
                 <div
                   className={`transition-all duration-500 ease-out overflow-hidden ${
                     isStoryExpanded
@@ -111,42 +90,17 @@ export default function AProposContent() {
                   }`}
                 >
                   <div className="prose prose-lg text-noir-light space-y-4">
-                    <p>
-                      C&apos;est à ce moment que j&apos;ai rencontré l&apos;une de mes futures associées.
-                      Ensemble avec une autre amie qui nous a fait découvrir l&apos;ostéopathie, nous avons
-                      rejoint ensemble l&apos;école d&apos;ostéopathie de Toulouse de André Ratio, qui se
-                      situait alors dans un lieu hors du commun : <strong>le domaine de Richard Rampin,
-                      à Avignonet-Lauragais</strong>. Nous avons étudié pendant <strong>six années</strong>
-                      (et oui avant c&apos;était 6 ans !) dans ce cadre inspirant, avec une petite promo
-                      de 15 étudiants — un vrai luxe pour apprendre dans l&apos;intimité, au contact de
-                      professeurs venus de toute la France et de l&apos;étranger. Grâce à un partenariat
-                      avec l&apos;école de Maidstone (UK), notre diplôme avait une reconnaissance malgré
-                      l&apos;absence de cadre légal en France.
-                    </p>
-                    <p>
-                      C&apos;est dans ce contexte que j&apos;ai découvert l&apos;<strong>ostéopathie
-                      gynécologique</strong>. Et ce fut un <strong>véritable bouleversement</strong>.
-                      Nous étions jeunes mamans, confrontées à nos propres douleurs, nos silences,
-                      nos histoires corporelles. Comprendre, soulager, libérer : ces techniques ont
-                      été une véritable délivrance. Dès la formation, j&apos;ai commencé à les appliquer
-                      en rééducation périnéale.
-                    </p>
-                    <p>
-                      J&apos;ai été diplômée en <strong>2004</strong>, avec une remise officielle en
-                      janvier 2005. Très vite, ma pratique s&apos;est naturellement orientée vers
-                      <strong> l&apos;accompagnement des femmes</strong>. Ma patientèle s&apos;est
-                      féminisée, et mon approche est devenue plus intuitive, plus globale.
-                    </p>
+                    {content.parcoursExpandedParagraphs.map((paragraph, index) => (
+                      <p key={index}>{paragraph}</p>
+                    ))}
                   </div>
                 </div>
 
-                {/* Dégradé visible uniquement quand collapsed */}
                 {!isStoryExpanded && (
                   <div className="absolute bottom-0 left-0 right-0 h-20 bg-gradient-to-t from-clair via-clair/80 to-transparent pointer-events-none" />
                 )}
               </div>
 
-              {/* Bouton Lire plus / Réduire */}
               <button
                 onClick={() => setIsStoryExpanded(!isStoryExpanded)}
                 className="mt-4 flex items-center gap-2 text-dore hover:text-dore-dark font-medium transition-colors"
@@ -171,14 +125,13 @@ export default function AProposContent() {
             viewport={{ once: true }}
             className="text-3xl md:text-4xl font-serif text-noir text-center mb-12"
           >
-            28 ans de parcours
+            {content.timelineTitle}
           </motion.h2>
 
           <div className="relative">
-            {/* Line */}
             <div className="absolute left-4 md:left-1/2 top-0 bottom-0 w-px bg-beige md:-translate-x-px" />
 
-            {timeline.map((item, index) => (
+            {content.timeline.map((item, index) => (
               <motion.div
                 key={item.year}
                 initial={{ opacity: 0, y: 20 }}
@@ -189,10 +142,8 @@ export default function AProposContent() {
                   index % 2 === 0 ? "md:flex-row-reverse" : ""
                 }`}
               >
-                {/* Dot */}
                 <div className="absolute left-4 md:left-1/2 w-3 h-3 bg-dore rounded-full -translate-x-1/2 ring-4 ring-creme" />
 
-                {/* Content */}
                 <div className={`ml-12 md:ml-0 md:w-1/2 ${index % 2 === 0 ? "md:pr-12 md:text-right" : "md:pl-12"}`}>
                   <span className="text-dore font-serif text-lg">{item.year}</span>
                   <p className="text-noir-light mt-1">{item.event}</p>
@@ -203,9 +154,8 @@ export default function AProposContent() {
         </div>
       </SectionWrapper>
 
-      {/* Confession - IMPROVED */}
+      {/* Confession */}
       <section className="relative py-20 md:py-28 bg-noir overflow-hidden">
-        {/* Background decorative elements */}
         <div className="absolute inset-0 opacity-10">
           <div className="absolute top-20 left-10 w-64 h-64 rounded-full bg-dore blur-3xl" />
           <div className="absolute bottom-20 right-10 w-80 h-80 rounded-full bg-dore blur-3xl" />
@@ -219,70 +169,28 @@ export default function AProposContent() {
             className="text-center mb-12"
           >
             <p className="text-sm font-medium tracking-widest uppercase text-dore mb-4">
-              Ma confession
+              {content.confessionLabel}
             </p>
             <h2 className="text-3xl md:text-5xl font-serif text-blanc leading-tight">
-              Et puis, la vie m&apos;a arrêtée…
+              {content.confessionTitle}
             </h2>
           </motion.div>
 
           <div className="space-y-8">
-            <motion.p
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              className="text-lg md:text-xl text-blanc/80 leading-relaxed"
-            >
-              En 2024, la vie m&apos;a stoppée. <span className="text-dore font-medium">Une maladie aux mains.</span> Au départ 
-              l&apos;annonce d&apos;une maladie neurologique centrale. Un vertige m&apos;a saisie, 
-              la peur, l&apos;incompréhension.
-            </motion.p>
-
-            <motion.p
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ delay: 0.1 }}
-              className="text-lg md:text-xl text-blanc/80 leading-relaxed italic"
-            >
-              Pour une ostéopathe, ne plus pouvoir se servir de ses mains... vous imaginez ?
-            </motion.p>
-
-            <motion.p
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ delay: 0.2 }}
-              className="text-lg text-blanc/70 leading-relaxed"
-            >
-              Le diagnostic a été invalidé... mais me voilà partie pour un parcours de santé 
-              qui continue encore. Les soins, une première chirurgie, la rééducation...
-            </motion.p>
-
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ delay: 0.3 }}
-              className="py-8"
-            >
-              <p className="text-blanc/60 text-lg mb-4">
-                Mais toujours cette petite voix :
-              </p>
-              <p className="text-xl md:text-2xl text-blanc/90 italic">
-                &quot;Pourquoi la vie t&apos;a enlevé ce que tu aimes le plus au monde ?&quot;
-              </p>
-            </motion.div>
-
-            <motion.p
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ delay: 0.4 }}
-              className="text-lg text-blanc/70 leading-relaxed"
-            >
-              J’ai décidé de ne pas subir cet arrêt, mais d’en faire un espace fertile. J’ai exploré des approches plus subtiles : reiki, magnétisme, énergie quantique, soins énergétiques, féminin sacré… jusqu’au jour où l’évidence s’est imposée : ce que j’aime profondément, c’est accompagner le corps et le féminin. Tout était déjà là, en moi. Il est temps de transmettre.
-            </motion.p>
+            {content.confessionParagraphs.map((paragraph, index) => (
+              <motion.p
+                key={index}
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ delay: index * 0.1 }}
+                className={`text-lg md:text-xl leading-relaxed ${
+                  index === 1 ? "text-blanc/80 italic" : "text-blanc/70"
+                }`}
+              >
+                {paragraph}
+              </motion.p>
+            ))}
 
             {/* Quote highlight */}
             <motion.div
@@ -294,29 +202,9 @@ export default function AProposContent() {
             >
               <Quote size={48} className="absolute top-0 left-0 text-dore/30" />
               <blockquote className="text-2xl md:text-3xl font-serif text-dore text-center leading-relaxed">
-                
-“Il est temps de transmettre. De former d'autres mains pour qu'elles soulagent encore plus de femmes.”
+                &ldquo;{content.confessionQuote}&rdquo;
               </blockquote>
               <Quote size={48} className="absolute bottom-0 right-0 text-dore/30 rotate-180" />
-            </motion.div>
-
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ delay: 0.6 }}
-              className="space-y-4"
-            >
-              <p className="text-lg text-blanc/80 leading-relaxed">
-                J&apos;avais l&apos;expertise, l&apos;expérience et la sensibilité à partager. 
-                J&apos;avais déjà accompagné de nombreux étudiants. J&apos;avais déjà transmis 
-                à mon propre fils, devenu ostéopathe.
-              </p>
-
-              <p className="text-xl md:text-2xl font-serif text-blanc pt-4">
-                Il est temps de transmettre. De former d&apos;autres mains pour qu&apos;elles 
-                soulagent encore plus de femmes.
-              </p>
             </motion.div>
           </div>
         </div>
@@ -331,7 +219,7 @@ export default function AProposContent() {
             viewport={{ once: true }}
             className="text-sm font-medium tracking-widest uppercase text-dore mb-4"
           >
-            Ma philosophie
+            {content.philosophieLabel}
           </motion.p>
 
           <motion.h2
@@ -340,7 +228,7 @@ export default function AProposContent() {
             viewport={{ once: true }}
             className="text-3xl md:text-4xl font-serif text-noir mb-8"
           >
-            Ma façon d&apos;accompagner
+            {content.philosophieTitle}
           </motion.h2>
 
           <motion.div
@@ -350,19 +238,9 @@ export default function AProposContent() {
             transition={{ delay: 0.2 }}
             className="prose prose-lg text-noir-light mx-auto"
           >
-            <p>
-              Ce que je veux transmettre aujourd&apos;hui, ce n&apos;est pas seulement des 
-              techniques spécifiques d&apos;ostéopathie gynécologique.
-            </p>
-            <p>
-              C&apos;est une <strong>posture</strong>. Une <strong>écoute</strong>. 
-              Une <strong>conscience du geste</strong>.
-            </p>
-            <p>
-              C&apos;est la capacité à <em>ressentir</em> ce qui est juste ou pas, 
-              à <em>choisir</em> quand intervenir ou non, à devenir un(e) praticien(ne) 
-              en santé féminine, sensible et ancré(e).
-            </p>
+            {content.philosophieParagraphs.map((paragraph, index) => (
+              <p key={index}>{paragraph}</p>
+            ))}
           </motion.div>
 
           <motion.div
@@ -373,81 +251,52 @@ export default function AProposContent() {
             className="mt-10 p-6 bg-dore/10 rounded-xl inline-block"
           >
             <p className="text-noir-light text-sm">
-              L&apos;accompagnement proposé est <strong>complémentaire</strong> au suivi médical 
-              et <strong>ne le remplace pas</strong>.
+              {content.philosophieDisclaimer}
             </p>
           </motion.div>
         </div>
       </SectionWrapper>
 
-      {/* Mon quotidien - IMPROVED */}
+      {/* Mon quotidien */}
       <SectionWrapper background="creme">
         <div className="grid lg:grid-cols-2 gap-12 lg:gap-16 items-center">
-          {/* Left: Title + Description */}
           <motion.div
             initial={{ opacity: 0, x: -30 }}
             whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true }}
           >
             <p className="text-sm font-medium tracking-widest uppercase text-dore mb-4">
-              Au quotidien
+              {content.quotidienLabel}
             </p>
 
             <h2 className="text-3xl md:text-4xl font-serif text-noir mb-6">
-              Ma vie, entre cabinet et famille
+              {content.quotidienTitle}
             </h2>
 
             <p className="text-noir-light text-lg mb-8">
-              Au-delà de la pratique, je suis avant tout maman de 4 enfants. 
-              C&apos;est cette vie riche et intense qui nourrit ma vision du soin 
-              et ma façon d&apos;accompagner.
+              {content.quotidienDescription}
             </p>
 
             {/* Stats cards */}
             <div className="grid grid-cols-2 gap-4">
-              <div className="bg-blanc p-5 rounded-xl shadow-soft">
-                <div className="flex items-center gap-3 mb-2">
-                  <Heart size={20} className="text-dore" />
-                  <span className="font-medium text-noir">4 enfants</span>
-                </div>
-                <p className="text-sm text-noir-light">
-                  3 fils (25, 24, 18 ans) + 1 fille (10 ans)
-                </p>
-              </div>
-
-              <div className="bg-blanc p-5 rounded-xl shadow-soft">
-                <div className="flex items-center gap-3 mb-2">
-                  <Users size={20} className="text-dore" />
-                  <span className="font-medium text-noir">Florian</span>
-                </div>
-                <p className="text-sm text-noir-light">
-                  Mon fils aîné, devenu ostéopathe
-                </p>
-              </div>
-
-              <div className="bg-blanc p-5 rounded-xl shadow-soft">
-                <div className="flex items-center gap-3 mb-2">
-                  <Stethoscope size={20} className="text-dore" />
-                  <span className="font-medium text-noir">Recherche</span>
-                </div>
-                <p className="text-sm text-noir-light">
-                  Dyspareunies à la Clinique Rive Gauche
-                </p>
-              </div>
-
-              <div className="bg-blanc p-5 rounded-xl shadow-soft">
-                <div className="flex items-center gap-3 mb-2">
-                  <BookOpen size={20} className="text-dore" />
-                  <span className="font-medium text-noir">AERO</span>
-                </div>
-                <p className="text-sm text-noir-light">
-                  Groupe de recherche continu
-                </p>
-              </div>
+              {content.quotidienStats.map((stat, index) => {
+                const Icon = quotidienIcons[index] || Heart;
+                return (
+                  <div key={stat.title} className="bg-blanc p-5 rounded-xl shadow-soft">
+                    <div className="flex items-center gap-3 mb-2">
+                      <Icon size={20} className="text-dore" />
+                      <span className="font-medium text-noir">{stat.title}</span>
+                    </div>
+                    <p className="text-sm text-noir-light">
+                      {stat.description}
+                    </p>
+                  </div>
+                );
+              })}
             </div>
           </motion.div>
 
-          {/* Right: WhatsApp teaser */}
+          {/* WhatsApp teaser */}
           <motion.div
             initial={{ opacity: 0, x: 30 }}
             whileInView={{ opacity: 1, x: 0 }}
@@ -498,7 +347,6 @@ export default function AProposContent() {
               </div>
             </div>
 
-            {/* Decorative */}
             <div className="absolute -bottom-4 -right-4 w-24 h-24 bg-dore/10 rounded-full blur-2xl" />
           </motion.div>
         </div>
@@ -513,7 +361,7 @@ export default function AProposContent() {
             viewport={{ once: true }}
             className="text-3xl md:text-4xl font-serif text-noir mb-6"
           >
-            Envie de rejoindre l&apos;aventure MATERIS ?
+            {content.ctaTitle}
           </motion.h2>
 
           <motion.div
@@ -535,4 +383,3 @@ export default function AProposContent() {
     </>
   );
 }
-

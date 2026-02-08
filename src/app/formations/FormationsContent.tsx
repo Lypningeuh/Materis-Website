@@ -11,8 +11,11 @@ import {
 import SectionWrapper from "@/components/ui/SectionWrapper";
 import Button from "@/components/ui/Button";
 import CheminsSection from "@/components/sections/CheminsSection";
+import formationsContent from "../../../content/formations.json";
 
 export default function FormationsContent() {
+  const content = formationsContent;
+
   return (
     <>
       {/* Votre chemin - Selection e-learning / présentiel */}
@@ -29,31 +32,29 @@ export default function FormationsContent() {
             <div className="flex items-center gap-3 mb-4">
               <Calendar size={20} className="text-dore" />
               <p className="text-sm font-medium tracking-widest uppercase text-dore">
-                Formation présentielle
+                {content.presentielLabel}
               </p>
             </div>
 
             <h2 className="text-3xl md:text-4xl font-serif text-noir mb-6">
-              Formation en présentiel
+              {content.presentielTitle}
             </h2>
 
             <p className="text-noir-light mb-6 text-lg">
-              Apprendre <strong>au contact du terrain</strong>, avec un regard croisé 
-              (ostéo, sage-femme, chirurgien, médecin). Passer de la technique au <em>geste juste</em>.
+              {content.presentielDescription}
             </p>
 
             <div className="bg-blanc p-6 rounded-xl shadow-soft mb-6">
               <h4 className="font-medium text-noir mb-4">Intervenants</h4>
               <ul className="space-y-2 text-noir-light text-sm">
-                <li>• <strong>Sandrine</strong> — Ostéopathe formatrice, 28+ ans</li>
-                <li>• <strong>Yannig</strong> — Sage-femme, Ostéopathe, 25+ ans</li>
-                <li>• Chirurgien spécialisé en endométriose</li>
-                <li>• Médecin</li>
+                {content.intervenants.map((intervenant, index) => (
+                  <li key={index}>• {intervenant}</li>
+                ))}
               </ul>
             </div>
 
-            <Button href="/formations/presentiel" variant="primary" icon={<ArrowRight size={18} />}>
-              Voir le programme 2025-2026
+            <Button href={content.presentielCtaHref} variant="primary" icon={<ArrowRight size={18} />}>
+              {content.presentielCtaText}
             </Button>
           </motion.div>
 
@@ -66,13 +67,7 @@ export default function FormationsContent() {
             <h4 className="font-serif text-xl text-noir mb-6">Sessions disponibles</h4>
             
             <div className="space-y-4">
-              {[
-                { num: 1, title: "Présentation gynéco — Douleurs coccygiennes", dates: "26-27 sept 2025", price: "230€", duration: "8h" },
-                { num: 2, title: "Endométriose", dates: "21-22 nov 2025", price: "280€", duration: "10h30" },
-                { num: 3, title: "Dyspareunie — Névralgie pudendale", dates: "23-24 jan 2026", price: "230€", duration: "8h" },
-                { num: 4, title: "Infertilité & PMA", dates: "13-14 mars 2026", price: "230€", duration: "8h" },
-                { num: 5, title: "Grossesse, accouchement & post-partum", dates: "10-11 avr 2026", price: "280€", duration: "10h30" },
-              ].map((session) => (
+              {content.sessions.map((session) => (
                 <div key={session.num} className="flex items-center justify-between p-4 bg-creme/50 rounded-lg hover:bg-creme transition-colors">
                   <div className="flex-1">
                     <div className="flex items-center gap-2 mb-1">
@@ -94,9 +89,9 @@ export default function FormationsContent() {
 
             <div className="mt-6 p-4 bg-gradient-to-r from-dore/10 to-dore/5 rounded-lg text-center">
               <p className="text-noir">
-                <span className="font-medium">Pack 5 sessions :</span>{" "}
-                <span className="text-dore font-serif text-xl">1 100€</span>
-                <span className="text-noir-light text-sm block mt-1">(au lieu de 1 250€)</span>
+                <span className="font-medium">{content.packLabel}</span>{" "}
+                <span className="text-dore font-serif text-xl">{content.packPrice}</span>
+                <span className="text-noir-light text-sm block mt-1">({content.packOriginalPrice})</span>
               </p>
             </div>
           </motion.div>
@@ -120,28 +115,17 @@ export default function FormationsContent() {
             <div className="flex items-start gap-4 mb-6 p-4 bg-blanc rounded-lg">
               <AlertTriangle size={20} className="text-dore flex-shrink-0 mt-0.5" />
               <p className="text-noir-light">
-                <strong>Important</strong> : Cette formation n&apos;est pas un acte médical. 
-                Elle s&apos;inscrit en complément des parcours de soins.
+                <strong>Important</strong> : {content.securiteImportant}
               </p>
             </div>
 
             <ul className="space-y-3 text-noir-light">
-              <li className="flex items-center gap-3">
-                <Check size={18} className="text-dore flex-shrink-0" />
-                Respect des contre-indications
-              </li>
-              <li className="flex items-center gap-3">
-                <Check size={18} className="text-dore flex-shrink-0" />
-                Importance des red flags
-              </li>
-              <li className="flex items-center gap-3">
-                <Check size={18} className="text-dore flex-shrink-0" />
-                Orientation vers spécialistes quand nécessaire
-              </li>
-              <li className="flex items-center gap-3">
-                <Check size={18} className="text-dore flex-shrink-0" />
-                Consentement et confort de la patiente
-              </li>
+              {content.securiteItems.map((item) => (
+                <li key={item} className="flex items-center gap-3">
+                  <Check size={18} className="text-dore flex-shrink-0" />
+                  {item}
+                </li>
+              ))}
             </ul>
           </motion.div>
         </div>
@@ -156,7 +140,7 @@ export default function FormationsContent() {
             viewport={{ once: true }}
             className="text-3xl md:text-4xl font-serif text-noir mb-6"
           >
-            Besoin d&apos;aide pour choisir ?
+            {content.ctaTitle}
           </motion.h2>
           <motion.p
             initial={{ opacity: 0 }}
@@ -164,8 +148,7 @@ export default function FormationsContent() {
             viewport={{ once: true }}
             className="text-noir-light mb-8 max-w-xl mx-auto"
           >
-            Prenez 20 minutes pour en discuter avec moi. Je vous aiderai à trouver 
-            le format le plus adapté à votre situation.
+            {content.ctaDescription}
           </motion.p>
           <motion.div
             initial={{ opacity: 0, y: 20 }}
@@ -174,13 +157,13 @@ export default function FormationsContent() {
             transition={{ delay: 0.2 }}
           >
             <Button
-              href="https://calendly.com/sandrine-mosse-materis/30min"
+              href={content.ctaCalendlyUrl}
               external
               variant="primary"
               size="lg"
               icon={<Calendar size={20} />}
             >
-              Prendre RDV (20 min)
+              {content.ctaButtonText}
             </Button>
           </motion.div>
         </div>
@@ -188,4 +171,3 @@ export default function FormationsContent() {
     </>
   );
 }
-

@@ -1,0 +1,61 @@
+{
+  "pageHeader": {
+    "overtitle": "À propos",
+    "title": "Sandrine & l'histoire de MATERIS",
+    "subtitle": "Un parcours de 28 ans au service des femmes, une transmission née d'une épreuve."
+  },
+  "parcoursLabel": "Mon parcours",
+  "parcoursTitle": "Comment les maux ont guidé ma vocation",
+  "parcoursImage": "/photo_sandrine-verticale.png",
+  "parcoursImageAlt": "Sandrine, fondatrice de MATERIS",
+  "parcoursParagraphs": [
+    "Je suis née à Carcassonne, et c'est là que ma vocation a pris racine… un peu malgré moi. À la suite d'un accident de mobylette, j'ai passé de longs mois en rééducation.",
+    "Une expérience marquante, parfois douloureuse — et une révélation : je voulais faire ce métier.",
+    "De la kinésithérapie à l'ostéopathie, puis à l'ostéopathie gynécologique, chaque étape m'a rapprochée de ce qui allait devenir ma spécialité : accompagner les femmes dans leurs douleurs les plus intimes."
+  ],
+  "parcoursExpandedParagraphs": [
+    "C'est à ce moment que j'ai rencontré l'une de mes futures associées. Ensemble avec une autre amie qui nous a fait découvrir l'ostéopathie, nous avons rejoint ensemble l'école d'ostéopathie de Toulouse de André Ratio, qui se situait alors dans un lieu hors du commun : le domaine de Richard Rampin, à Avignonet-Lauragais. Nous avons étudié pendant six années dans ce cadre inspirant, avec une petite promo de 15 étudiants — un vrai luxe pour apprendre dans l'intimité.",
+    "C'est dans ce contexte que j'ai découvert l'ostéopathie gynécologique. Et ce fut un véritable bouleversement. Nous étions jeunes mamans, confrontées à nos propres douleurs, nos silences, nos histoires corporelles. Comprendre, soulager, libérer : ces techniques ont été une véritable délivrance.",
+    "J'ai été diplômée en 2004, avec une remise officielle en janvier 2005. Très vite, ma pratique s'est naturellement orientée vers l'accompagnement des femmes. Ma patientèle s'est féminisée, et mon approche est devenue plus intuitive, plus globale."
+  ],
+  "timelineTitle": "28 ans de parcours",
+  "timeline": [
+    { "year": "1997", "event": "Diplômée kinésithérapie (Toulouse)" },
+    { "year": "1997-2004", "event": "6 ans d'études d'ostéopathie, école André Ratio" },
+    { "year": "1998", "event": "Premier cabinet à Saint-Jean avec Florence" },
+    { "year": "2004", "event": "Diplôme d'ostéopathie" },
+    { "year": "2007", "event": "Professeure en viscéral au CSO Toulouse" },
+    { "year": "2014", "event": "Diplôme d'étiomédecine (Max Bernardeau)" },
+    { "year": "2015", "event": "Conférence EndoFrance + Création Pôle Féminin" },
+    { "year": "2018", "event": "Formation AERO (4 ans + groupe continu)" },
+    { "year": "2022", "event": "Ouverture cabinet de Quint avec son fils Florian" },
+    { "year": "2024", "event": "Naissance de MATERIS" }
+  ],
+  "confessionLabel": "Ma confession",
+  "confessionTitle": "Et puis, la vie m'a arrêtée…",
+  "confessionParagraphs": [
+    "En 2024, la vie m'a stoppée. Une maladie aux mains. Au départ l'annonce d'une maladie neurologique centrale. Un vertige m'a saisie, la peur, l'incompréhension.",
+    "Pour une ostéopathe, ne plus pouvoir se servir de ses mains... vous imaginez ?",
+    "Le diagnostic a été invalidé... mais me voilà partie pour un parcours de santé qui continue encore. Les soins, une première chirurgie, la rééducation...",
+    "J'ai décidé de ne pas subir cet arrêt, mais d'en faire un espace fertile. J'ai exploré des approches plus subtiles : reiki, magnétisme, énergie quantique, soins énergétiques, féminin sacré… jusqu'au jour où l'évidence s'est imposée : ce que j'aime profondément, c'est accompagner le corps et le féminin. Tout était déjà là, en moi. Il est temps de transmettre."
+  ],
+  "confessionQuote": "Il est temps de transmettre. De former d'autres mains pour qu'elles soulagent encore plus de femmes.",
+  "philosophieLabel": "Ma philosophie",
+  "philosophieTitle": "Ma façon d'accompagner",
+  "philosophieParagraphs": [
+    "Ce que je veux transmettre aujourd'hui, ce n'est pas seulement des techniques spécifiques d'ostéopathie gynécologique.",
+    "C'est une posture. Une écoute. Une conscience du geste.",
+    "C'est la capacité à ressentir ce qui est juste ou pas, à choisir quand intervenir ou non, à devenir un(e) praticien(ne) en santé féminine, sensible et ancré(e)."
+  ],
+  "philosophieDisclaimer": "L'accompagnement proposé est complémentaire au suivi médical et ne le remplace pas.",
+  "quotidienLabel": "Au quotidien",
+  "quotidienTitle": "Ma vie, entre cabinet et famille",
+  "quotidienDescription": "Au-delà de la pratique, je suis avant tout maman de 4 enfants. C'est cette vie riche et intense qui nourrit ma vision du soin et ma façon d'accompagner.",
+  "quotidienStats": [
+    { "title": "4 enfants", "description": "3 fils (25, 24, 18 ans) + 1 fille (10 ans)" },
+    { "title": "Florian", "description": "Mon fils aîné, devenu ostéopathe" },
+    { "title": "Recherche", "description": "Dyspareunies à la Clinique Rive Gauche" },
+    { "title": "AERO", "description": "Groupe de recherche continu" }
+  ],
+  "ctaTitle": "Envie de rejoindre l'aventure MATERIS ?"
+}

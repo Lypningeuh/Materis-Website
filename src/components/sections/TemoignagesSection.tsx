@@ -5,31 +5,12 @@ import { createPortal } from "react-dom";
 import { Play, Star, ChevronLeft, ChevronRight } from "lucide-react";
 import SectionWrapper from "@/components/ui/SectionWrapper";
 import SectionHeader from "@/components/ui/SectionHeader";
+import temoignagesContent from "../../../content/temoignages.json";
 
-const videoTestimonials = [
-  { id: "e2eaa810", title: "Expérience Transformatrice" },
-  { id: "06e9a9ad", title: "Témoignage Formation" },
-  { id: "4458d5ea", title: "Retour d'expérience" },
-  { id: "f51923f9", title: "Avis praticienne" },
-  { id: "e288458a", title: "Mon parcours Materis" },
-];
+const content = temoignagesContent;
 
-const googleReviews = [
-  { author: "Lauriane Jammes", text: "Depuis presque 15ans..... Une personne au top professionnellement parlant et toujours attentionnée", rating: 5 },
-  { author: "Lucile Florac", text: "Impossible de savoir ce que mon genou avait : médecins diverses radio irm ... et depuis remise en place! Super", rating: 5 },
-  { author: "Huhu Patafix", text: "Ma mère avais un gros problème de santé grâce à Sandrine elle n'a plus rien. Merci", rating: 5 },
-  { author: "Sophie Garcia", text: "Super rencontre avec cette professionnelle qui est à la fois humaine et compétente dans son domaine... elle prend le temps de vous écouter ce qui aide pour la suite de la séance. Je vous recommande fortement Sandrine.", rating: 5 },
-  { author: "Le Pisciniste", text: "Sandrine et ses collaborateurs sont des magiciens à l'écoute de leurs patients. Ils sont juste au top du top et je les consulte plus que mon généraliste. Je commande et recommande", rating: 5 },
-  { author: "Stéphanie", text: "Vu pour mes deux grossesses. Aide a la préparation du bassin et du périné, rassure, enlève les tensions dùes à la grossesse, avec bienveillance et douceur. A sauver ma vie intime apres ma 1ere grossesse ! Je recommande a 100%!", rating: 5 },
-  { author: "Alison Payne", text: "Sandrine a l'habitude des nourrissons et ça se voit ! Elle a su soulager les douleurs de notre nouveau-né avec une grande douceur. C'est grâce à elle que j'ai pu continuer l'allaitement !", rating: 5 },
-  { author: "Laura", text: "Sandrine est une excellente ostéopathe, humaine, douce et de très bon conseils. Elle m'a suivie durant ma grossesse et m'a beaucoup soulagée. Je recommande vivement !", rating: 5 },
-  { author: "Sonia Borull", text: "Sandrine est une ostéopathe exceptionnelle tant au niveau professionnel et qu'humain. J'ai pu beneficier de ses multiples compétences. Ses soins très précieux m'ont beaucoup aidés et soulagés. Je la recommande fortement.", rating: 5 },
-  { author: "Marion", text: "Sandrine, Sandrine, Sandrine, Milles merci. Ma magicienne, fée Marabout. J'ai passé une bonne nuit. Je me sens comme la reine des neiges … libérée, délivrée de la cage thoracique et du bassin. Je me sens tellement mieux. Mais qu'est ce que je suis contente de te connaître et d'être accompagnée et chouchoutée par toi pendant cette grossesse.", rating: 5 },
-  { author: "Manon", text: "Un grand grand merci. Mon dos va beaucoup mieux, je ressens encore quelques douleurs mais ça n'a pas absolument plus rien à voir. Ça s'est soulagé petit à Petit depuis notre rdv. Merci beaucoup pour ton soin, tes mots et ta présence.", rating: 5 },
-];
-
-const topRowReviews = googleReviews.filter((_, i) => i % 2 === 0);
-const bottomRowReviews = googleReviews.filter((_, i) => i % 2 === 1);
+const topRowReviews = content.googleReviews.filter((_, i) => i % 2 === 0);
+const bottomRowReviews = content.googleReviews.filter((_, i) => i % 2 === 1);
 
 // Composant pour les étoiles (évite la duplication)
 function Stars({ rating }: { rating: number }) {
@@ -61,7 +42,7 @@ function ReviewCard({
   review,
   containerRef
 }: {
-  review: typeof googleReviews[0];
+  review: typeof content.googleReviews[0];
   containerRef: React.RefObject<HTMLDivElement | null>;
 }) {
   const [isHovered, setIsHovered] = useState(false);
@@ -70,7 +51,6 @@ function ReviewCard({
   const [position, setPosition] = useState<{ left: number; top: number; width: number } | null>(null);
   const timeoutRef = useRef<NodeJS.Timeout | null>(null);
 
-  // Pour éviter les erreurs SSR avec createPortal
   useEffect(() => {
     setIsMounted(true);
     return () => {
@@ -78,7 +58,6 @@ function ReviewCard({
     };
   }, []);
 
-  // Fermer l'overlay au scroll
   useEffect(() => {
     if (!isHovered) return;
 
@@ -101,7 +80,6 @@ function ReviewCard({
       const rect = cardRef.current.getBoundingClientRect();
       const containerRect = containerRef.current.getBoundingClientRect();
 
-      // Zone morte de 150px près des bords - pas d'overlay
       const EDGE_MARGIN = 150;
       if (rect.left < containerRect.left + EDGE_MARGIN ||
           rect.right > containerRect.right - EDGE_MARGIN) {
@@ -132,8 +110,6 @@ function ReviewCard({
     setPosition(null);
   };
 
-  // L'overlay est rendu via Portal dans document.body pour échapper au transform du marquee
-  // z-index 50 pour passer sous les dégradés (qui seront à z-index 100)
   const overlay = isHovered && position && isMounted ? createPortal(
     <div
       className="rounded-2xl border border-dore/50 bg-noir shadow-2xl animate-card-appear"
@@ -167,7 +143,6 @@ function ReviewCard({
         onMouseEnter={handleMouseEnter}
         onMouseLeave={handleMouseLeave}
       >
-        {/* Carte de base - hauteur fixe, texte tronqué */}
         <div className="h-[180px] p-5 rounded-2xl border border-blanc/10 bg-noir">
           <Stars rating={review.rating} />
           <p className="text-blanc/85 text-sm leading-relaxed line-clamp-3">
@@ -187,12 +162,11 @@ function MarqueeRow({
   isPaused,
   containerRef
 }: {
-  reviews: typeof googleReviews;
+  reviews: typeof content.googleReviews;
   direction: "left" | "right";
   isPaused: boolean;
   containerRef: React.RefObject<HTMLDivElement | null>;
 }) {
-  // Duplication 2x pour boucle parfaite avec -50%
   const duplicatedReviews = [...reviews, ...reviews];
 
   return (
@@ -221,31 +195,27 @@ export default function TemoignagesSection() {
   const [bottomRowPaused, setBottomRowPaused] = useState(false);
   const reviewsContainerRef = useRef<HTMLDivElement>(null);
 
-  // Preload adjacent videos when index changes
   useEffect(() => {
     const toLoad = new Set(loadedVideos);
-    // Current visible videos
     for (let i = 0; i < 3; i++) {
-      toLoad.add((currentVideoIndex + i) % videoTestimonials.length);
+      toLoad.add((currentVideoIndex + i) % content.videoTestimonials.length);
     }
-    // Preload next video
-    toLoad.add((currentVideoIndex + 3) % videoTestimonials.length);
-    // Preload previous video
-    toLoad.add((currentVideoIndex - 1 + videoTestimonials.length) % videoTestimonials.length);
+    toLoad.add((currentVideoIndex + 3) % content.videoTestimonials.length);
+    toLoad.add((currentVideoIndex - 1 + content.videoTestimonials.length) % content.videoTestimonials.length);
 
     setLoadedVideos(toLoad);
   }, [currentVideoIndex]);
 
   const getVisibleIndices = () => {
-    return [0, 1, 2].map(i => (currentVideoIndex + i) % videoTestimonials.length);
+    return [0, 1, 2].map(i => (currentVideoIndex + i) % content.videoTestimonials.length);
   };
 
   const nextVideo = () => {
-    setCurrentVideoIndex((prev) => (prev + 1) % videoTestimonials.length);
+    setCurrentVideoIndex((prev) => (prev + 1) % content.videoTestimonials.length);
   };
 
   const prevVideo = () => {
-    setCurrentVideoIndex((prev) => (prev - 1 + videoTestimonials.length) % videoTestimonials.length);
+    setCurrentVideoIndex((prev) => (prev - 1 + content.videoTestimonials.length) % content.videoTestimonials.length);
   };
 
   const visibleIndices = getVisibleIndices();
@@ -271,9 +241,9 @@ export default function TemoignagesSection() {
       `}</style>
 
       <SectionHeader
-        eyebrow="Témoignages"
-        title="Ce qu'ils disent de Sandrine"
-        subtitle="Découvrez les retours authentiques des patients et praticiens formés."
+        eyebrow={content.eyebrow}
+        title={content.title}
+        subtitle={content.subtitle}
         light
       />
 
@@ -293,9 +263,8 @@ export default function TemoignagesSection() {
             <ChevronLeft size={20} />
           </button>
 
-          {/* Video container with all videos preloaded */}
           <div className="flex gap-4 md:gap-6">
-            {videoTestimonials.map((video, index) => {
+            {content.videoTestimonials.map((video, index) => {
               const isVisible = visibleIndices.includes(index);
               const isLoaded = loadedVideos.has(index);
               const pos = visibleIndices.indexOf(index);
@@ -338,7 +307,7 @@ export default function TemoignagesSection() {
         </div>
 
         <div className="flex items-center justify-center gap-2 mt-6">
-          {videoTestimonials.map((_, index) => (
+          {content.videoTestimonials.map((_, index) => (
             <button
               key={index}
               onClick={() => setCurrentVideoIndex(index)}
@@ -364,13 +333,10 @@ export default function TemoignagesSection() {
           <span className="text-blanc/60 text-sm">Témoignages écrits</span>
         </div>
 
-        {/* Container avec overflow-hidden pour clipper les cartes */}
         <div ref={reviewsContainerRef} className="relative overflow-hidden">
-          {/* Dégradés - z-10 suffit car la zone morte (150px) empêche les overlays près des bords (128px) */}
           <div className="pointer-events-none absolute left-0 top-0 bottom-0 w-32 bg-gradient-to-r from-noir to-transparent z-10" />
           <div className="pointer-events-none absolute right-0 top-0 bottom-0 w-32 bg-gradient-to-l from-noir to-transparent z-10" />
 
-          {/* Top row */}
           <div
             className="mb-4"
             onMouseEnter={() => setTopRowPaused(true)}
@@ -379,7 +345,6 @@ export default function TemoignagesSection() {
             <MarqueeRow reviews={topRowReviews} direction="left" isPaused={topRowPaused} containerRef={reviewsContainerRef} />
           </div>
 
-          {/* Bottom row */}
           <div
             onMouseEnter={() => setBottomRowPaused(true)}
             onMouseLeave={() => setBottomRowPaused(false)}

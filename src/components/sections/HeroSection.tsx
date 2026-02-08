@@ -4,14 +4,17 @@ import Image from "next/image";
 import { motion } from "framer-motion";
 import { ArrowRight, Calendar, Sparkles } from "lucide-react";
 import Button from "@/components/ui/Button";
+import heroContent from "../../../content/hero.json";
 
 export default function HeroSection() {
+  const content = heroContent;
+
   return (
     <section className="relative min-h-screen flex items-center justify-center overflow-hidden">
       {/* Full background image */}
       <div className="absolute inset-0">
         <Image
-          src="/bg_header_cover.png"
+          src={content.backgroundImage}
           alt="Soins et bien-être féminin"
           fill
           priority
@@ -61,7 +64,7 @@ export default function HeroSection() {
         >
           <Sparkles className="w-4 h-4 text-dore" />
           <span className="text-sm font-medium text-blanc/90 tracking-wide">
-            28+ ans d&apos;expérience en santé féminine
+            {content.badge}
           </span>
         </motion.div>
 
@@ -72,9 +75,9 @@ export default function HeroSection() {
           transition={{ duration: 0.9, delay: 0.2, ease: "easeOut" }}
           className="text-4xl md:text-5xl lg:text-7xl font-serif text-blanc leading-[1.1] md:leading-[0.95] mb-8"
         >
-          Former des praticiens qui{" "}
+          {content.titleBefore}
           <span className="relative inline-block">
-            <span className="text-dore">écoutent</span>
+            <span className="text-dore">{content.titleHighlight}</span>
             <motion.span
               initial={{ scaleX: 0 }}
               animate={{ scaleX: 1 }}
@@ -82,7 +85,7 @@ export default function HeroSection() {
               className="absolute -bottom-2 left-0 right-0 h-0.5 bg-gradient-to-r from-transparent via-dore to-transparent origin-center"
             />
           </span>
-          {" "}ce que le corps des femmes leur dit
+          {content.titleAfter}
         </motion.h1>
 
         {/* Subtitle */}
@@ -92,9 +95,7 @@ export default function HeroSection() {
           transition={{ duration: 0.8, delay: 0.4, ease: "easeOut" }}
           className="text-lg md:text-xl text-blanc/80 leading-relaxed mb-12 max-w-2xl mx-auto"
         >
-          Endométriose, douleurs pelviennes, santé féminine : des formations
-          ancrées dans la pratique pour passer de la technique au{" "}
-          <em className="text-dore-light font-medium not-italic">geste juste</em>.
+          {content.subtitle}
         </motion.p>
 
         {/* CTAs */}
@@ -105,19 +106,19 @@ export default function HeroSection() {
           className="flex flex-col sm:flex-row gap-4 justify-center mb-16"
         >
           <Button
-            href="/formations"
+            href={content.ctaPrimaryHref}
             variant="primary"
             size="lg"
             icon={<ArrowRight size={20} />}
           >
-            Découvrir les formations
+            {content.ctaPrimary}
           </Button>
           <button
-            onClick={() => window.open("https://calendly.com/sandrine-mosse-materis/30min", "_blank")}
+            onClick={() => window.open(content.calendlyUrl, "_blank")}
             className="group flex items-center justify-center gap-3 px-8 py-4 rounded-full border border-blanc/30 text-blanc font-medium transition-all duration-300 hover:bg-blanc/10 hover:border-blanc/50"
           >
             <Calendar size={20} />
-            Prendre RDV
+            {content.ctaSecondary}
             <span className="text-blanc/50 group-hover:text-blanc/80 transition-colors">→</span>
           </button>
         </motion.div>
@@ -129,30 +130,26 @@ export default function HeroSection() {
           transition={{ delay: 1, duration: 0.8 }}
           className="flex flex-wrap items-center justify-center gap-8 md:gap-12"
         >
-          <div className="flex items-center gap-3">
-            <span className="text-3xl md:text-4xl font-serif text-dore">12+</span>
-            <span className="text-sm text-blanc/70 text-left leading-tight">
-              praticiens<br />formés
-            </span>
-          </div>
-          <div className="w-px h-12 bg-blanc/20 hidden md:block" />
-          <div className="flex items-center gap-3">
-            <span className="text-3xl md:text-4xl font-serif text-dore">5</span>
-            <span className="text-sm text-blanc/70 text-left leading-tight">
-              formations<br />disponibles
-            </span>
-          </div>
-          <div className="w-px h-12 bg-blanc/20 hidden md:block" />
-          <div className="flex items-center gap-3">
-            <span className="text-3xl md:text-4xl font-serif text-dore">28</span>
-            <span className="text-sm text-blanc/70 text-left leading-tight">
-              années<br />d&apos;expertise
-            </span>
-          </div>
+          {content.stats.map((stat, index) => (
+            <div key={index} className="flex items-center gap-3">
+              <span className="text-3xl md:text-4xl font-serif text-dore">{stat.value}</span>
+              <span className="text-sm text-blanc/70 text-left leading-tight">
+                {stat.label.split(" ").map((word, i) => (
+                  <span key={i}>
+                    {word}
+                    {i < stat.label.split(" ").length - 1 && <br />}
+                  </span>
+                ))}
+              </span>
+              {index < content.stats.length - 1 && (
+                <div className="w-px h-12 bg-blanc/20 hidden md:block ml-5" />
+              )}
+            </div>
+          ))}
         </motion.div>
       </div>
 
-      {/* Subtle vignette effect - placed before transition so it doesn't darken it */}
+      {/* Subtle vignette effect */}
       <div className="absolute inset-0 pointer-events-none bg-[radial-gradient(ellipse_at_center,_transparent_0%,_rgba(26,21,32,0.3)_100%)]" />
 
       {/* Elegant curved transition */}
@@ -164,14 +161,11 @@ export default function HeroSection() {
           className="w-full h-[80px] md:h-[130px]"
           preserveAspectRatio="none"
         >
-          {/* Soft shadow layer */}
           <path
             d="M0 150V70Q360 120 720 60Q1080 0 1440 50V150H0Z"
             fill="var(--creme-doux)"
             fillOpacity="0.35"
           />
-          
-          {/* Main smooth wave - centered dip */}
           <path
             d="M0 150V90Q360 130 720 75Q1080 20 1440 70V150H0Z"
             fill="var(--creme-doux)"

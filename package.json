@@ -3,19 +3,23 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "next dev",
+    "dev": "tinacms dev -c \"next dev\"",
+    "dev:next": "next dev",
     "build": "next build",
+    "build:tina": "tinacms build && next build",
     "start": "next start",
     "lint": "eslint"
   },
   "dependencies": {
     "@supabase/supabase-js": "^2.88.0",
+    "@tinacms/cli": "^2.1.5",
     "framer-motion": "^12.23.25",
     "lucide-react": "^0.555.0",
     "next": "16.0.7",
     "react": "19.2.0",
     "react-dom": "19.2.0",
-    "resend": "^6.7.0"
+    "resend": "^6.7.0",
+    "tinacms": "^3.4.1"
   },
   "devDependencies": {
     "@netlify/plugin-nextjs": "^5.15.2",

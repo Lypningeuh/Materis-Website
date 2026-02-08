@@ -1,0 +1,17 @@
+{
+  "badge": "28+ ans d'expérience en santé féminine",
+  "titleBefore": "Former des praticiens qui ",
+  "titleHighlight": "écoutent",
+  "titleAfter": " ce que le corps des femmes leur dit",
+  "subtitle": "Endométriose, douleurs pelviennes, santé féminine : des formations ancrées dans la pratique pour passer de la technique au geste juste.",
+  "backgroundImage": "/bg_header_cover.png",
+  "ctaPrimary": "Découvrir les formations",
+  "ctaPrimaryHref": "/formations",
+  "ctaSecondary": "Prendre RDV",
+  "calendlyUrl": "https://calendly.com/sandrine-mosse-materis/30min",
+  "stats": [
+    { "value": "12+", "label": "praticiens formés" },
+    { "value": "5", "label": "formations disponibles" },
+    { "value": "28", "label": "années d'expertise" }
+  ]
+}

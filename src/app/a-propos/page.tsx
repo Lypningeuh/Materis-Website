@@ -3,6 +3,7 @@ import { Suspense } from "react";
 import dynamic from "next/dynamic";
 import PageHeader from "@/components/ui/PageHeader";
 import SectionSkeleton from "@/components/ui/SectionSkeleton";
+import aProposContent from "../../../content/a-propos.json";
 
 const AProposContent = dynamic(() => import("./AProposContent"), {
   loading: () => <SectionSkeleton />,
@@ -18,9 +19,9 @@ export default function AProposPage() {
   return (
     <>
       <PageHeader
-        overtitle="À propos"
-        title="Sandrine & l'histoire de MATERIS"
-        subtitle="Un parcours de 28 ans au service des femmes, une transmission née d'une épreuve."
+        overtitle={aProposContent.pageHeader.overtitle}
+        title={aProposContent.pageHeader.title}
+        subtitle={aProposContent.pageHeader.subtitle}
       />
       <Suspense fallback={<SectionSkeleton />}>
         <AProposContent />
@@ -28,4 +29,3 @@ export default function AProposPage() {
     </>
   );
 }
-

@@ -1,0 +1,39 @@
+{
+  "pageHeader": {
+    "overtitle": "Formations",
+    "title": "Formations & Accompagnements",
+    "subtitle": "Choisissez le chemin qui vous correspond pour développer votre expertise en santé féminine."
+  },
+  "presentielLabel": "Formation présentielle",
+  "presentielTitle": "Formation en présentiel",
+  "presentielDescription": "Apprendre au contact du terrain, avec un regard croisé (ostéo, sage-femme, chirurgien, médecin). Passer de la technique au geste juste.",
+  "intervenants": [
+    "Sandrine — Ostéopathe formatrice, 28+ ans",
+    "Yannig — Sage-femme, Ostéopathe, 25+ ans",
+    "Chirurgien spécialisé en endométriose",
+    "Médecin"
+  ],
+  "presentielCtaText": "Voir le programme 2025-2026",
+  "presentielCtaHref": "/formations/presentiel",
+  "sessions": [
+    { "num": 1, "title": "Présentation gynéco — Douleurs coccygiennes", "dates": "26-27 sept 2025", "price": "230€", "duration": "8h" },
+    { "num": 2, "title": "Endométriose", "dates": "21-22 nov 2025", "price": "280€", "duration": "10h30" },
+    { "num": 3, "title": "Dyspareunie — Névralgie pudendale", "dates": "23-24 jan 2026", "price": "230€", "duration": "8h" },
+    { "num": 4, "title": "Infertilité & PMA", "dates": "13-14 mars 2026", "price": "230€", "duration": "8h" },
+    { "num": 5, "title": "Grossesse, accouchement & post-partum", "dates": "10-11 avr 2026", "price": "280€", "duration": "10h30" }
+  ],
+  "packLabel": "Pack 5 sessions :",
+  "packPrice": "1 100€",
+  "packOriginalPrice": "au lieu de 1 250€",
+  "securiteImportant": "Cette formation n'est pas un acte médical. Elle s'inscrit en complément des parcours de soins.",
+  "securiteItems": [
+    "Respect des contre-indications",
+    "Importance des red flags",
+    "Orientation vers spécialistes quand nécessaire",
+    "Consentement et confort de la patiente"
+  ],
+  "ctaTitle": "Besoin d'aide pour choisir ?",
+  "ctaDescription": "Prenez 20 minutes pour en discuter avec moi. Je vous aiderai à trouver le format le plus adapté à votre situation.",
+  "ctaButtonText": "Prendre RDV (20 min)",
+  "ctaCalendlyUrl": "https://calendly.com/sandrine-mosse-materis/30min"
+}

@@ -1,0 +1,32 @@
+{
+  "eyebrow": "La méthode MATERIS",
+  "title": "3 piliers pour une transformation durable",
+  "subtitle": "Un accompagnement e-learning complet : autonomie, coaching personnalisé et lives de groupe pour ne plus être seule dans votre cabinet.",
+  "piliers": [
+    {
+      "title": "Formation digitale complète",
+      "description": "Accès immédiat à la plateforme vschool avec 8 modules vidéo, documents PDF téléchargeables et replay illimité.",
+      "features": ["8 modules vidéo HD", "PDF & fiches pratiques", "Accès à vie"],
+      "highlight": true
+    },
+    {
+      "title": "Accompagnement continu",
+      "description": "Groupe WhatsApp pour vos questions en temps réel, lives bi-mensuels pour les études de cas avec la communauté.",
+      "features": ["Réponse sous 24h", "Lives bi-mensuels", "Communauté active"],
+      "highlight": false
+    },
+    {
+      "title": "Pratique guidée",
+      "description": "Application sur vos vraies patientes avec possibilité de journée de pratique accompagnée en cabinet.",
+      "features": ["Cas réels", "Journée pratique", "Supervision personnalisée"],
+      "highlight": false
+    }
+  ],
+  "advantageLabel": "Avantage digital",
+  "advantageTitle": "Formez-vous quand vous voulez, où vous voulez",
+  "advantageDescription": "Pas de week-ends sacrifiés, pas de déplacements coûteux. Apprenez à votre rythme avec un accès illimité aux contenus.",
+  "advantageStats": [
+    { "value": "24/7", "label": "Accès aux modules" },
+    { "value": "∞", "label": "Replay illimité" }
+  ]
+}

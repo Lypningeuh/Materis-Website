@@ -1,0 +1,25 @@
+{
+  "sectionLabel": "Mon histoire",
+  "title": "D'un accident à une",
+  "titleHighlight": "vocation",
+  "paragraphs": [
+    "Un accident de mobylette m'a conduite vers la kinésithérapie. Puis l'ostéopathie. Puis l'ostéopathie gynécologique — un bouleversement qui a orienté 28 ans de pratique auprès des femmes.",
+    "En 2024, une maladie aux mains m'a stoppée. Et un message m'est venu : «Il est temps de transmettre.»",
+    "C'est ainsi que MATERIS est née. Pour former d'autres mains, sensibles et justes."
+  ],
+  "quote": "Il est temps de transmettre. De former d'autres mains pour qu'elles soulagent encore plus de femmes.",
+  "quoteAuthor": "Sandrine",
+  "image": "/sandrine_avec_patient-pdt-massage_danscabinet_verticale.png",
+  "imageAlt": "Sandrine en consultation avec une patiente",
+  "experienceYears": "28+",
+  "experienceLabel": "ans de pratique",
+  "ctaText": "Découvrir mon parcours",
+  "ctaHref": "/a-propos",
+  "timelineLabel": "Étapes clés",
+  "timeline": [
+    { "year": "1997", "event": "Diplôme kiné" },
+    { "year": "2004", "event": "Diplôme ostéo" },
+    { "year": "2015", "event": "EndoFrance" },
+    { "year": "2024", "event": "MATERIS" }
+  ]
+}

@@ -5,8 +5,11 @@ import { motion } from "framer-motion";
 import { ArrowRight } from "lucide-react";
 import SectionWrapper from "@/components/ui/SectionWrapper";
 import Button from "@/components/ui/Button";
+import histoireContent from "../../../content/histoire.json";
 
 export default function HistoireSection() {
+  const content = histoireContent;
+
   return (
     <SectionWrapper background="clair">
       <div className="grid lg:grid-cols-2 gap-12 lg:gap-16 items-center">
@@ -25,8 +28,8 @@ export default function HistoireSection() {
           <div className="relative rounded-2xl overflow-hidden shadow-soft">
             <div className="aspect-[4/5] relative">
               <Image
-                src="/sandrine_avec_patient-pdt-massage_danscabinet_verticale.png"
-                alt="Sandrine en consultation avec une patiente"
+                src={content.image}
+                alt={content.imageAlt}
                 fill
                 className="object-cover"
                 sizes="(max-width: 768px) 100vw, 50vw"
@@ -40,10 +43,9 @@ export default function HistoireSection() {
             <div className="absolute bottom-6 left-6 right-6">
               <div className="bg-blanc/95 backdrop-blur-sm p-5 rounded-xl shadow-soft">
                 <p className="text-noir-light italic text-sm leading-relaxed">
-                  &ldquo;Il est temps de transmettre. De former d&apos;autres mains
-                  pour qu&apos;elles soulagent encore plus de femmes.&rdquo;
+                  &ldquo;{content.quote}&rdquo;
                 </p>
-                <p className="mt-2 text-dore text-sm font-medium">— Sandrine</p>
+                <p className="mt-2 text-dore text-sm font-medium">— {content.quoteAuthor}</p>
               </div>
             </div>
           </div>
@@ -56,8 +58,8 @@ export default function HistoireSection() {
             transition={{ delay: 0.4 }}
             className="absolute -right-4 top-8 bg-dore text-blanc p-4 rounded-xl shadow-lg"
           >
-            <p className="text-3xl font-serif">25+</p>
-            <p className="text-xs mt-1">ans de pratique</p>
+            <p className="text-3xl font-serif">{content.experienceYears}</p>
+            <p className="text-xs mt-1">{content.experienceLabel}</p>
           </motion.div>
         </motion.div>
 
@@ -70,48 +72,33 @@ export default function HistoireSection() {
           className="order-1 lg:order-2"
         >
           <p className="text-sm font-medium tracking-widest uppercase text-dore mb-4">
-            Mon histoire
+            {content.sectionLabel}
           </p>
           
           <h2 className="text-3xl md:text-4xl lg:text-5xl font-serif text-noir leading-tight mb-6">
-            D&apos;un accident à une{" "}
-            <span className="text-dore">vocation</span>
+            {content.title}{" "}
+            <span className="text-dore">{content.titleHighlight}</span>
           </h2>
 
           <div className="space-y-5 text-noir-light leading-relaxed mb-8">
-            <p>
-              Un accident de mobylette m&apos;a conduite vers la kinésithérapie.
-              Puis l&apos;ostéopathie. Puis l&apos;ostéopathie gynécologique — un
-              bouleversement qui a orienté 28 ans de pratique auprès des femmes.
-            </p>
-            <p>
-              En 2024, une maladie aux mains m&apos;a stoppée. Et un message
-              m&apos;est venu : <em className="text-noir font-medium">&ldquo;Il est temps de transmettre.&rdquo;</em>
-            </p>
-            <p>
-              C&apos;est ainsi que <span className="text-dore font-semibold">MATERIS</span> est née.
-              Pour former d&apos;autres mains, sensibles et justes.
-            </p>
+            {content.paragraphs.map((paragraph, index) => (
+              <p key={index}>{paragraph}</p>
+            ))}
           </div>
 
           <Button
-            href="/a-propos"
+            href={content.ctaHref}
             variant="outline"
             icon={<ArrowRight size={18} />}
           >
-            Découvrir mon parcours
+            {content.ctaText}
           </Button>
 
           {/* Timeline preview */}
           <div className="mt-10 pt-8 border-t border-beige">
-            <p className="text-sm text-noir-light mb-4">Étapes clés</p>
+            <p className="text-sm text-noir-light mb-4">{content.timelineLabel}</p>
             <div className="flex items-center gap-4 overflow-x-auto pb-2">
-              {[
-                { year: "1997", event: "Diplôme kiné" },
-                { year: "2004", event: "Diplôme ostéo" },
-                { year: "2015", event: "EndoFrance" },
-                { year: "2024", event: "MATERIS" },
-              ].map((item, i) => (
+              {content.timeline.map((item, i) => (
                 <div key={item.year} className="flex items-center gap-4 flex-shrink-0">
                   <div className="text-center">
                     <p className="text-lg font-serif text-dore">{item.year}</p>
@@ -119,7 +106,7 @@ export default function HistoireSection() {
                       {item.event}
                     </p>
                   </div>
-                  {i < 3 && <div className="w-8 h-px bg-beige" />}
+                  {i < content.timeline.length - 1 && <div className="w-8 h-px bg-beige" />}
                 </div>
               ))}
             </div>
@@ -129,4 +116,3 @@ export default function HistoireSection() {
     </SectionWrapper>
   );
 }
-
