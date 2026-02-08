@@ -1,5 +1,5 @@
 [build]
-  command = "npx tinacms build && npm run build"
+  command = "npx tinacms build || (echo 'TinaCloud syncing, retrying in 30s...' && sleep 30 && npx tinacms build) && npm run build"
   publish = ".next"
 
 [[plugins]]
