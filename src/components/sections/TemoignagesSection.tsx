@@ -271,7 +271,7 @@ export default function TemoignagesSection() {
 
               return (
                 <div
-                  key={video.id}
+                  key={video.url}
                   className="w-[240px] md:w-[280px] flex-shrink-0 transition-all duration-500 ease-out"
                   style={{
                     display: isVisible ? "block" : "none",
@@ -283,7 +283,7 @@ export default function TemoignagesSection() {
                   <div className="relative aspect-[9/16] rounded-2xl overflow-hidden shadow-lg">
                     {isLoaded && (
                       <iframe
-                        src={`https://my.onetake.ai/558e05a7/${video.id}/index.html`}
+                        src={video.url}
                         loading="lazy"
                         allow="autoplay; clipboard-write; encrypted-media; fullscreen"
                         allowFullScreen

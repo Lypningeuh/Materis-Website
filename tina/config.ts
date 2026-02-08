@@ -281,7 +281,8 @@ export default defineConfig({
           {
             type: "object",
             name: "videoTestimonials",
-            label: "Témoignages vidéo",
+            label: "Témoignages vidéo (format vertical 9:16)",
+            description: "Ajoutez des vidéos verticales (format 9:16 uniquement). Collez le lien complet de la vidéo (OneTake, YouTube Shorts, Vimeo, ou tout autre lien embed).",
             list: true,
             ui: {
               itemProps: (item: Record<string, string>) => ({
@@ -291,10 +292,11 @@ export default defineConfig({
             fields: [
               {
                 type: "string",
-                name: "id",
-                label: "ID vidéo OneTake",
+                name: "url",
+                label: "Lien de la vidéo (URL embed complète)",
+                description: "Collez ici le lien embed complet de la vidéo. Exemples : https://my.onetake.ai/... ou https://www.youtube.com/embed/... — Format vertical 9:16 uniquement.",
               },
-              { type: "string", name: "title", label: "Titre" },
+              { type: "string", name: "title", label: "Titre de la vidéo" },
             ],
           },
           {
