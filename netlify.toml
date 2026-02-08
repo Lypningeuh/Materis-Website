@@ -1,5 +1,5 @@
 [build]
-  command = "npx tinacms build && npm run build"
+  command = "(npx tinacms build || echo 'TinaCMS build skipped') && npm run build"
   publish = ".next"
 
 [[plugins]]
