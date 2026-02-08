@@ -3,6 +3,7 @@ import { Suspense } from "react";
 import dynamic from "next/dynamic";
 import PageHeader from "@/components/ui/PageHeader";
 import SectionSkeleton from "@/components/ui/SectionSkeleton";
+import ressourcesContent from "../../../content/ressources.json";
 
 const RessourcesContent = dynamic(() => import("./RessourcesContent"), {
   loading: () => <SectionSkeleton />,
@@ -18,9 +19,9 @@ export default function RessourcesPage() {
   return (
     <>
       <PageHeader
-        overtitle="Ressources"
-        title="Ressources & Cadeaux"
-        subtitle="Des contenus gratuits pour vous accompagner dans votre pratique."
+        overtitle={ressourcesContent.pageHeader.overtitle}
+        title={ressourcesContent.pageHeader.title}
+        subtitle={ressourcesContent.pageHeader.subtitle}
       />
       <Suspense fallback={<SectionSkeleton />}>
         <RessourcesContent />

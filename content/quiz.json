@@ -1,0 +1,14 @@
+{
+  "eyebrow": "Parlons de vous",
+  "title": "Et vous, où en êtes-vous ?",
+  "subtitle": "Cochez ce qui vous correspond et prenons le temps d'en parler ensemble.",
+  "options": [
+    { "id": "debutant", "label": "Je débute et je me sens perdue face aux problématiques gynéco" },
+    { "id": "specialiser", "label": "Je veux me spécialiser" },
+    { "id": "cabinet", "label": "Je veux développer mon cabinet autrement" },
+    { "id": "discuter", "label": "Je ne sais pas trop, j'aimerais discuter" }
+  ],
+  "ctaText": "On en parle pendant 20 minutes ?",
+  "ctaHref": "https://calendly.com/sandrine-mosse-materis/30min",
+  "ctaNote": "Appel gratuit et sans engagement"
+}

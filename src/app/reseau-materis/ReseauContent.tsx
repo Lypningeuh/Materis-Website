@@ -19,14 +19,9 @@ import Button from "@/components/ui/Button";
 import { supabase } from "@/lib/supabase";
 import { useSiteSettings } from "@/lib/useSiteSettings";
 import type { Praticien } from "@/lib/types";
+import reseauContent from "../../../content/reseau-page.json";
 
-const charteItems = [
-  "Respect du cadre médical",
-  "Formation continue",
-  "Éthique et consentement",
-  "Complémentarité avec le parcours de soins",
-  "Orientation vers spécialistes quand nécessaire",
-];
+const charteItems = reseauContent.charteItems;
 
 export default function ReseauContent() {
   const { settings } = useSiteSettings();
@@ -72,9 +67,7 @@ export default function ReseauContent() {
       <SectionWrapper background="clair" immediate>
         <div className="max-w-3xl mx-auto text-center">
           <p className="text-lg md:text-xl text-noir-light leading-relaxed">
-            Materis, c&apos;est aussi une <strong>communauté de praticiens formés</strong> à 
-            une approche spécifique d&apos;ostéo gynéco. Notre ambition : créer <strong>LE réseau 
-            français d&apos;ostéopathes gynéco</strong>, formés à une même méthode, partageant les mêmes valeurs.
+            {reseauContent.introText}
           </p>
         </div>
       </SectionWrapper>
@@ -97,11 +90,11 @@ export default function ReseauContent() {
           <div className="flex items-center justify-center gap-3 mb-4">
             <Users size={24} className="text-dore" />
             <p className="text-sm font-medium tracking-widest uppercase text-dore">
-              Nos praticiens
+              {reseauContent.praticiensLabel}
             </p>
           </div>
           <h2 className="text-3xl md:text-4xl font-serif text-noir">
-            Trouver un praticien MATERIS
+            {reseauContent.praticiensTitle}
           </h2>
         </div>
 
@@ -183,17 +176,16 @@ export default function ReseauContent() {
             <div className="flex items-center gap-3 mb-4">
               <Shield size={24} className="text-dore" />
               <p className="text-sm font-medium tracking-widest uppercase text-dore">
-                Engagement qualité
+                {reseauContent.charteLabel}
               </p>
             </div>
 
             <h2 className="text-3xl md:text-4xl font-serif text-noir mb-6">
-              La Charte MATERIS
+              {reseauContent.charteTitle}
             </h2>
 
             <p className="text-noir-light mb-8">
-              Chaque praticien du réseau MATERIS s&apos;engage à respecter une charte 
-              de qualité et d&apos;éthique commune.
+              {reseauContent.charteDescription}
             </p>
 
             <ul className="space-y-4">
@@ -209,12 +201,10 @@ export default function ReseauContent() {
           <div className="bg-creme p-8 rounded-2xl">
             <Award size={40} className="text-dore mb-6" />
             <h3 className="text-xl font-serif text-noir mb-4">
-              Certification MATERIS
+              {reseauContent.certificationTitle}
             </h3>
             <p className="text-noir-light">
-              Tous nos praticiens ont suivi une formation complète et validé 
-              les compétences nécessaires pour intégrer le réseau. Ils bénéficient 
-              d&apos;un accompagnement continu et participent aux formations continues.
+              {reseauContent.certificationDescription}
             </p>
           </div>
         </div>
@@ -225,18 +215,17 @@ export default function ReseauContent() {
         <div className="max-w-4xl mx-auto">
           <div className="text-center mb-12">
             <h2 className="text-3xl md:text-4xl font-serif text-noir">
-              Comment rejoindre le réseau ?
+              {reseauContent.joinTitle}
             </h2>
           </div>
 
           <div className="grid md:grid-cols-2 gap-8">
             <div className="bg-blanc p-8 rounded-2xl shadow-soft text-center">
               <h3 className="text-xl font-serif text-noir mb-4">
-                Je veux me former
+                {reseauContent.joinFormTitle}
               </h3>
               <p className="text-noir-light mb-6">
-                Découvrez nos formations pour développer vos compétences en 
-                ostéopathie gynécologique et rejoindre le réseau.
+                {reseauContent.joinFormDescription}
               </p>
               <Button href="/formations" variant="primary" icon={<ArrowRight size={18} />}>
                 Voir les formations
@@ -245,11 +234,10 @@ export default function ReseauContent() {
 
             <div className="bg-blanc p-8 rounded-2xl shadow-soft text-center">
               <h3 className="text-xl font-serif text-noir mb-4">
-                Je suis déjà formé(e)
+                {reseauContent.joinAlreadyTitle}
               </h3>
               <p className="text-noir-light mb-6">
-                Vous avez déjà suivi une formation MATERIS ? Demandez votre 
-                accès au réseau et à la communauté.
+                {reseauContent.joinAlreadyDescription}
               </p>
               <Button href="/contact" variant="outline">
                 Demander l&apos;accès
@@ -265,11 +253,10 @@ export default function ReseauContent() {
           <div className="bg-creme p-8 md:p-12 rounded-2xl">
             <MessageCircle size={40} className="mx-auto text-dore mb-6" />
             <h2 className="text-2xl md:text-3xl font-serif text-noir mb-4">
-              Rejoignez la communauté WhatsApp
+              {reseauContent.whatsappTitle}
             </h2>
             <p className="text-noir-light mb-8">
-              Un groupe privé réservé aux praticiens formés MATERIS pour échanger, 
-              poser vos questions et partager vos cas cliniques.
+              {reseauContent.whatsappDescription}
             </p>
             <Button
               href={whatsappLink}
@@ -277,7 +264,7 @@ export default function ReseauContent() {
               variant="primary"
               icon={<MessageCircle size={18} />}
             >
-              Accès réservé aux membres
+              {reseauContent.whatsappCtaText}
             </Button>
           </div>
         </div>

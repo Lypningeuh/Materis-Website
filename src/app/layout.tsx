@@ -21,7 +21,7 @@ const raleway = Raleway({
 export const metadata: Metadata = {
   title: "MATERIS — Formations endométriose & ostéopathie gynécologique",
   description:
-    "Former des praticiens qui prennent vraiment soin des femmes. Formations en ostéopathie gynécologique, endométriose et santé féminine par Sandrine, 25+ ans d'expérience.",
+    "Former des praticiens qui prennent vraiment soin des femmes. Formations en ostéopathie gynécologique, endométriose et santé féminine par Sandrine, 28+ ans d'expérience.",
   keywords: [
     "formation endométriose",
     "formation ostéopathie gynécologique",
@@ -35,7 +35,7 @@ export const metadata: Metadata = {
   openGraph: {
     title: "MATERIS — Formations endométriose & ostéopathie gynécologique",
     description:
-      "Former des praticiens qui prennent vraiment soin des femmes. 25+ ans d'expérience en ostéopathie gynécologique.",
+      "Former des praticiens qui prennent vraiment soin des femmes. 28+ ans d'expérience en ostéopathie gynécologique.",
     type: "website",
     locale: "fr_FR",
   },

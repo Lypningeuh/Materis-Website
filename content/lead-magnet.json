@@ -1,0 +1,16 @@
+{
+  "badge": "Cadeau offert",
+  "title": "En attendant qu'on se rencontre...",
+  "description": "J'ai préparé 3 techniques que j'utilise tous les jours. Simples, efficaces, vos patientes vont adorer.",
+  "benefits": [
+    "Vidéo explicative pas à pas",
+    "PDF récapitulatif téléchargeable",
+    "Conseils d'application clinique"
+  ],
+  "formTitle": "Recevez vos 3 techniques",
+  "formSubtitle": "Remplissez le formulaire, je vous les envoie avec plaisir.",
+  "submitText": "Je vous les envoie avec plaisir",
+  "privacyNote": "Vos données restent confidentielles. Pas de spam, promis.",
+  "successTitle": "C'est envoyé !",
+  "successMessage": "Vérifiez votre boîte mail (et les spams, au cas où). À très vite !"
+}

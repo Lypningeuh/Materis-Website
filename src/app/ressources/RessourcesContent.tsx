@@ -20,6 +20,7 @@ import SectionWrapper from "@/components/ui/SectionWrapper";
 import Button from "@/components/ui/Button";
 import { supabase } from "@/lib/supabase";
 import type { RessourceCategory, Ressource } from "@/lib/types";
+import ressourcesContent from "../../../content/ressources.json";
 
 const iconMap: Record<string, React.ElementType> = {
   BookOpen,
@@ -28,28 +29,7 @@ const iconMap: Record<string, React.ElementType> = {
   Video,
 };
 
-const faqItems = [
-  {
-    question: "Je débute, est-ce fait pour moi ?",
-    answer: "Oui ! Les formations reprennent les fondamentaux et s'adaptent à votre niveau. Que vous soyez débutant(e) en gynéco ou que vous souhaitiez approfondir vos connaissances, vous trouverez une formule adaptée.",
-  },
-  {
-    question: "Je veux me spécialiser, par où commencer ?",
-    answer: "Le Pack ENDO digital est idéal pour démarrer en autonomie. Pour un accompagnement personnalisé, optez pour IN SITU. Et si vous voulez tout changer, AURIZON est fait pour vous.",
-  },
-  {
-    question: "Ces formations remplacent-elles un suivi médical ?",
-    answer: "Non. Elles s'inscrivent en complément du parcours de soins et ne remplacent pas un avis médical. Nous insistons beaucoup sur les red flags et l'orientation vers les spécialistes.",
-  },
-  {
-    question: "Les techniques sont-elles douloureuses ?",
-    answer: "Non. L'approche est douce et progressive ; le consentement et le confort de la patiente priment toujours. C'est la base de notre philosophie.",
-  },
-  {
-    question: "Quels sont les pré-requis pour les formations ?",
-    answer: "Un diplôme en règle (ostéopathe, sage-femme, kinésithérapeute) et une assurance professionnelle. Une base en anatomie/physiologie est recommandée.",
-  },
-];
+const faqItems = ressourcesContent.faqItems;
 
 const getIcon = (iconName: string | null) => {
   if (!iconName || !iconMap[iconName]) return BookOpen;
@@ -127,38 +107,31 @@ export default function RessourcesContent() {
             <div className="flex items-center gap-3 mb-4">
               <Gift size={24} className="text-dore" />
               <p className="text-sm font-medium tracking-widest uppercase text-dore">
-                Cadeau
+                {ressourcesContent.leadMagnetLabel}
               </p>
             </div>
 
             <h2 className="text-3xl md:text-4xl font-serif text-noir mb-6">
-              3 techniques que j&apos;utilise tous les jours
+              {ressourcesContent.leadMagnetTitle}
             </h2>
 
             <p className="text-noir-light text-lg mb-6">
-              En attendant qu&apos;on se rencontre, j&apos;ai préparé pour vous 
-              <strong> 3 techniques simples et efficaces</strong>. Vos patientes vont adorer.
+              {ressourcesContent.leadMagnetDescription}
             </p>
 
             <ul className="space-y-3 text-noir-light">
-              <li className="flex items-start gap-3">
-                <span className="text-dore font-serif text-lg">1.</span>
-                <span>Technique de relâchement du diaphragme pelvien</span>
-              </li>
-              <li className="flex items-start gap-3">
-                <span className="text-dore font-serif text-lg">2.</span>
-                <span>Auto-massage pour soulager les douleurs pelviennes</span>
-              </li>
-              <li className="flex items-start gap-3">
-                <span className="text-dore font-serif text-lg">3.</span>
-                <span>Exercice de respiration pour détendre le plancher pelvien</span>
-              </li>
+              {ressourcesContent.leadMagnetTechniques.map((technique, i) => (
+                <li key={i} className="flex items-start gap-3">
+                  <span className="text-dore font-serif text-lg">{i + 1}.</span>
+                  <span>{technique}</span>
+                </li>
+              ))}
             </ul>
           </div>
 
           <div className="bg-blanc p-8 rounded-2xl shadow-soft">
             <h3 className="text-xl font-serif text-noir mb-6 text-center">
-              Je vous les envoie avec plaisir
+              {ressourcesContent.leadMagnetFormTitle}
             </h3>
 
             <form onSubmit={handleSubmit} className="space-y-4">
@@ -212,7 +185,7 @@ export default function RessourcesContent() {
                 className="w-full btn-gradient text-blanc py-4 rounded-full font-medium flex items-center justify-center gap-2 hover:shadow-lg transition-shadow"
               >
                 <Send size={18} />
-                Recevoir les 3 techniques
+                {ressourcesContent.leadMagnetSubmitText}
               </button>
             </form>
           </div>
@@ -225,14 +198,14 @@ export default function RessourcesContent() {
           <div className="flex items-center justify-center gap-3 mb-4">
             <GraduationCap size={24} className="text-dore" />
             <p className="text-sm font-medium tracking-widest uppercase text-dore">
-              Espace formation
+              {ressourcesContent.resourceHubLabel}
             </p>
           </div>
           <h2 className="text-3xl md:text-4xl font-serif text-noir">
-            Bibliothèque de ressources
+            {ressourcesContent.resourceHubTitle}
           </h2>
           <p className="text-noir-light mt-4 max-w-2xl mx-auto">
-            Accédez aux contenus pédagogiques organisés par type
+            {ressourcesContent.resourceHubSubtitle}
           </p>
         </div>
 
@@ -370,10 +343,10 @@ export default function RessourcesContent() {
         <div className="max-w-3xl mx-auto">
           <div className="text-center mb-12">
             <p className="text-sm font-medium tracking-widest uppercase text-dore mb-4">
-              Questions fréquentes
+              {ressourcesContent.faqLabel}
             </p>
             <h2 className="text-3xl md:text-4xl font-serif text-noir">
-              FAQ Praticiens
+              {ressourcesContent.faqTitle}
             </h2>
           </div>
 
@@ -409,7 +382,7 @@ export default function RessourcesContent() {
       <SectionWrapper background="clair">
         <div className="text-center">
           <h2 className="text-3xl md:text-4xl font-serif text-noir mb-6">
-            Envie d&apos;aller plus loin ?
+            {ressourcesContent.ctaTitle}
           </h2>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <Button href="/formations" variant="primary" icon={<ArrowRight size={18} />}>

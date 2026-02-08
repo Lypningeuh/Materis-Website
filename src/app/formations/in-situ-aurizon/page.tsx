@@ -3,6 +3,7 @@ import { Suspense } from "react";
 import dynamic from "next/dynamic";
 import PageHeader from "@/components/ui/PageHeader";
 import SectionSkeleton from "@/components/ui/SectionSkeleton";
+import inSituContent from "../../../../content/in-situ-aurizon.json";
 
 const InSituAurizonContent = dynamic(() => import("./InSituAurizonContent"), {
   loading: () => <SectionSkeleton />,
@@ -18,9 +19,9 @@ export default function InSituAurizonPage() {
   return (
     <>
       <PageHeader
-        overtitle="Accompagnement premium"
-        title="In Situ & Aurizon"
-        subtitle="Des formules d'accompagnement personnalisé pour transformer votre pratique en profondeur."
+        overtitle={inSituContent.pageHeader.overtitle}
+        title={inSituContent.pageHeader.title}
+        subtitle={inSituContent.pageHeader.subtitle}
       />
       <Suspense fallback={<SectionSkeleton />}>
         <InSituAurizonContent />

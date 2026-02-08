@@ -7,6 +7,7 @@ import SectionWrapper from "@/components/ui/SectionWrapper";
 import Button from "@/components/ui/Button";
 import { supabase } from "@/lib/supabase";
 import { Praticien } from "@/lib/types";
+import content from "../../../content/reseau-section.json";
 
 // Dictionnaire des villes françaises avec coordonnées sur la carte SVG
 const CITY_COORDINATES: Record<string, { top: string; left: string }> = {
@@ -276,7 +277,7 @@ export default function ReseauSection() {
             viewport={{ once: true }}
             className="text-sm font-medium tracking-widest uppercase text-dore mb-4"
           >
-            Le réseau MATERIS
+            {content.sectionLabel}
           </motion.p>
           
           <motion.h2
@@ -285,8 +286,7 @@ export default function ReseauSection() {
             viewport={{ once: true }}
             className="text-3xl md:text-4xl lg:text-5xl font-serif text-noir leading-tight mb-6"
           >
-            Un réseau français d&apos;ostéopathes {" "}
-            <span className="text-dore">formés en santé féminine</span>
+            {content.title}
           </motion.h2>
 
           <motion.p
@@ -296,7 +296,7 @@ export default function ReseauSection() {
             transition={{ delay: 0.2 }}
             className="text-lg text-noir-light leading-relaxed mb-8"
           >
-            Materis, c&apos;est des praticiens spécialisés en techniques ostéopathique uro-gynéco... Mais bien plus aussi en partageant avec vous les liens, le subtil et les valeurs.
+            {content.description}
           </motion.p>
 
           {/* Stats */}
@@ -318,11 +318,11 @@ export default function ReseauSection() {
           </motion.div>
 
           <Button
-            href="/reseau-materis"
+            href={content.ctaHref}
             variant="outline"
             icon={<ArrowRight size={18} />}
           >
-            Découvrir le réseau
+            {content.ctaText}
           </Button>
         </div>
 
@@ -401,11 +401,11 @@ export default function ReseauSection() {
             <div className="flex items-center justify-center gap-6 mt-6 pt-6 border-t border-beige">
               <div className="flex items-center gap-2">
                 <div className="w-3 h-3 rounded-full bg-dore ring-2 ring-dore/30" />
-                <span className="text-sm text-noir-light">Siège MATERIS</span>
+                <span className="text-sm text-noir-light">{content.legendMain}</span>
               </div>
               <div className="flex items-center gap-2">
                 <div className="w-3 h-3 rounded-full bg-dore/70" />
-                <span className="text-sm text-noir-light">Praticiens formés</span>
+                <span className="text-sm text-noir-light">{content.legendDots}</span>
               </div>
             </div>
           </div>
@@ -423,8 +423,8 @@ export default function ReseauSection() {
                 <Users size={20} className="text-dore" />
               </div>
               <div>
-                <p className="font-medium text-noir text-sm">Communauté active</p>
-                <p className="text-xs text-noir-light">WhatsApp & lives mensuels</p>
+                <p className="font-medium text-noir text-sm">{content.floatingCardTitle}</p>
+                <p className="text-xs text-noir-light">{content.floatingCardSubtitle}</p>
               </div>
             </div>
           </motion.div>

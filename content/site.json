@@ -1,0 +1,31 @@
+{
+  "calendlyUrl": "https://calendly.com/sandrine-mosse-materis/30min",
+  "navigation": [
+    { "name": "Accueil", "href": "/" },
+    { "name": "À propos", "href": "/a-propos" },
+    { "name": "Méthode", "href": "/methode-materis" },
+    { "name": "Formations", "href": "/formations" },
+    { "name": "Réseau", "href": "/reseau-materis" },
+    { "name": "Ressources", "href": "/ressources" },
+    { "name": "Contact", "href": "/contact" }
+  ],
+  "headerCtaText": "Prendre RDV",
+  "footerDescription": "Former des praticiens qui prennent vraiment soin des femmes. Endométriose, douleurs pelviennes, santé féminine — des formations ancrées dans 28 ans de pratique.",
+  "footerSignatureName": "Sandrine",
+  "footerSignatureRole": "Fondatrice de MATERIS",
+  "footerContactTitle": "Une question ? Une hésitation ?",
+  "footerContactSubtitle": "Je réponds personnellement à chaque message.",
+  "footerContact": [
+    { "label": "M'appeler", "href": "tel:+33631702848", "text": "06 31 70 28 48" },
+    { "label": "WhatsApp", "href": "https://wa.me/33631702848", "text": "06 31 70 28 48" },
+    { "label": "Email", "href": "mailto:sandrine.mosse@materis.fr", "text": "sandrine.mosse@materis.fr" }
+  ],
+  "footerAddress": "Toulouse & environs",
+  "footerAddressDetail": "Haute-Garonne (31)",
+  "footerNewsletter": "Recevez mes conseils, actualités et offres exclusives directement dans votre boîte mail.",
+  "methodePageHeader": {
+    "overtitle": "La méthode",
+    "title": "La signature pédagogique MATERIS",
+    "subtitle": "Un accompagnement e-learning complet : autonomie, coaching personnalisé et lives de groupe pour ne plus être seule dans votre cabinet."
+  }
+}

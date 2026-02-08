@@ -55,7 +55,7 @@
 ### Section Histoire Courte
 
 **Récit condensé** :
-> Un accident de mobylette m'a conduite vers la kinésithérapie. Puis l'ostéopathie. Puis l'ostéopathie gynécologique — un bouleversement qui a orienté 25 ans de pratique auprès des femmes.
+> Un accident de mobylette m'a conduite vers la kinésithérapie. Puis l'ostéopathie. Puis l'ostéopathie gynécologique — un bouleversement qui a orienté 25 ans de pratique auprès des femmes.    
 >
 > En 2024, une maladie aux mains m'a stoppée. Et un message m'est venu : **"Il est temps de transmettre. De former d'autres mains."**
 >

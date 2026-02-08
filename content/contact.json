@@ -1,0 +1,26 @@
+{
+  "pageHeader": {
+    "overtitle": "Contact",
+    "title": "Parlons de vous",
+    "subtitle": "Une question ? Une hésitation ? Je suis là pour vous accompagner."
+  },
+  "formTitle": "Envoyez-moi un message",
+  "contactTitle": "Ou contactez-moi directement",
+  "contactChannels": [
+    { "label": "Téléphone", "value": "06 31 70 28 48", "secondValue": "06 87 52 88 22", "href": "tel:+33631702848" },
+    { "label": "WhatsApp", "value": "06 31 70 28 48", "href": "" },
+    { "label": "Email", "value": "sandrine.mosse@materis.fr", "secondValue": "legorrecyannig@yahoo.fr", "href": "mailto:sandrine.mosse@materis.fr" }
+  ],
+  "address": "Toulouse & environs",
+  "addressDetail": "Haute-Garonne (31)",
+  "personalQuote": "Je réponds personnellement à chaque message.",
+  "calendlyTitle": "Appel d'information",
+  "calendlyDescription": "20 minutes pour faire le point ensemble et voir comment je peux vous aider.",
+  "calendlyUrl": "https://calendly.com/sandrine-mosse-materis/30min",
+  "calendlyCtaText": "Réserver un créneau",
+  "praticiensTitle": "Pour les praticiens déjà formés",
+  "praticiensDescription": "Vous faites déjà partie du réseau MATERIS ? Accédez au groupe WhatsApp privé pour échanger avec la communauté.",
+  "praticiensCtaText": "Accès groupe WhatsApp (membres)",
+  "successTitle": "Message envoyé !",
+  "successMessage": "Merci pour votre message. Je vous répondrai très rapidement."
+}

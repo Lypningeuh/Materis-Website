@@ -6,16 +6,9 @@ import { useState, useEffect } from "react";
 import { usePathname } from "next/navigation";
 import { motion, AnimatePresence } from "framer-motion";
 import { Menu, X, Phone } from "lucide-react";
+import siteContent from "../../../content/site.json";
 
-const navigation = [
-  { name: "Accueil", href: "/" },
-  { name: "À propos", href: "/a-propos" },
-  { name: "Méthode", href: "/methode-materis" },
-  { name: "Formations", href: "/formations" },
-  { name: "Réseau", href: "/reseau-materis" },
-  { name: "Ressources", href: "/ressources" },
-  { name: "Contact", href: "/contact" },
-];
+const navigation = siteContent.navigation;
 
 export default function Header() {
   const [isScrolled, setIsScrolled] = useState(false);
@@ -82,7 +75,7 @@ export default function Header() {
           {/* CTA Button */}
           <div className="hidden lg:flex items-center gap-4">
             <a
-              href="https://calendly.com/sandrine-mosse-materis/30min"
+              href={siteContent.calendlyUrl}
               target="_blank"
               rel="noopener noreferrer"
               className={`flex items-center gap-2 px-6 py-2.5 text-sm font-medium rounded-full transition-all duration-300 ${
@@ -92,7 +85,7 @@ export default function Header() {
               }`}
             >
               <Phone size={16} />
-              Prendre RDV
+              {siteContent.headerCtaText}
             </a>
           </div>
 
@@ -144,13 +137,13 @@ export default function Header() {
                 className="pt-4"
               >
                 <a
-                  href="https://calendly.com/sandrine-mosse-materis/30min"
+                  href={siteContent.calendlyUrl}
                   target="_blank"
                   rel="noopener noreferrer"
                   className="inline-flex items-center gap-2 px-6 py-3 btn-gradient text-blanc font-medium rounded-full"
                 >
                   <Phone size={18} />
-                  Prendre RDV
+                  {siteContent.headerCtaText}
                 </a>
               </motion.div>
             </nav>

@@ -4,6 +4,7 @@ import { useState } from "react";
 import { motion } from "framer-motion";
 import { Gift, Send, Check, Loader2 } from "lucide-react";
 import SectionWrapper from "@/components/ui/SectionWrapper";
+import content from "../../../content/lead-magnet.json";
 
 export default function LeadMagnetSection() {
   const [isSubmitted, setIsSubmitted] = useState(false);
@@ -52,26 +53,20 @@ export default function LeadMagnetSection() {
         >
           <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-dore/10 border border-dore/20 mb-6">
             <Gift size={18} className="text-dore" />
-            <span className="text-sm font-medium text-dore">Cadeau offert</span>
+            <span className="text-sm font-medium text-dore">{content.badge}</span>
           </div>
 
           <h2 className="text-3xl md:text-4xl lg:text-5xl font-serif text-noir leading-tight mb-6">
-            En attendant qu&apos;on se rencontre...
+            {content.title}
           </h2>
 
           <p className="text-lg text-noir-light leading-relaxed mb-8">
-            J&apos;ai préparé <strong className="text-noir">3 techniques</strong> que
-            j&apos;utilise tous les jours. Simples, efficaces, vos patientes vont
-            adorer.
+            {content.description}
           </p>
 
           {/* What you get */}
           <div className="space-y-4">
-            {[
-              "Vidéo explicative pas à pas",
-              "PDF récapitulatif téléchargeable",
-              "Conseils d'application clinique",
-            ].map((item, index) => (
+            {content.benefits.map((item, index) => (
               <motion.div
                 key={item}
                 initial={{ opacity: 0, x: -20 }}
@@ -100,10 +95,10 @@ export default function LeadMagnetSection() {
             {!isSubmitted ? (
               <>
                 <h3 className="text-2xl font-serif text-noir mb-2">
-                  Recevez vos 3 techniques
+                  {content.formTitle}
                 </h3>
                 <p className="text-noir-light mb-8">
-                  Remplissez le formulaire, je vous les envoie avec plaisir.
+                  {content.formSubtitle}
                 </p>
 
                 <form onSubmit={handleSubmit} className="space-y-5">
@@ -181,14 +176,14 @@ export default function LeadMagnetSection() {
                     ) : (
                       <>
                         <Send size={18} />
-                        Je vous les envoie avec plaisir
+                        {content.submitText}
                       </>
                     )}
                   </button>
                 </form>
 
                 <p className="mt-4 text-xs text-noir-light text-center">
-                  Vos données restent confidentielles. Pas de spam, promis.
+                  {content.privacyNote}
                 </p>
               </>
             ) : (
@@ -201,11 +196,10 @@ export default function LeadMagnetSection() {
                   <Check size={32} className="text-dore" />
                 </div>
                 <h3 className="text-2xl font-serif text-noir mb-3">
-                  C&apos;est envoyé !
+                  {content.successTitle}
                 </h3>
                 <p className="text-noir-light">
-                  Vérifiez votre boîte mail (et les spams, au cas où).
-                  <br />À très vite !
+                  {content.successMessage}
                 </p>
               </motion.div>
             )}

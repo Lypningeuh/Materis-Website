@@ -3,6 +3,7 @@ import { Suspense } from "react";
 import dynamic from "next/dynamic";
 import PageHeader from "@/components/ui/PageHeader";
 import SectionSkeleton from "@/components/ui/SectionSkeleton";
+import siteContent from "../../../content/site.json";
 
 const MethodeContent = dynamic(() => import("./MethodeContent"), {
   loading: () => <SectionSkeleton />,
@@ -18,9 +19,9 @@ export default function MethodePage() {
   return (
     <>
       <PageHeader
-        overtitle="La méthode"
-        title="La signature pédagogique MATERIS"
-        subtitle="Un accompagnement e-learning complet : autonomie, coaching personnalisé et lives de groupe pour ne plus être seule dans votre cabinet."
+        overtitle={siteContent.methodePageHeader.overtitle}
+        title={siteContent.methodePageHeader.title}
+        subtitle={siteContent.methodePageHeader.subtitle}
       />
       <Suspense fallback={<SectionSkeleton />}>
         <MethodeContent />

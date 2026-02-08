@@ -1,0 +1,30 @@
+{
+  "pageHeader": {
+    "overtitle": "Le réseau",
+    "title": "Réseau MATERIS",
+    "subtitle": "Une communauté de praticiens formés à une approche spécifique d'ostéopathie gynécologique."
+  },
+  "introText": "Materis, c'est aussi une communauté de praticiens formés à une approche spécifique d'ostéo gynéco. Notre ambition : créer LE réseau français d'ostéopathes gynéco, formés à une même méthode, partageant les mêmes valeurs.",
+  "praticiensLabel": "Nos praticiens",
+  "praticiensTitle": "Trouver un praticien MATERIS",
+  "charteLabel": "Engagement qualité",
+  "charteTitle": "La Charte MATERIS",
+  "charteDescription": "Chaque praticien du réseau MATERIS s'engage à respecter une charte de qualité et d'éthique commune.",
+  "charteItems": [
+    "Respect du cadre médical",
+    "Formation continue",
+    "Éthique et consentement",
+    "Complémentarité avec le parcours de soins",
+    "Orientation vers spécialistes quand nécessaire"
+  ],
+  "certificationTitle": "Certification MATERIS",
+  "certificationDescription": "Tous nos praticiens ont suivi une formation complète et validé les compétences nécessaires pour intégrer le réseau. Ils bénéficient d'un accompagnement continu et participent aux formations continues.",
+  "joinTitle": "Comment rejoindre le réseau ?",
+  "joinFormTitle": "Je veux me former",
+  "joinFormDescription": "Découvrez nos formations pour développer vos compétences en ostéopathie gynécologique et rejoindre le réseau.",
+  "joinAlreadyTitle": "Je suis déjà formé(e)",
+  "joinAlreadyDescription": "Vous avez déjà suivi une formation MATERIS ? Demandez votre accès au réseau et à la communauté.",
+  "whatsappTitle": "Rejoignez la communauté WhatsApp",
+  "whatsappDescription": "Un groupe privé réservé aux praticiens formés MATERIS pour échanger, poser vos questions et partager vos cas cliniques.",
+  "whatsappCtaText": "Accès réservé aux membres"
+}

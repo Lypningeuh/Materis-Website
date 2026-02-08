@@ -3,6 +3,7 @@ import { Suspense } from "react";
 import dynamic from "next/dynamic";
 import PageHeader from "@/components/ui/PageHeader";
 import SectionSkeleton from "@/components/ui/SectionSkeleton";
+import contactContent from "../../../content/contact.json";
 
 const ContactContent = dynamic(() => import("./ContactContent"), {
   loading: () => <SectionSkeleton />,
@@ -18,9 +19,9 @@ export default function ContactPage() {
   return (
     <>
       <PageHeader
-        overtitle="Contact"
-        title="Parlons de vous"
-        subtitle="Une question ? Une hésitation ? Je suis là pour vous accompagner."
+        overtitle={contactContent.pageHeader.overtitle}
+        title={contactContent.pageHeader.title}
+        subtitle={contactContent.pageHeader.subtitle}
       />
       <Suspense fallback={<SectionSkeleton />}>
         <ContactContent />

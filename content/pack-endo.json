@@ -1,0 +1,38 @@
+{
+  "pageHeader": {
+    "overtitle": "Formation digitale",
+    "title": "Pack Endométriose",
+    "subtitle": "Un parcours 100% digital pour intégrer pas à pas les fondamentaux de l'ostéopathie gynécologique et les spécificités de l'endométriose."
+  },
+  "ressources": [
+    { "title": "PDF pédagogiques", "desc": "Rappels anat/physio, protocoles, checklists" },
+    { "title": "Vidéos", "desc": "Démonstrations détaillées, focus posture & ressenti" },
+    { "title": "Support WhatsApp", "desc": "Questions en temps réel avec Sandrine" }
+  ],
+  "modulesLabel": "Programme complet",
+  "modulesTitle": "8 modules structurés",
+  "modules": [
+    { "num": 1, "title": "Protocole de tests MATERIS", "content": ["Objectifs et séquence de tests", "Critères d'arrêt, red flags", "Notes de sécurité"] },
+    { "num": 2, "title": "Coccyx", "content": ["Techniques spécifiques", "Liens fasciaux et neurologiques", "Indications/contre-indications"] },
+    { "num": 3, "title": "Techniques de base ostéo gynéco", "content": ["Approches musculaires", "Approches fasciales", "Techniques d'écoute"] },
+    { "num": 4, "title": "Péritoine", "content": ["Travail doux des feuillets péritonéaux", "Gestion des adhérences"] },
+    { "num": 5, "title": "Mobilité de l'utérus", "content": ["Évaluations", "Mobilisations non douloureuses", "Consentement et limites"] },
+    { "num": 6, "title": "LUS (Ligaments utéro-sacrés)", "content": ["Repères anatomiques", "Lecture tissulaire", "Prudences"] },
+    { "num": 7, "title": "Endométriose — Théorie", "content": ["Définition OMS, origines", "Formes : superficielle, profonde, endométriome, adénomyose", "Diagnostic médical (retard jusqu'à 7 ans)", "Traitements médical/chirurgical", "Place de l'ostéopathie (complémentaire)"] },
+    { "num": 8, "title": "Endométriose — Pratiques", "content": ["Cas guidés", "Séquences et progressions", "Critères de non-indication"] }
+  ],
+  "learningTitle": "Ce que vous allez apprendre",
+  "learningItems": [
+    "Les fondamentaux de l'ostéopathie gynécologique",
+    "Le protocole de tests MATERIS",
+    "Les techniques spécifiques pour chaque structure",
+    "La théorie complète de l'endométriose",
+    "L'application pratique sur cas réels",
+    "Les red flags et critères de sécurité"
+  ],
+  "ctaTitle": "Prêt(e) à commencer ?",
+  "ctaDescription": "Discutons de votre projet et de vos objectifs pour voir si le Pack ENDO est adapté à votre situation.",
+  "ctaPrimaryText": "Réserver un appel découverte",
+  "ctaCalendlyUrl": "https://calendly.com/sandrine-mosse-materis/30min",
+  "ctaSecondaryText": "Me contacter"
+}

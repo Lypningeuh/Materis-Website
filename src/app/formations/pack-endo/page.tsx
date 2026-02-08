@@ -3,6 +3,7 @@ import { Suspense } from "react";
 import dynamic from "next/dynamic";
 import PageHeader from "@/components/ui/PageHeader";
 import SectionSkeleton from "@/components/ui/SectionSkeleton";
+import packEndoContent from "../../../../content/pack-endo.json";
 
 const PackEndoContent = dynamic(() => import("./PackEndoContent"), {
   loading: () => <SectionSkeleton />,
@@ -18,9 +19,9 @@ export default function PackEndoPage() {
   return (
     <>
       <PageHeader
-        overtitle="Formation digitale"
-        title="Pack Endométriose"
-        subtitle="Un parcours 100% digital pour intégrer pas à pas les fondamentaux de l'ostéopathie gynécologique et les spécificités de l'endométriose."
+        overtitle={packEndoContent.pageHeader.overtitle}
+        title={packEndoContent.pageHeader.title}
+        subtitle={packEndoContent.pageHeader.subtitle}
       />
       <Suspense fallback={<SectionSkeleton />}>
         <PackEndoContent />

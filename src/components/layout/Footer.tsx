@@ -5,27 +5,14 @@ import Image from "next/image";
 import Script from "next/script";
 import { usePathname } from "next/navigation";
 import { Phone, MessageCircle, Mail, MapPin, Heart, Sparkles } from "lucide-react";
+import siteContent from "../../../content/site.json";
 
-const contactChannels = [
-  {
-    icon: Phone,
-    label: "M'appeler",
-    href: "tel:+33631702848",
-    text: "06 31 70 28 48",
-  },
-  {
-    icon: MessageCircle,
-    label: "WhatsApp",
-    href: "https://wa.me/33631702848",
-    text: "06 31 70 28 48",
-  },
-  {
-    icon: Mail,
-    label: "Email",
-    href: "mailto:sandrine.mosse@materis.fr",
-    text: "sandrine.mosse@materis.fr",
-  },
-];
+const contactIcons = [Phone, MessageCircle, Mail] as const;
+
+const contactChannels = siteContent.footerContact.map((ch, i) => ({
+  ...ch,
+  icon: contactIcons[i],
+}));
 
 const quickLinks = [
   { name: "Accueil", href: "/" },
@@ -56,10 +43,10 @@ export default function Footer() {
         <div className="max-w-7xl mx-auto px-6 lg:px-8">
           <div className="text-center mb-12">
             <h2 className="text-3xl md:text-4xl font-serif text-blanc mb-4">
-              Une question ? Une hésitation ?
+              {siteContent.footerContactTitle}
             </h2>
             <p className="text-blanc/70 max-w-xl mx-auto">
-              Je réponds personnellement à chaque message.
+              {siteContent.footerContactSubtitle}
             </p>
           </div>
 
@@ -93,7 +80,7 @@ export default function Footer() {
               <h3 className="font-serif text-xl text-blanc">Newsletter</h3>
             </div>
             <p className="text-blanc/60 mb-6">
-              Recevez mes conseils, actualités et offres exclusives directement dans votre boîte mail.
+              {siteContent.footerNewsletter}
             </p>
             <div
               data-supascribe-embed-id="429247623568"
@@ -124,9 +111,7 @@ export default function Footer() {
                 />
               </Link>
               <p className="text-blanc/60 max-w-md mb-6 leading-relaxed">
-                Former des praticiens qui prennent vraiment soin des femmes.
-                Endométriose, douleurs pelviennes, santé féminine — des formations
-                ancrées dans 28 ans de pratique.
+                {siteContent.footerDescription}
               </p>
               {/* Sandrine signature */}
               <div className="flex items-center gap-4">
@@ -140,8 +125,8 @@ export default function Footer() {
                   />
                 </div>
                 <div>
-                  <p className="text-blanc font-medium">Sandrine</p>
-                  <p className="text-blanc/50 text-sm">Fondatrice de MATERIS</p>
+                  <p className="text-blanc font-medium">{siteContent.footerSignatureName}</p>
+                  <p className="text-blanc/50 text-sm">{siteContent.footerSignatureRole}</p>
                 </div>
               </div>
             </div>
@@ -169,8 +154,8 @@ export default function Footer() {
               <div className="flex items-start gap-3 text-blanc/60 mb-8">
                 <MapPin size={18} className="mt-1 flex-shrink-0" />
                 <div>
-                  <p>Toulouse & environs</p>
-                  <p>Haute-Garonne (31)</p>
+                  <p>{siteContent.footerAddress}</p>
+                  <p>{siteContent.footerAddressDetail}</p>
                 </div>
               </div>
 

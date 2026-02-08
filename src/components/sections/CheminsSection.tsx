@@ -6,79 +6,24 @@ import SectionWrapper from "@/components/ui/SectionWrapper";
 import SectionHeader from "@/components/ui/SectionHeader";
 import Button from "@/components/ui/Button";
 import { useState } from "react";
+import cheminsContent from "../../../content/chemins.json";
 
 type ModeType = "elearning" | "presentiel" | null;
 
-const elearningFormations = [
-  {
-    icon: Smartphone,
-    name: "PRAKTIKA",
-    accroche: "J'aime l'autonomie",
-    description:
-      "Formation digitale complète. Je vous guide à distance avec le Pack ENDO, vidéos détaillées et support WhatsApp illimité.",
-    features: [
-      "100% en ligne, à votre rythme",
-      "8 modules vidéo complets + PDF",
-      "Coaching individuel de 1h",
-      "Accès à vie aux contenus",
-    ],
-    color: "from-dore/25 to-dore-light/15",
-    href: "/formations/pack-endo",
-  },
-  {
-    icon: Users,
-    name: "IN SITU",
-    accroche: "J'ai besoin d'être accompagnée",
-    description:
-      "Accompagnement personnalisée sur vos patientes + journée de pratique incluse.",
-    features: [
-      "Accès à tout Praktika",
-      "4 sessions de coaching incluses",
-      "Lives bi-mensuels inclus",
-      "Suivi sur 3 mois",
-    ],
-    specialFeature: {
-      text: "1 journée présentiel dans votre cabinet",
-      placesLeft: 11,
-    },
-    color: "from-bronze/15 to-dore-dark/10",
-    href: "/formations/in-situ-aurizon",
-    featured: true,
-  },
-  {
-    icon: Sparkles,
-    name: "AURIZON",
-    accroche: "Je veux tout changer",
-    description:
-      "Transformation complète de votre pratique. Accompagnement intensif sur plusieurs mois en e-learning avancé.",
-    features: [
-      "TOUT IN SITU Complet",
-      "de 4 à 6 coaching",
-      "4 mois d'accompagnement",
-      "Boosttoncab.fr à prix préférentiel",
-    ],
-    color: "from-noir/5 to-beige/30",
-    href: "/formations/in-situ-aurizon",
-  },
-];
+const elearningIcons = [Smartphone, Users, Sparkles] as const;
 
-const presentielFormations = [
-  {
-    icon: Calendar,
-    name: "SESSIONS PRÉSENTIELLES",
-    accroche: "J'apprends avec des experts",
-    description:
-      "5 sessions thématiques à Toulouse avec ostéo, sage-femme, chirurgien et médecin. Apprendre au contact du terrain.",
-    features: [
-      "5 sessions thématiques 2025-2026",
-      "Intervenants experts multidisciplinaires",
-      "À Toulouse - Clinique Rive Gauche",
-      "De 230€ à 280€ par session",
-    ],
-    color: "from-dore/20 to-dore-light/10",
-    href: "/formations/presentiel",
-  },
-];
+const elearningFormations = cheminsContent.elearningFormations.map((f, i) => ({
+  ...f,
+  icon: elearningIcons[i],
+  color: ["from-dore/25 to-dore-light/15", "from-bronze/15 to-dore-dark/10", "from-noir/5 to-beige/30"][i],
+  ...(f.specialFeatureText ? { specialFeature: { text: f.specialFeatureText, placesLeft: f.specialFeaturePlaces } } : {}),
+}));
+
+const presentielFormations = cheminsContent.presentielFormations.map((f) => ({
+  ...f,
+  icon: Calendar,
+  color: "from-dore/20 to-dore-light/10",
+}));
 
 interface CheminsSectionProps {
   background?: "creme" | "clair" | "blanc";
@@ -90,9 +35,9 @@ export default function CheminsSection({ background = "creme" }: CheminsSectionP
   return (
     <SectionWrapper background={background}>
       <SectionHeader
-        eyebrow="Votre chemin"
-        title="Ce qui vous correspond vous attend"
-        subtitle="Choisissez le format d'accompagnement qui résonne avec votre façon d'apprendre"
+        eyebrow={cheminsContent.eyebrow}
+        title={cheminsContent.title}
+        subtitle={cheminsContent.subtitle}
       />
 
       {/* Offre spéciale banner */}
@@ -114,23 +59,19 @@ export default function CheminsSection({ background = "creme" }: CheminsSectionP
             <div className="flex-1">
               <div className="flex flex-wrap items-center gap-2 mb-2">
                 <h3 className="text-lg md:text-xl font-serif text-noir">
-                  Offre de lancement
+                  {cheminsContent.offerTitle}
                 </h3>
                 <span className="px-2.5 py-0.5 text-xs font-semibold bg-dore text-blanc rounded-full">
-                  3 places
+                  {cheminsContent.offerBadge}
                 </span>
               </div>
               <p className="text-noir-light text-sm md:text-base leading-relaxed mb-3">
-                <strong className="text-dore">Module Endométriose en présentiel offert</strong> pour les 3 premiers inscrits IN SITU ou AURIZON
+                <strong className="text-dore">{cheminsContent.offerDescription}</strong>
               </p>
-              <div className="flex flex-wrap items-center gap-x-3 gap-y-1 text-sm text-noir-light/80">
-                <span className="flex items-center gap-1.5">
-                  <Users size={14} className="text-dore" />
-                  Sandrine & Yannig (sage-femme ostéo)
-                </span>
-                <span className="text-dore/50">•</span>
-                <span>Présentation d&apos;un chirurgien</span>
-              </div>
+              <p className="text-sm text-noir-light/80 flex items-center gap-1.5">
+                <Users size={14} className="text-dore" />
+                {cheminsContent.offerDetails}
+              </p>
             </div>
           </div>
         </div>
@@ -148,7 +89,7 @@ export default function CheminsSection({ background = "creme" }: CheminsSectionP
             className="max-w-3xl mx-auto mb-16"
           >
             <p className="text-center text-lg text-noir mb-8">
-              Choisissez votre format d'apprentissage
+              {cheminsContent.modeSelectionText}
             </p>
 
             <div className="grid md:grid-cols-2 gap-6">
@@ -163,10 +104,10 @@ export default function CheminsSection({ background = "creme" }: CheminsSectionP
                   <Laptop size={32} className="text-blanc" />
                 </div>
                 <h3 className="text-2xl font-serif text-noir mb-2">
-                  Accompagnement en e-learning
+                  {cheminsContent.elearningTitle}
                 </h3>
                 <p className="text-noir-light mb-4">
-                  Formation à distance, à votre rythme, avec un accompagnement continu
+                  {cheminsContent.elearningSubtitle}
                 </p>
                 <div className="flex items-center gap-2 text-dore font-medium">
                   Découvrir les options
@@ -185,10 +126,10 @@ export default function CheminsSection({ background = "creme" }: CheminsSectionP
                   <MapPin size={32} className="text-blanc" />
                 </div>
                 <h3 className="text-2xl font-serif text-noir mb-2">
-                  Formation en présentiel
+                  {cheminsContent.presentielModeTitle}
                 </h3>
                 <p className="text-noir-light mb-4">
-                  Apprentissage sur le terrain, dans votre cabinet ou à Toulouse
+                  {cheminsContent.presentielModeSubtitle}
                 </p>
                 <div className="flex items-center gap-2 text-bronze font-medium">
                   Découvrir les options
@@ -219,10 +160,10 @@ export default function CheminsSection({ background = "creme" }: CheminsSectionP
 
             <div className="mb-8">
               <h3 className="text-2xl font-serif text-noir mb-3">
-                Formations en e-learning
+                {cheminsContent.elearningTitle}
               </h3>
               <p className="text-noir-light max-w-2xl">
-                Apprenez à votre rythme avec un accompagnement continu. Support WhatsApp illimité et accès à vie aux contenus.
+                {cheminsContent.elearningIntro}
               </p>
             </div>
 
@@ -327,10 +268,10 @@ export default function CheminsSection({ background = "creme" }: CheminsSectionP
 
             <div className="mb-8">
               <h3 className="text-2xl font-serif text-noir mb-3">
-                Formations en présentiel
+                {cheminsContent.presentielModeTitle}
               </h3>
               <p className="text-noir-light max-w-2xl">
-                Apprentissage sur le terrain avec des intervenants experts. Accompagnement personnalisé ou sessions thématiques.
+                {cheminsContent.presentielIntro}
               </p>
             </div>
 

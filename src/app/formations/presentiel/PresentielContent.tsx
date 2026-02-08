@@ -18,20 +18,9 @@ import SectionWrapper from "@/components/ui/SectionWrapper";
 import Button from "@/components/ui/Button";
 import { supabase } from "@/lib/supabase";
 import type { Session } from "@/lib/types";
+import presentielPageContent from "../../../../content/presentiel-page.json";
 
-const objectifs = [
-  "Comprendre les tableaux cliniques de l'endométriose et diagnostics différentiels",
-  "Savoir accueillir et orienter en complément du suivi médical",
-  "Acquérir des tests et techniques sécuritaires en ostéo gynéco",
-  "Développer le ressenti et la posture clinique",
-];
-
-const intervenants = [
-  { name: "Sandrine", role: "Ostéopathe formatrice, 25+ ans d'expérience" },
-  { name: "Yannig", role: "Sage-femme, ostéopathe" },
-  { name: "Chirurgien", role: "Spécialisé en endométriose (invité)" },
-  { name: "Médecin", role: "Intervenant invité" },
-];
+const content = presentielPageContent;
 
 export default function PresentielContent() {
   const [sessions, setSessions] = useState<Session[]>([]);
@@ -178,18 +167,18 @@ export default function PresentielContent() {
               <tbody>
                 <tr className="border-b border-beige">
                   <td className="p-4 text-noir">À l&apos;unité</td>
-                  <td className="p-4 text-center text-noir-light">230€</td>
-                  <td className="p-4 text-center text-noir-light">280€</td>
+                  <td className="p-4 text-center text-noir-light">{content.pricingUnit8h}</td>
+                  <td className="p-4 text-center text-noir-light">{content.pricingUnit10h}</td>
                 </tr>
                 <tr className="border-b border-beige bg-creme/30">
                   <td className="p-4 text-noir">2 sessions et +</td>
-                  <td className="p-4 text-center text-dore font-medium">220€</td>
-                  <td className="p-4 text-center text-dore font-medium">270€</td>
+                  <td className="p-4 text-center text-dore font-medium">{content.pricingMulti8h}</td>
+                  <td className="p-4 text-center text-dore font-medium">{content.pricingMulti10h}</td>
                 </tr>
                 <tr className="bg-dore/10">
                   <td className="p-4 text-noir font-medium">Pack 5 sessions</td>
-                  <td className="p-4 text-center text-dore font-medium">200€</td>
-                  <td className="p-4 text-center text-dore font-medium">250€</td>
+                  <td className="p-4 text-center text-dore font-medium">{content.pricingPack8h}</td>
+                  <td className="p-4 text-center text-dore font-medium">{content.pricingPack10h}</td>
                 </tr>
               </tbody>
             </table>
@@ -198,13 +187,13 @@ export default function PresentielContent() {
           <div className="mt-8 grid md:grid-cols-2 gap-6">
             <div className="bg-blanc p-6 rounded-xl shadow-soft text-center">
               <Euro size={24} className="mx-auto mb-3 text-dore" />
-              <p className="text-2xl font-serif text-dore mb-2">1 100€</p>
-              <p className="text-noir-light text-sm">Total pack complet (5 sessions)</p>
+              <p className="text-2xl font-serif text-dore mb-2">{content.packTotal}</p>
+              <p className="text-noir-light text-sm">{content.packTotalLabel}</p>
             </div>
             <div className="bg-blanc p-6 rounded-xl shadow-soft text-center">
               <Calendar size={24} className="mx-auto mb-3 text-dore" />
-              <p className="text-2xl font-serif text-noir mb-2">20%</p>
-              <p className="text-noir-light text-sm">Acompte à la réservation</p>
+              <p className="text-2xl font-serif text-noir mb-2">{content.depositPercent}</p>
+              <p className="text-noir-light text-sm">{content.depositLabel}</p>
             </div>
           </div>
         </div>
@@ -220,7 +209,7 @@ export default function PresentielContent() {
               <h3 className="text-2xl font-serif text-noir">Objectifs pédagogiques</h3>
             </div>
             <ul className="space-y-4">
-              {objectifs.map((objectif, index) => (
+              {content.objectifs.map((objectif, index) => (
                 <li key={index} className="flex items-start gap-3">
                   <Check size={20} className="text-dore flex-shrink-0 mt-0.5" />
                   <span className="text-noir-light">{objectif}</span>
@@ -236,7 +225,7 @@ export default function PresentielContent() {
               <h3 className="text-2xl font-serif text-noir">Intervenants</h3>
             </div>
             <div className="space-y-4">
-              {intervenants.map((intervenant) => (
+              {content.intervenants.map((intervenant) => (
                 <div key={intervenant.name} className="p-4 bg-creme rounded-lg">
                   <p className="font-medium text-noir">{intervenant.name}</p>
                   <p className="text-sm text-noir-light">{intervenant.role}</p>
@@ -251,17 +240,17 @@ export default function PresentielContent() {
       <SectionWrapper background="clair">
         <div className="max-w-3xl mx-auto text-center">
           <p className="text-sm font-medium tracking-widest uppercase text-dore mb-4">
-            Public visé
+            {content.publicLabel}
           </p>
           <h2 className="text-3xl md:text-4xl font-serif text-noir mb-8">
-            Pour qui ?
+            {content.publicTitle}
           </h2>
           <p className="text-noir-light mb-8">
-            Ostéopathes, sages-femmes, kinésithérapeutes impliqués en santé féminine.
+            {content.publicDescription}
           </p>
           <div className="bg-dore/10 p-6 rounded-xl inline-block">
             <p className="text-noir">
-              <strong>Pré-requis :</strong> Diplôme et assurance professionnelle en règle
+              <strong>{content.prerequis}</strong>
             </p>
           </div>
         </div>
@@ -271,23 +260,23 @@ export default function PresentielContent() {
       <SectionWrapper background="creme">
         <div className="max-w-3xl mx-auto text-center">
           <h2 className="text-3xl md:text-4xl font-serif text-noir mb-8">
-            Contact & inscriptions
+            {content.contactTitle}
           </h2>
 
           <div className="grid sm:grid-cols-2 gap-6 mb-8">
             <a
-              href="mailto:sandrine.mosse@materis.fr"
+              href={`mailto:${content.contactEmail}`}
               className="flex items-center justify-center gap-3 p-6 bg-blanc rounded-xl shadow-soft hover:shadow-lg transition-shadow"
             >
               <Mail size={20} className="text-dore" />
-              <span className="text-noir">sandrine.mosse@materis.fr</span>
+              <span className="text-noir">{content.contactEmail}</span>
             </a>
             <a
-              href="tel:+33631702848"
+              href={`tel:${content.contactPhone.replace(/\s/g, '')}`}
               className="flex items-center justify-center gap-3 p-6 bg-blanc rounded-xl shadow-soft hover:shadow-lg transition-shadow"
             >
               <Phone size={20} className="text-dore" />
-              <span className="text-noir">06 31 70 28 48</span>
+              <span className="text-noir">{content.contactPhone}</span>
             </a>
           </div>
 

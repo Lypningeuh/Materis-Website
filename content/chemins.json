@@ -1,0 +1,53 @@
+{
+  "eyebrow": "Votre chemin",
+  "title": "Ce qui vous correspond vous attend",
+  "subtitle": "Choisissez le format d'accompagnement qui résonne avec votre façon d'apprendre",
+  "offerTitle": "Offre de lancement",
+  "offerBadge": "3 places",
+  "offerDescription": "Module Endométriose en présentiel offert pour les 3 premiers inscrits IN SITU ou AURIZON",
+  "offerDetails": "Sandrine & Yannig (sage-femme ostéo) • Présentation d'un chirurgien",
+  "modeSelectionText": "Choisissez votre format d'apprentissage",
+  "elearningTitle": "Accompagnement en e-learning",
+  "elearningSubtitle": "Formation à distance, à votre rythme, avec un accompagnement continu",
+  "elearningIntro": "Apprenez à votre rythme avec un accompagnement continu. Support WhatsApp illimité et accès à vie aux contenus.",
+  "presentielModeTitle": "Formation en présentiel",
+  "presentielModeSubtitle": "Apprentissage sur le terrain, dans votre cabinet ou à Toulouse",
+  "presentielIntro": "Apprentissage sur le terrain avec des intervenants experts. Accompagnement personnalisé ou sessions thématiques.",
+  "elearningFormations": [
+    {
+      "name": "PRAKTIKA",
+      "accroche": "J'aime l'autonomie",
+      "description": "Formation digitale complète. Je vous guide à distance avec le Pack ENDO, vidéos détaillées et support WhatsApp illimité.",
+      "features": ["100% en ligne, à votre rythme", "8 modules vidéo complets + PDF", "Coaching individuel de 1h", "Accès à vie aux contenus"],
+      "href": "/formations/pack-endo",
+      "featured": false
+    },
+    {
+      "name": "IN SITU",
+      "accroche": "J'ai besoin d'être accompagnée",
+      "description": "Accompagnement personnalisée sur vos patientes + journée de pratique incluse.",
+      "features": ["Accès à tout Praktika", "4 sessions de coaching incluses", "Lives bi-mensuels inclus", "Suivi sur 3 mois"],
+      "specialFeatureText": "1 journée présentiel dans votre cabinet",
+      "specialFeaturePlaces": 11,
+      "href": "/formations/in-situ-aurizon",
+      "featured": true
+    },
+    {
+      "name": "AURIZON",
+      "accroche": "Je veux tout changer",
+      "description": "Transformation complète de votre pratique. Accompagnement intensif sur plusieurs mois en e-learning avancé.",
+      "features": ["TOUT IN SITU Complet", "de 4 à 6 coaching", "4 mois d'accompagnement", "Boosttoncab.fr à prix préférentiel"],
+      "href": "/formations/in-situ-aurizon",
+      "featured": false
+    }
+  ],
+  "presentielFormations": [
+    {
+      "name": "SESSIONS PRÉSENTIELLES",
+      "accroche": "J'apprends avec des experts",
+      "description": "5 sessions thématiques à Toulouse avec ostéo, sage-femme, chirurgien et médecin. Apprendre au contact du terrain.",
+      "features": ["5 sessions thématiques 2025-2026", "Intervenants experts multidisciplinaires", "À Toulouse - Clinique Rive Gauche", "De 230€ à 280€ par session"],
+      "href": "/formations/presentiel"
+    }
+  ]
+}

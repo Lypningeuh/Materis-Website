@@ -17,6 +17,10 @@ import SectionWrapper from "@/components/ui/SectionWrapper";
 import Button from "@/components/ui/Button";
 import { useSiteSettings } from "@/lib/useSiteSettings";
 import { supabase } from "@/lib/supabase";
+import contactContent from "../../../content/contact.json";
+
+const content = contactContent;
+const contactIcons = [Phone, MessageCircle, Mail] as const;
 
 export default function ContactContent() {
   const { settings } = useSiteSettings();
@@ -32,28 +36,11 @@ export default function ContactContent() {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isSubmitted, setIsSubmitted] = useState(false);
 
-  const contactChannels = [
-    {
-      icon: Phone,
-      label: "Téléphone",
-      value: "06 31 70 28 48",
-      secondValue: "06 87 52 88 22",
-      href: "tel:+33631702848",
-    },
-    {
-      icon: MessageCircle,
-      label: "WhatsApp",
-      value: "06 31 70 28 48",
-      href: whatsappLink,
-    },
-    {
-      icon: Mail,
-      label: "Email",
-      value: "sandrine.mosse@materis.fr",
-      secondValue: "legorrecyannig@yahoo.fr",
-      href: "mailto:sandrine.mosse@materis.fr",
-    },
-  ];
+  const contactChannels = content.contactChannels.map((ch, i) => ({
+    ...ch,
+    icon: contactIcons[i],
+    href: i === 1 ? whatsappLink : ch.href,
+  }));
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -93,15 +80,15 @@ export default function ContactContent() {
             viewport={{ once: true }}
           >
             <h2 className="text-2xl font-serif text-noir mb-6">
-              Envoyez-moi un message
+              {content.formTitle}
             </h2>
 
             {isSubmitted ? (
               <div className="bg-blanc p-8 rounded-2xl shadow-soft text-center">
                 <CheckCircle size={48} className="mx-auto text-dore mb-4" />
-                <h3 className="text-xl font-serif text-noir mb-2">Message envoyé !</h3>
+                <h3 className="text-xl font-serif text-noir mb-2">{content.successTitle}</h3>
                 <p className="text-noir-light mb-6">
-                  Merci pour votre message. Je vous répondrai très rapidement.
+                  {content.successMessage}
                 </p>
                 <button
                   onClick={() => setIsSubmitted(false)}
@@ -216,7 +203,7 @@ export default function ContactContent() {
             viewport={{ once: true }}
           >
             <h2 className="text-2xl font-serif text-noir mb-6">
-              Ou contactez-moi directement
+              {content.contactTitle}
             </h2>
 
             <div className="space-y-4 mb-8">
@@ -248,14 +235,14 @@ export default function ContactContent() {
                 <MapPin size={22} className="text-dore flex-shrink-0 mt-1" />
                 <div>
                   <p className="font-medium text-noir mb-1">Adresse</p>
-                  <p className="text-noir-light">Toulouse & environs</p>
-                  <p className="text-noir-light text-sm">Haute-Garonne (31)</p>
+                  <p className="text-noir-light">{content.address}</p>
+                  <p className="text-noir-light text-sm">{content.addressDetail}</p>
                 </div>
               </div>
             </div>
 
             <p className="mt-6 text-noir-light italic text-center">
-              &quot;Je réponds personnellement à chaque message.&quot;
+              &quot;{content.personalQuote}&quot;
             </p>
           </motion.div>
         </div>
@@ -272,10 +259,10 @@ export default function ContactContent() {
           >
             <Calendar size={40} className="mx-auto text-dore mb-4" />
             <h2 className="text-3xl md:text-4xl font-serif text-noir mb-4">
-              Appel d&apos;information
+              {content.calendlyTitle}
             </h2>
             <p className="text-noir-light text-lg">
-              20 minutes pour faire le point ensemble et voir comment je peux vous aider.
+              {content.calendlyDescription}
             </p>
           </motion.div>
 
@@ -294,13 +281,13 @@ export default function ContactContent() {
             </div>
 
             <Button
-              href="https://calendly.com/sandrine-mosse-materis/30min"
+              href={content.calendlyUrl}
               external
               variant="primary"
               size="lg"
               icon={<Calendar size={20} />}
             >
-              Réserver un créneau
+              {content.calendlyCtaText}
             </Button>
           </motion.div>
         </div>
@@ -317,11 +304,10 @@ export default function ContactContent() {
           >
             <Users size={40} className="mx-auto text-dore mb-4" />
             <h2 className="text-2xl font-serif text-noir mb-4">
-              Pour les praticiens déjà formés
+              {content.praticiensTitle}
             </h2>
             <p className="text-noir-light mb-6">
-              Vous faites déjà partie du réseau MATERIS ? Accédez au groupe 
-              WhatsApp privé pour échanger avec la communauté.
+              {content.praticiensDescription}
             </p>
             <Button
               href={whatsappLink}
@@ -329,7 +315,7 @@ export default function ContactContent() {
               variant="outline"
               icon={<MessageCircle size={18} />}
             >
-              Accès groupe WhatsApp (membres)
+              {content.praticiensCtaText}
             </Button>
           </motion.div>
         </div>

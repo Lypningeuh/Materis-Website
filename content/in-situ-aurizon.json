@@ -1,0 +1,59 @@
+{
+  "pageHeader": {
+    "overtitle": "Accompagnement premium",
+    "title": "In Situ & Aurizon",
+    "subtitle": "Des formules d'accompagnement personnalisé pour transformer votre pratique en profondeur."
+  },
+  "inSituLabel": "Accompagnement personnalisé",
+  "inSituTitle": "IN SITU",
+  "inSituAccroche": "J'ai besoin d'être accompagnée",
+  "inSituParagraphs": [
+    "Oubliez les formations classiques. Je ne veux pas vous faire perdre vos week-ends. Je ne veux pas vous faire perdre vos consultations.",
+    "3 mois d'accompagnement pour une vraie transformation de votre pratique. Pas juste des techniques, mais une nouvelle façon d'exercer."
+  ],
+  "inSituAvantages": [
+    "Pas de déplacement pour vous",
+    "Cas réels (vos patientes)",
+    "Moins de perte de revenus",
+    "Personnalisé à votre niveau",
+    "Accompagnement sur plusieurs mois"
+  ],
+  "inSituConcept": [
+    { "title": "Accès complet à Praktika", "desc": "Toute la formation digitale incluse" },
+    { "title": "4 sessions de coaching", "desc": "Accompagnement individuel personnalisé" },
+    { "title": "Lives bi-mensuels", "desc": "Masterclass en direct incluses" },
+    { "title": "Suivi sur 3 mois", "desc": "Accompagnement étalé dans le temps" }
+  ],
+  "inSituSpecialFeature": "1 journée présentiel dans votre cabinet",
+  "inSituPlacesLeft": 11,
+  "inSituScarcity": "Places très limitées : 12 par trimestre limité",
+  "aurizonBadge": "Premium",
+  "aurizonTitle": "AURIZON",
+  "aurizonAccroche": "Je veux tout changer",
+  "aurizonDescription": "On révolutionne votre pratique ensemble. Un parcours de transformation complète sur plusieurs mois pour celles et ceux qui veulent aller au bout.",
+  "aurizonInclus": [
+    "Audit complet de votre pratique",
+    "Plan de transformation personnalisé",
+    "Sessions de formation intensives",
+    "Suivi hebdomadaire WhatsApp",
+    "Coaching individualisé",
+    "Accès à vie aux ressources"
+  ],
+  "aurizonPricing": "Parcours sur-mesure • Tarif sur devis",
+  "aurizonCtaText": "Discuter de mon projet",
+  "aurizonCalendlyUrl": "https://calendly.com/sandrine-mosse-materis/30min",
+  "comparatifTitle": "Quelle formule choisir ?",
+  "comparatif": [
+    { "critere": "Durée", "inSitu": "3 Mois", "aurizon": "4 Mois" },
+    { "critere": "Lieu", "inSitu": "Distanciel & Pratique avec Sandrine", "aurizon": "Distanciel & Pratique avec Sandrine" },
+    { "critere": "Temps présentiel", "inSitu": "1 Jour", "aurizon": "2 Jours pour les 3 premiers" },
+    { "critere": "Accompagnement", "inSitu": "Intensif & Continu", "aurizon": "Intensif & continu avec développement de votre cabinet" },
+    { "critere": "Suivi", "inSitu": "WhatsApp + 4 Coaching Hebdo", "aurizon": "WhatsApp + 5 Coaching Hebdo" },
+    { "critere": "Objectif", "inSitu": "Compétences ciblées & Transformation", "aurizon": "Transformation complète Pratique & Cabinet Boosttoncab.fr" }
+  ],
+  "ctaTitle": "Prêt(e) à passer à l'action ?",
+  "ctaDescription": "Prenons 20 minutes pour discuter de votre situation et définir ensemble la formule la plus adaptée à vos besoins.",
+  "ctaPrimaryText": "Réserver un appel découverte",
+  "ctaCalendlyUrl": "https://calendly.com/sandrine-mosse-materis/30min",
+  "ctaSecondaryText": "Me contacter"
+}

@@ -13,61 +13,19 @@ import {
 import SectionWrapper from "@/components/ui/SectionWrapper";
 import Button from "@/components/ui/Button";
 import ExamplesModal from "@/components/formations/ExamplesModal";
+import packEndoContent from "../../../../content/pack-endo.json";
 
-const modules = [
-  {
-    num: 1,
-    title: "Protocole de tests MATERIS",
-    content: ["Objectifs et séquence de tests", "Critères d'arrêt, red flags", "Notes de sécurité"],
-  },
-  {
-    num: 2,
-    title: "Coccyx",
-    content: ["Techniques spécifiques", "Liens fasciaux et neurologiques", "Indications/contre-indications"],
-  },
-  {
-    num: 3,
-    title: "Techniques de base ostéo gynéco",
-    content: ["Approches musculaires", "Approches fasciales", "Techniques d'écoute"],
-  },
-  {
-    num: 4,
-    title: "Péritoine",
-    content: ["Travail doux des feuillets péritonéaux", "Gestion des adhérences"],
-  },
-  {
-    num: 5,
-    title: "Mobilité de l'utérus",
-    content: ["Évaluations", "Mobilisations non douloureuses", "Consentement et limites"],
-  },
-  {
-    num: 6,
-    title: "LUS (Ligaments utéro-sacrés)",
-    content: ["Repères anatomiques", "Lecture tissulaire", "Prudences"],
-  },
-  {
-    num: 7,
-    title: "Endométriose — Théorie",
-    content: [
-      "Définition OMS, origines",
-      "Formes : superficielle, profonde, endométriome, adénomyose",
-      "Diagnostic médical (retard jusqu'à 7 ans)",
-      "Traitements médical/chirurgical",
-      "Place de l'ostéopathie (complémentaire)",
-    ],
-  },
-  {
-    num: 8,
-    title: "Endométriose — Pratiques",
-    content: ["Cas guidés", "Séquences et progressions", "Critères de non-indication"],
-  },
-];
+const content = packEndoContent;
 
-const ressources = [
-  { icon: FileText, title: "PDF pédagogiques", desc: "Rappels anat/physio, protocoles, checklists", hasExamples: true, exampleType: "pdf" as const },
-  { icon: PlayCircle, title: "Vidéos", desc: "Démonstrations détaillées, focus posture & ressenti", hasExamples: true, exampleType: "video" as const },
-  { icon: MessageCircle, title: "Support WhatsApp", desc: "Questions en temps réel avec Sandrine", hasExamples: false, exampleType: null },
-];
+const ressourceIcons = [FileText, PlayCircle, MessageCircle] as const;
+
+const ressources = content.ressources.map((r, index) => ({
+  icon: ressourceIcons[index],
+  title: r.title,
+  desc: r.desc,
+  hasExamples: index === 0 || index === 1,
+  exampleType: index === 0 ? ("pdf" as const) : index === 1 ? ("video" as const) : null,
+}));
 
 export default function PackEndoContent() {
   const [modalOpen, setModalOpen] = useState(false);
@@ -121,7 +79,7 @@ export default function PackEndoContent() {
             viewport={{ once: true }}
             className="text-sm font-medium tracking-widest uppercase text-dore mb-4"
           >
-            Programme complet
+            {content.modulesLabel}
           </motion.p>
           <motion.h2
             initial={{ opacity: 0, y: 20 }}
@@ -129,12 +87,12 @@ export default function PackEndoContent() {
             viewport={{ once: true }}
             className="text-3xl md:text-4xl font-serif text-noir"
           >
-            8 modules structurés
+            {content.modulesTitle}
           </motion.h2>
         </div>
 
         <div className="grid md:grid-cols-2 gap-6">
-          {modules.map((module, index) => (
+          {content.modules.map((module, index) => (
             <motion.div
               key={module.num}
               initial={{ opacity: 0, y: 20 }}
@@ -174,7 +132,7 @@ export default function PackEndoContent() {
             className="flex items-center justify-center gap-3 mb-6"
           >
             <BookOpen size={24} className="text-dore" />
-            <h2 className="text-2xl font-serif text-noir">Ce que vous allez apprendre</h2>
+            <h2 className="text-2xl font-serif text-noir">{content.learningTitle}</h2>
           </motion.div>
 
           <motion.div
@@ -183,14 +141,7 @@ export default function PackEndoContent() {
             viewport={{ once: true }}
             className="grid sm:grid-cols-2 gap-4 text-left"
           >
-            {[
-              "Les fondamentaux de l'ostéopathie gynécologique",
-              "Le protocole de tests MATERIS",
-              "Les techniques spécifiques pour chaque structure",
-              "La théorie complète de l'endométriose",
-              "L'application pratique sur cas réels",
-              "Les red flags et critères de sécurité",
-            ].map((item, index) => (
+            {content.learningItems.map((item, index) => (
               <div key={index} className="flex items-start gap-3 p-4 bg-creme rounded-lg">
                 <Check size={18} className="text-dore mt-0.5 flex-shrink-0" />
                 <span className="text-noir-light">{item}</span>
@@ -209,7 +160,7 @@ export default function PackEndoContent() {
             viewport={{ once: true }}
             className="text-3xl md:text-4xl font-serif text-noir mb-6"
           >
-            Prêt(e) à commencer ?
+            {content.ctaTitle}
           </motion.h2>
           <motion.p
             initial={{ opacity: 0 }}
@@ -217,8 +168,7 @@ export default function PackEndoContent() {
             viewport={{ once: true }}
             className="text-noir-light mb-8 max-w-xl mx-auto"
           >
-            Discutons de votre projet et de vos objectifs pour voir si le Pack ENDO 
-            est adapté à votre situation.
+            {content.ctaDescription}
           </motion.p>
           <motion.div
             initial={{ opacity: 0, y: 20 }}
@@ -228,16 +178,16 @@ export default function PackEndoContent() {
             className="flex flex-col sm:flex-row gap-4 justify-center"
           >
             <Button
-              href="https://calendly.com/sandrine-mosse-materis/30min"
+              href={content.ctaCalendlyUrl}
               external
               variant="primary"
               size="lg"
               icon={<ArrowRight size={20} />}
             >
-              Réserver un appel découverte
+              {content.ctaPrimaryText}
             </Button>
             <Button href="/contact" variant="outline" size="lg">
-              Me contacter
+              {content.ctaSecondaryText}
             </Button>
           </motion.div>
         </div>
@@ -252,4 +202,3 @@ export default function PackEndoContent() {
     </>
   );
 }
-

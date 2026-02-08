@@ -1,0 +1,30 @@
+{
+  "pageHeader": {
+    "overtitle": "Ressources",
+    "title": "Ressources & Cadeaux",
+    "subtitle": "Des contenus gratuits pour vous accompagner dans votre pratique."
+  },
+  "leadMagnetLabel": "Cadeau",
+  "leadMagnetTitle": "3 techniques que j'utilise tous les jours",
+  "leadMagnetDescription": "En attendant qu'on se rencontre, j'ai préparé pour vous 3 techniques simples et efficaces. Vos patientes vont adorer.",
+  "leadMagnetTechniques": [
+    "Technique de relâchement du diaphragme pelvien",
+    "Auto-massage pour soulager les douleurs pelviennes",
+    "Exercice de respiration pour détendre le plancher pelvien"
+  ],
+  "leadMagnetFormTitle": "Je vous les envoie avec plaisir",
+  "leadMagnetSubmitText": "Recevoir les 3 techniques",
+  "resourceHubLabel": "Espace formation",
+  "resourceHubTitle": "Bibliothèque de ressources",
+  "resourceHubSubtitle": "Accédez aux contenus pédagogiques organisés par type",
+  "faqLabel": "Questions fréquentes",
+  "faqTitle": "FAQ Praticiens",
+  "faqItems": [
+    { "question": "Je débute, est-ce fait pour moi ?", "answer": "Oui ! Les formations reprennent les fondamentaux et s'adaptent à votre niveau. Que vous soyez débutant(e) en gynéco ou que vous souhaitiez approfondir vos connaissances, vous trouverez une formule adaptée." },
+    { "question": "Je veux me spécialiser, par où commencer ?", "answer": "Le Pack ENDO digital est idéal pour démarrer en autonomie. Pour un accompagnement personnalisé, optez pour IN SITU. Et si vous voulez tout changer, AURIZON est fait pour vous." },
+    { "question": "Ces formations remplacent-elles un suivi médical ?", "answer": "Non. Elles s'inscrivent en complément du parcours de soins et ne remplacent pas un avis médical. Nous insistons beaucoup sur les red flags et l'orientation vers les spécialistes." },
+    { "question": "Les techniques sont-elles douloureuses ?", "answer": "Non. L'approche est douce et progressive ; le consentement et le confort de la patiente priment toujours. C'est la base de notre philosophie." },
+    { "question": "Quels sont les pré-requis pour les formations ?", "answer": "Un diplôme en règle (ostéopathe, sage-femme, kinésithérapeute) et une assurance professionnelle. Une base en anatomie/physiologie est recommandée." }
+  ],
+  "ctaTitle": "Envie d'aller plus loin ?"
+}

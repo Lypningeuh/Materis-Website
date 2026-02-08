@@ -1,0 +1,36 @@
+{
+  "pageHeader": {
+    "overtitle": "Formation présentielle",
+    "title": "Santé féminine & endométriose",
+    "subtitle": "Apprendre au contact du terrain, avec un regard croisé. Passer de la technique au geste juste."
+  },
+  "objectifs": [
+    "Comprendre les tableaux cliniques de l'endométriose et diagnostics différentiels",
+    "Savoir accueillir et orienter en complément du suivi médical",
+    "Acquérir des tests et techniques sécuritaires en ostéo gynéco",
+    "Développer le ressenti et la posture clinique"
+  ],
+  "intervenants": [
+    { "name": "Sandrine", "role": "Ostéopathe formatrice, 28+ ans d'expérience" },
+    { "name": "Yannig", "role": "Sage-femme, ostéopathe" },
+    { "name": "Chirurgien", "role": "Spécialisé en endométriose (invité)" },
+    { "name": "Médecin", "role": "Intervenant invité" }
+  ],
+  "pricingUnit8h": "230€",
+  "pricingUnit10h": "280€",
+  "pricingMulti8h": "220€",
+  "pricingMulti10h": "270€",
+  "pricingPack8h": "200€",
+  "pricingPack10h": "250€",
+  "packTotal": "1 100€",
+  "packTotalLabel": "Total pack complet (5 sessions)",
+  "depositPercent": "20%",
+  "depositLabel": "Acompte à la réservation",
+  "publicLabel": "Public visé",
+  "publicTitle": "Pour qui ?",
+  "publicDescription": "Ostéopathes, sages-femmes, kinésithérapeutes impliqués en santé féminine.",
+  "prerequis": "Pré-requis : Diplôme et assurance professionnelle en règle",
+  "contactTitle": "Contact & inscriptions",
+  "contactEmail": "sandrine.mosse@materis.fr",
+  "contactPhone": "06 31 70 28 48"
+}

@@ -3,6 +3,7 @@ import { Suspense } from "react";
 import dynamic from "next/dynamic";
 import PageHeader from "@/components/ui/PageHeader";
 import SectionSkeleton from "@/components/ui/SectionSkeleton";
+import reseauContent from "../../../content/reseau-page.json";
 
 const ReseauContent = dynamic(() => import("./ReseauContent"), {
   loading: () => <SectionSkeleton />,
@@ -18,9 +19,9 @@ export default function ReseauPage() {
   return (
     <>
       <PageHeader
-        overtitle="Le réseau"
-        title="Réseau MATERIS"
-        subtitle="Une communauté de praticiens formés à une approche spécifique d'ostéopathie gynécologique."
+        overtitle={reseauContent.pageHeader.overtitle}
+        title={reseauContent.pageHeader.title}
+        subtitle={reseauContent.pageHeader.subtitle}
       />
       <Suspense fallback={<SectionSkeleton />}>
         <ReseauContent />
