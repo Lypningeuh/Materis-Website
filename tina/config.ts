@@ -293,8 +293,8 @@ export default defineConfig({
               {
                 type: "string",
                 name: "url",
-                label: "Lien de la vidéo (URL embed complète)",
-                description: "Collez ici le lien embed complet de la vidéo. Exemples : https://my.onetake.ai/... ou https://www.youtube.com/embed/... — Format vertical 9:16 uniquement.",
+                label: "Lien de la vidéo",
+                description: "Collez n'importe quel lien vidéo — il sera converti automatiquement. Formats acceptés : lien YouTube (ex: youtube.com/watch?v=... ou youtube.com/shorts/...), lien Vimeo, lien OneTake, ou fichier vidéo direct (.mp4). ⚠️ Format vertical 9:16 uniquement.",
               },
               { type: "string", name: "title", label: "Titre de la vidéo" },
             ],

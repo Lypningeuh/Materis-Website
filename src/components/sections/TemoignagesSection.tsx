@@ -9,6 +9,38 @@ import temoignagesContent from "../../../content/temoignages.json";
 
 const content = temoignagesContent;
 
+/**
+ * Converts a video URL to an embeddable format, or returns null if it's a direct video file.
+ * Supports: YouTube (watch, shorts, embed), Vimeo, OneTake, and direct video files (.mp4, .webm, .mov).
+ */
+function getVideoEmbed(url: string): { type: "iframe" | "video"; src: string } {
+  const trimmed = url.trim();
+
+  // Direct video files → use <video> tag
+  if (/\.(mp4|webm|mov|ogg)(\?.*)?$/i.test(trimmed)) {
+    return { type: "video", src: trimmed };
+  }
+
+  // YouTube: convert watch/shorts/youtu.be URLs to embed
+  const ytWatchMatch = trimmed.match(/(?:youtube\.com\/watch\?v=|youtu\.be\/)([a-zA-Z0-9_-]+)/);
+  if (ytWatchMatch) {
+    return { type: "iframe", src: `https://www.youtube.com/embed/${ytWatchMatch[1]}` };
+  }
+  const ytShortsMatch = trimmed.match(/youtube\.com\/shorts\/([a-zA-Z0-9_-]+)/);
+  if (ytShortsMatch) {
+    return { type: "iframe", src: `https://www.youtube.com/embed/${ytShortsMatch[1]}` };
+  }
+
+  // Vimeo: convert regular URLs to embed
+  const vimeoMatch = trimmed.match(/vimeo\.com\/(\d+)/);
+  if (vimeoMatch && !trimmed.includes("player.vimeo.com")) {
+    return { type: "iframe", src: `https://player.vimeo.com/video/${vimeoMatch[1]}` };
+  }
+
+  // Everything else (OneTake, already-embed URLs, etc.) → iframe as-is
+  return { type: "iframe", src: trimmed };
+}
+
 const topRowReviews = content.googleReviews.filter((_, i) => i % 2 === 0);
 const bottomRowReviews = content.googleReviews.filter((_, i) => i % 2 === 1);
 
@@ -281,16 +313,31 @@ export default function TemoignagesSection() {
                   }}
                 >
                   <div className="relative aspect-[9/16] rounded-2xl overflow-hidden shadow-lg">
-                    {isLoaded && (
-                      <iframe
-                        src={video.url}
-                        loading="lazy"
-                        allow="autoplay; clipboard-write; encrypted-media; fullscreen"
-                        allowFullScreen
-                        title={video.title}
-                        className="absolute inset-0 w-full h-full border-0"
-                      />
-                    )}
+                    {isLoaded && (() => {
+                      const embed = getVideoEmbed(video.url);
+                      if (embed.type === "video") {
+                        return (
+                          <video
+                            src={embed.src}
+                            controls
+                            playsInline
+                            preload="metadata"
+                            title={video.title}
+                            className="absolute inset-0 w-full h-full object-cover"
+                          />
+                        );
+                      }
+                      return (
+                        <iframe
+                          src={embed.src}
+                          loading="lazy"
+                          allow="autoplay; clipboard-write; encrypted-media; fullscreen"
+                          allowFullScreen
+                          title={video.title}
+                          className="absolute inset-0 w-full h-full border-0"
+                        />
+                      );
+                    })()}
                   </div>
                 </div>
               );
